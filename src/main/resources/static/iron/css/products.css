@@ -1,0 +1,19 @@
+@charset "UTF-8";
+/* CSS Document */
+.products-img-list{
+	width: 100%;
+	height:auto;
+	border:#22B7E5 solid 1px; 
+	min-height:100px;
+}
+.products-img-list img{
+	width:30%;
+	height:auto;
+	margin:10px;
+}
+.test{
+	padding-left: 5px;
+}
+.dislink{
+	pointer-events: none;
+}

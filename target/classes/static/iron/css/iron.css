@@ -1,0 +1,331 @@
+.iron-mouse:hover {
+	background-color: #DAE6F6;
+	border-radius: 10px;
+}
+.iron-red:hover{
+	color:red;
+}
+.iron-height {
+	margin: 8px 0px 8px 0px;
+	padding-top: 4px;
+	padding-bottom: 7px;
+}
+
+.iron-padding {
+	padding: 10px;
+}
+#ImgBox div {
+	width: 80px;
+	height: 80px;
+	margin: 4px 4px;
+	position: relative;
+	float: left;
+}
+
+#ImgBox img {
+	width: 80px;
+	height: 80px;
+}
+
+#ImgBox span {
+	background-color: white;
+	font-color: #ececec;
+	font-size: 15px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	border-radius: 100%;
+	transform: rotate(45deg);
+	cursor: pointer;
+	opacity: 0.5;
+	top: 0px;
+	right: 0px;
+	display: block;
+	position: absolute;
+}
+
+#BoxButton:hover {
+	color: red;
+}
+
+.iron-hidden {
+	visibility: hidden;
+	display: none;
+}
+
+.content-img-list>div {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	float: left;
+	margin: 5px;
+}
+.content-img-list-add>div {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	float: left;
+	margin: 5px;
+}
+
+.content-img-list img {
+	width: 100%;
+	height: 100%;
+}
+.add-img {
+	width: 100px;
+	height: 100px;
+	float: left;
+}
+
+.delete-div {
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	left: 0;
+	bottom: 0;
+	background: rgba(50, 153, 248, 0.4);
+	text-align: center;
+}
+.delete-div-add {
+	position: absolute;
+	width: 100%;
+	height: 30px;
+	left: 0;
+	bottom: 0;
+	background: rgba(50, 153, 248, 0.4);
+	text-align: center;
+}
+
+.product {
+	display: flex;
+}
+
+.pro-content-img {
+	display: flex;
+	flex-direction: column;
+	min-height: 500px;
+	width: 400px;
+}
+
+.pro-content-detail {
+	flex: 1;
+}
+
+.pro-bigimg-div {
+	width:400px;
+	flex: 1;
+	text-align: center;
+	position: relative;
+	height: 400px;
+}
+
+.mask {
+	width: 160px;
+	height: 160px;
+	position: absolute;
+	cursor: move;
+	top: 0;
+	left: 0;
+	background: rgba(50, 153, 248, 0.4);
+	display: none;
+}
+
+.pro-bigimg {
+	height: 400px;
+	width: 400px;
+}
+
+.pro-smallimg {
+	height: 80px;
+	width: 80px;
+	margin: 5px;
+	border: white solid 2px;
+}
+
+.pro-content-detail {
+	padding-left: 20px;
+	position: relative;
+}
+.pro-smallimg-con{
+
+}
+.pro-smallimg-con img {
+
+}
+.pro-smallingg{
+	margin-right: 2px;
+}
+#product-name {
+	font-size: 15px;
+	border-bottom: 1px dashed #E0E0E0;
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	font-weight: bolder;
+}
+#product-simple{
+	color: grey;
+	margin-top: 5px;
+}
+#product-model {
+	color: #A2A2A2;
+	margin-bottom: 15px;
+}
+
+#product-model span {
+	color: black;
+	margin-left: 15px;
+}
+
+#product-prize {
+	color: #A2A2A2;
+}
+
+#product-prize .product-prize-sign {
+	margin-left: 25px;
+}
+
+#product-prize span {
+	font-size: 35px;
+	margin-left: 20px;
+	color: red;
+}
+
+.des-con {
+	width: 100%;
+	margin-top: 40px;
+}
+
+.iron-categories-list {
+	color: blue important;
+}
+
+.product-des {
+	font-size: 17px;
+	font-weight: bolder;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border-bottom: solid #E0E0E0 1px;
+	padding-bottom: 10px;
+}
+
+.product-intro {
+	margin-bottom: 20px;
+}
+
+.product-intro span {
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.product-intro div:first-child {
+	font-size: medium;
+	margin-top: 3px;
+	font-weight: none;
+}
+
+.img-detail {
+	height: 400px;
+	width: 400px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	overflow: hidden;
+}
+
+#products-introduction {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	left: 0;
+}#products-introductione {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.products-introduction-div {
+	position: relative;
+	
+}
+#simple{
+	color: black;
+}
+.products-introduction-div span {
+	display: block;
+	visibility: hidden;
+}
+
+.maskimg {
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+
+.list-product {
+	width: 80%;
+	margin-left: 50px;
+}
+
+.list-product li {
+	border: none;
+}
+
+.list-product li span {
+	font-size: 1px;
+	margin-right: 10px;
+}
+#img_show{
+	text-align: center;
+}
+#img_show img {
+	height:auto;
+	width:80%;
+}
+
+
+.product-delete:hover{
+	color:red;
+}
+.hundred{
+	width:100px;height:100px;
+	float: left;
+}
+#ProductCover{
+	width:100%;
+	height:auto;
+}
+.EditCover{
+	width:100%;
+}
+
+.EditCover img{
+	width:100%;
+	height:auto;
+
+}
+.iron-height-hundred{
+	height:50px;
+}
+.ContactDiv{
+	margin-top:80px;
+}
+.iron-pre{
+	opacity:0;
+}
+.tasteSpan{
+	color:red;
+}
+#ImgBox{
+	width:100%;
+	height:10px;
+}
+#ImgBox img{
+	float: left;
+
+}

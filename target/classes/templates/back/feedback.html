@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Responsive Admin Dashboard Template">
+<meta name="keywords" content="admin,dashboard">
+<meta name="author" content="stacks">
+<!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Iron Back Feedback</title>
+
+<!-- Styles -->
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+	rel="stylesheet">
+<link th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet">
+<link th:href="@{/plugins/font-awesome/css/all.min.css}"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/iron/css/iron.css}">
+
+<!-- Theme Styles -->
+<link th:href="@{/css/connect.min.css}" rel="stylesheet">
+<link th:href="@{/css/admin4.css}" rel="stylesheet">
+<link th:href="@{/css/dark_theme.css}" rel="stylesheet">
+<link th:href="@{/css/custom.css}" rel="stylesheet">
+<link th:href="@{/iron/css/categories.css}" rel="stylesheet">
+
+<link th:href="@{/fileinput/fileinput.css}" rel="stylesheet" />
+<script th:src="@{/fileinput/fileinput.js}"></script>
+<script th:src="@{/fileinput/zh.js}"></script>
+<script th:src="@{/plugins/jquery/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/plugins/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.min.js}"></script>
+<script th:src="@{/plugins/apexcharts/dist/apexcharts.min.js}"></script>
+<script th:src="@{/plugins/blockui/jquery.blockUI.js}"></script>
+<script th:src="@{/plugins/flot/jquery.flot.min.js}"></script>
+<script th:src="@{/plugins/flot/jquery.flot.time.min.js}"></script>
+<script th:src="@{/plugins/flot/jquery.flot.symbol.min.js}"></script>
+<script th:src="@{/plugins/flot/jquery.flot.resize.min.js}"></script>
+<script th:src="@{/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+<script th:src="@{/js/connect.min.js}"></script>
+<script th:src="@{/js/pages/dashboard.js}"></script>
+<script th:src="@{/js/pages/mailbox.js}"></script>
+
+
+<link th:src="@{/bootstrap/css/bootstrap/3.3.6/bootstrap.min.css}">
+<script th:src="@{/bootstrap/js/bootstrap/3.3.6/bootstrap.min.js}"></script>
+<style>
+</style>
+</head>
+<body>
+
+	<div class='loader'>
+		<div class='spinner-grow text-primary' role='status'>
+			<span class='sr-only'>Loading...</span>
+		</div>
+	</div>
+	<div class="connect-container align-content-stretch d-flex flex-wrap">
+		<div th:replace="back/include::left" id="left"></div>
+		<div class="page-container">
+			<div class="page-content">
+
+				<div class="main-wrapper">
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="card">
+								<div class="card-body">
+									<ul class="mailbox-menu list-unstyled iron-border">
+										<li>
+											<div class="container">
+												<div class="row ">
+													<div class="col-lg-2">id</div>
+													<div class="col-lg-4">name</div>
+													<div class="col-lg-6">email</div>
+												</div>
+											</div>
+										</li>
+										<th:block th:each="f:${page.content}">
+											<li class="iron-mouse showfb">
+												<div class="container iron-height">
+													<div class="row">
+														<div class="col-lg-2" id="showid" th:text="${f.id}">id</div>
+														<div class="col-lg-4" id="showfullname"
+															th:text="${f.fullname}">name</div>
+														<div class="col-lg-6" id="showemail" th:text="${f.email}">email</div>
+													</div>
+												</div>
+											</li>
+										</th:block>
+									</ul>
+									<nav>
+										<ul class="pagination">
+											<li><a th:href="@{/back/feedback(start=${0})}">[首页]</a></li>
+											<li id="pre" th:class="${pre}? active : dislink"><a  
+												th:href="@{/back/feedback(start=${page.Number-1})}">[上一页]</a></li>
+											<li  th:class="${next}? active : dislink"><a
+												th:href="@{/back/feedback(start=${page.Number+1})}">[下一页]</a></li>
+											<li><a
+												th:href="@{/back/feedback(start=${page.TotalPages-1})}">[末页]</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="card iron-padding">
+								<div class="card-body">
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-default">id</span>
+										</div>
+										<input type="text" class="form-control" aria-label="Default"
+											id="s-id" aria-describedby="inputGroup-sizing-default">
+									</div>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-default">fullname</span>
+										</div>
+										<input type="text" class="form-control" aria-label="Default"
+											id="s-fullname" aria-describedby="inputGroup-sizing-default">
+									</div>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-default">email</span>
+										</div>
+										<input type="text" class="form-control" aria-label="Default"
+											id="s-email" aria-describedby="inputGroup-sizing-default">
+									</div>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-default">phone</span>
+										</div>
+										<input type="text" class="form-control" aria-label="Default"
+											id="s-phone" aria-describedby="inputGroup-sizing-default">
+									</div>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-default">subject</span>
+										</div>
+										<input type="text" class="form-control" aria-label="Default"
+											id="s-subject" aria-describedby="inputGroup-sizing-default">
+									</div>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroup-sizing-default">message</span>
+										</div>
+										<input type="text" class="form-control" aria-label="Default"
+											id="s-message" aria-describedby="inputGroup-sizing-default">
+									</div>
+
+
+									<div class="inbox-pagination">
+										<button class="btn btn-primary iron-hidden" id="feedbackDel">删除</button>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<script th:inline="javascript">
+				$(".showfb").click(function(){
+					var page = [[${url}]] +"/back/feedback/show"
+					var id = $(this).find("#showid").text();
+					$.post(page,{"id":id},function(res){
+						$("#s-id").val(res.id)
+						$("#s-fullname").val(res.fullname)
+						$("#s-phone").val(res.phone)
+						$("#s-email").val(res.email)
+						$("#s-subject").val(res.subject)
+						$("#s-message").val(res.message)
+						$("#feedbackDel").removeClass("iron-hidden")
+					})
+				})
+				$("#feedbackDel").click(function(){
+					if(confirm("是否要删除")){
+						var page = [[${url}]] +"/back/feedback/delete"
+						var id = $("#s-id").val()
+						$.post(page,{"id":id},function(){location.reload()})
+					}
+					
+				})
+			
+			</script>
+			<div class="page-footer">
+				<div class="row">
+					<div class="col-md-12">
+						<span class="footer-text">2020 © <a
+							href="/iron/front/index">首页</a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="mailbox-compose-overlay"></div>
+	<div class="mailbox-item-overlay"></div>
+
+
+</body>
+</html>

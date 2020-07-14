@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="zh">
+
+    <footer th:fragment="top">
+        <h1 class="logo fl pic_box">
+            <a href="/iron/front/index"><img src="../../static/images/index/85768c7cf1.png"
+                             th:src="${qiniu}+${top.content}" alt="My Site"/><em></em></a>
+        </h1>
+        <div class="nav fr">
+            <div class="tem fl">
+                <a href="/iron/front/index" class="ia"  th:if="${session.i_language == 'zh'}" >主页</a>
+                <a href="/iron/front/index" class="ia"  th:if="${session.i_language == 'en'}" >Home</a>
+            </div>
+            <div class="tem fl">
+                <a href="/iron/front/product" class="ia"  th:if="${session.i_language == 'zh'}" >产品</a>
+                <a href="/iron/front/product" class="ia"  th:if="${session.i_language == 'en'}" >Products</a>
+                <div class="sub navigation">
+                    <div class="list">
+                        <div th:each="c:${categories}">
+                            <a th:href="@{'/front/product/categories?cid='+${c.id}}" th:text="${''+c.name}"  th:if="${session.i_language == 'zh'}"  title="Bare Tools">Bare Tools</a>
+                            <a th:href="@{'/front/product/categories?cid='+${c.id}}" th:text="${''+c.namee}"  th:unless="${session.i_language == 'zh'}"  title="Bare Tools">Bare Tools</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end of .sub -->
+            </div>
+            <div class="tem fl">
+                <a href="/iron/front/feedback" th:if="${session.i_language == 'zh'}" class="ia">反馈</a>
+                <a href="/iron/front/feedback" th:unless="${session.i_language == 'zh'}" class="ia">Feedback</a>
+            </div>
+            <div class="tem fl">
+                <a href="/iron/front/contact" class="ia"  th:if="${session.i_language == 'zh'}" >联系我们</a>
+                <a href="/iron/front/contact" class="ia"  th:if="${session.i_language == 'en'}" >Contact Us</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </footer>
+
+
+    <footer th:fragment="home_left">
+
+        <div class="leftmenu">
+            <div class="demo">
+                <div class="t"  th:if="${session.i_language == 'zh'}" >产品分类</div>
+                <div class="t"  th:unless="${session.i_language == 'zh'}" >Categories</div>
+                <div th:each="c:${categories}" class="row has category_6 iron-categories-list">
+                    <div class="n1 has">
+                        <div class="c_tit fl"><span style="visibility: hidden;"> _ </span>
+                            <a class="test" th:href="@{'/front/product/categories?cid='+${c.id}}"  th:if="${session.i_language == 'zh'}"  th:text="'   '+${c.name}">Bare Tools</a>
+                            <a class="test" th:href="@{'/front/product/categories?cid='+${c.id}}"  th:unless="${session.i_language == 'zh'}"  th:text="'   '+${c.namee}">Bare Tools</a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </footer>
+
+
+    <footer th:fragment="backAndTo">
+
+        <div class="fr">
+            <span class="glyphicon glyphicon-chevron-left ironHover" id="pageBack" ></span>
+            <span class="glyphicon glyphicon-chevron-right ironHover" id="pageGo"></span>
+        </div>
+        <script type="text/javascript">
+            $("#pageBack").click(function(e){
+                history.back()
+
+            })
+            $("#pageGo").click(function(e){
+                history.forward()
+            })
+
+        </script>
+    </footer>
+
+
+    <footer th:fragment="changeLanguage">
+        <script type="text/javascript" th:inline="javascript">
+            $("#changeLanguage").click(function (e) {
+                e.preventDefault();
+                const page = [[${url}]] + "/front/changeLanguage";
+                $.post(page,{},function(){ window.location.reload() }) })
+        </script>
+    </footer>
+
+</html>
+
+
+<footer th:fragment="search">
+    <input type="text" name="Keyword" id="searchName" class="text fl" placeholder="Search"/>
+    <input type="image" th:src="@{/images/seab.png}" class="stopSearch sub fl"/>
+    <script type="text/javascript">
+        $(".stopSearch").click(function () {
+            let name = $("#searchName").val()
+            let url = "/iron/front/product/str?name="+name
+            location.assign(url)
+        })
+
+    </script>
+
+</footer>
+
+<footer th:fragment="foot">
+    <div id="footer" class="copyright">
+        <a href="/iron/front/index"   th:if="${session.i_language == 'zh'}" >首页</a>
+        <a href="/iron/front/index"   th:unless="${session.i_language == 'zh'}" >index</a>
+        <a href="/iron/front/contact" rel="nofollow"   th:if="${session.i_language == 'zh'}" >联系我们</a>
+        <a href="/iron/front/contact" rel="nofollow"   th:unless="${session.i_language == 'zh'}" >Contact us</a>
+    </div>
+</footer>
+
+<footer  th:fragment="triggerInput">
+    <script type="text/javascript" th:inline="javascript">
+        function triggerInput(button,input){
+            button.click(function(){
+                input.trigger("click")
+            })
+        }
+    </script>
+</footer>

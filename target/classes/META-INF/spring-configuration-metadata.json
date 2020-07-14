@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "iron",
+      "type": "iron.ConfigBean",
+      "sourceType": "iron.ConfigBean"
+    }
+  ],
+  "properties": [
+    {
+      "name": "iron.accesskey",
+      "type": "java.lang.String",
+      "sourceType": "iron.ConfigBean"
+    },
+    {
+      "name": "iron.address",
+      "type": "java.lang.String",
+      "sourceType": "iron.ConfigBean"
+    },
+    {
+      "name": "iron.bucket",
+      "type": "java.lang.String",
+      "sourceType": "iron.ConfigBean"
+    },
+    {
+      "name": "iron.secretkey",
+      "type": "java.lang.String",
+      "sourceType": "iron.ConfigBean"
+    }
+  ],
+  "hints": []
+}

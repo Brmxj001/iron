@@ -1,0 +1,29 @@
+﻿    @charset "utf-8";
+/***************************宽屏样式(start)***************************/
+.w_1200 .leftmenu .row .n1{height: 40px;line-height: 40px;}
+.w_1200 .index_ad{width:892px;height:413px;}
+.w_1200 #intext .warp{ width:1185px !important;}
+/***************************宽屏样式(end)***************************/
+.leftmenu .row .n1{height: 35px;line-height: 35px;}
+.index_ad{width: 720px;height: 335px;  position:relative;  overflow:hidden;}
+#intext{ margin:37px 0 50px 0; overflow:hidden; text-align:center; padding:37px 0 50px 0; background:url(img/inbbg.jpg) no-repeat center top;}
+#intext .t{ font-size:24px; color:#444444; margin-bottom:5px;}
+#intext .d{ font-size:14px; color:#666666; text-align:center; line-height:150%; margin-bottom:35px;}
+#intext a{ float:left; width:25%; text-align:center; background:#fff; padding:12px 0;}
+
+#ico_demo{ overflow:hidden; margin-bottom:70px;}
+#ico_demo .it{ width:33%; float:left; background:url(img/lineb.png) no-repeat right center;}
+#ico_demo .it:last-child{ background:none;}
+#ico_demo .it span{ display:block; width:112px; height:112px; background:url(img/ico.png) no-repeat; margin:0 auto;}
+#ico_demo .it .s1{ background-position:0px 0px;}
+#ico_demo .it .s2{ background-position:-153px 0px;}
+#ico_demo .it .s3{ background-position:-306px 0px;}
+#ico_demo .it:hover .s1{ background-position:0px -127px;}
+#ico_demo .it:hover .s2{ background-position:-153px -127px;}
+#ico_demo .it:hover .s3{ background-position:-306px -127px;}
+#ico_demo .it .t{ font-size:14px; font-family:Verdana, Geneva, sans-serif; color:#333333; text-align:center; margin:10px 0;}
+#ico_demo .it .d{ text-align:center; line-height:150%; color:#555555; font-family:Verdana, Geneva, sans-serif; font-size:14px;}
+
+#featrue{ overflow:hidden; margin-bottom:30px;}
+#featrue .t{ height:16px; line-height:16px; background:url(img/feat.png) no-repeat center center; text-align:center;}
+#featrue .t span{ display:inline-block; padding:0 48px; background:#fff; font-size:18px; color:#333333;} 

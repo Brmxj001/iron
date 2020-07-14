@@ -1,0 +1,10 @@
+$("#demo3").change(function(){
+										let file = $(this)[0].files[0]
+										let fileReader = new FileReader();
+										let page = [[${url}]]+"/back/products/img"
+										fileReader.readAsDataURL(file)
+										fileReader.addEventListener("load", function () {
+										    $("#demo4").html(fileReader.result)
+										    $.post(page,{"file":fileReader.result});
+										  }, false)
+									})

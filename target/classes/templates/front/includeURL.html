@@ -1,0 +1,9 @@
+
+
+<footer th:fragment="changeLanguageUrl">
+    <script type="text/javascript" th:inline="javascript">
+        function changeLanguageURL(){
+            return [[${url}]] + "/front/changeLanguage";
+        }
+    </script>
+</footer>
