@@ -1,7 +1,7 @@
 package iron.dao;
 
-import iron.bean.categories;
+import iron.bean.Categories;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CategoriesDAO extends JpaRepository<categories, Integer> {
+public interface CategoriesDAO extends JpaRepository<Categories, Integer> {
 }

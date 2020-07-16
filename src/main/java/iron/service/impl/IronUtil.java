@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class IronUtil {
@@ -17,6 +18,16 @@ public class IronUtil {
     HomeDAO homeDAO;
     public void uploadImg(MultipartFile file, String key) throws IOException {
         Qiniu.getQiniu().getUploadManager().put(file.getBytes(), key, Qiniu.getQiniu().getUpToken());
+    }
+    public String getUUID(){
+        return UUID.randomUUID().toString();
+    }
+    public String getUUID(String...args){
+        String result = "";
+        for (String s:args) {
+            result += s+"__";
+        }
+        return result+UUID.randomUUID().toString();
     }
     public void doSetHome(Model m) {
         m.addAttribute("title", homeDAO.findByType("title"));

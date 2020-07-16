@@ -81,8 +81,8 @@
 
     </head>
     <body>
-
         <div th:replace="back/include::modal" id="modal"></div>
+        <div th:replace="back/include::showImgModal"></div>
         <div class='loader'>
             <div class='spinner-grow text-primary' role='status'>
                 <span class='sr-only'>Loading...</span>
@@ -119,48 +119,45 @@
                                                     <div class="mail-author">
                                                         <span>[[${c.name}]]</span>
                                                     </div>
-                                                    <div class="mail-title" th:text="${c.detail}"></div>
+                                                    <div class="mail-title" th:text="${c.namee}"></div>
                                                     <div class="mail-date"></div>
                                                     <div class="mail-star">
 														<span class="material-icons cDelete"
                                                               th:attr="data-id=${c.id}">delete</span>
-                                                    </div></li>
-
+                                                    </div>
+                                                </a>
+                                                </li>
                                             </th:block>
 
                                         </ul>
+                                        <div th:replace="back/CommonInclude::common"></div>
+                                        <div th:replace="back/CommonInclude::url"></div>
                                         <script type="text/javascript" th:inline="javascript">
-                                            $(".cDelete").click(function () {
-                                                if (confirm("是否要删除")) {
-                                                    var id = $(this).attr("data-id");
-                                                    var page = [[${url}]] + "/back/categories/delete";
-                                                    $.post(page, {"id": id}, function () {
-                                                        location.reload()
-                                                    })
-                                                }
+
+
+                                            $(".cDelete").click(function (event) {
                                                 event.stopPropagation()
+                                                if (confirm("是否要删除")) {
+                                                    postRequest(deleteCategoriesUrl(), getFormData("id",$(this).attr("data-id")))
+                                                    location.reload()
+                                                }
                                             });
 
                                             $("#categories-top").click(function (event) {
                                                 event.stopPropagation()
                                             });
-                                            var SrcList;
-                                            $(".CategoriesEdit").click(function () {
-                                                const page = [[${url}]] + "/back/categories/look";
-                                                const id = $(this).attr("data-id");
-                                                $.post(page, {
-                                                        "id": id
-                                                    }, function (res) {
-                                                        window.categories = res;
-                                                        $("#cName").val(res.name);
-                                                        $("#cNameE").val(res.namee);
-                                                        $("#categories-id").html(res.id);
-                                                        $("#cDetail").val(res.detail);
-                                                        SrcList = res.imgs;
-                                                        showIMG($("#ImgBox"))
-                                                    }
-                                                )
 
+                                            $(".CategoriesEdit").click(function () {
+                                                var box = BoxPlus.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
+                                                let id = $(this).attr("data-id")
+                                                let result = postRequest(getCategoriesUrl(), getFormData("id",id))
+                                                box.SrcList = result.imgs;
+                                                box.cid = id
+                                                box.init()
+
+                                                $("#editName").val(result.name);
+                                                $("#editNameE").val(result.namee);
+                                                $("#editId").html(result.id);
                                             })
                                         </script>
                                         <div class="inbox-pagination">
@@ -199,152 +196,39 @@
                 <div class="mail-container">
                     <div class="mail-header">
                         <div class="mail-title">
-                            分类编辑<span class="badge info" id="categories-id"></span>
+                            分类编辑<span class="badge info" id="editId"></span>
                         </div>
                     </div>
 
 
                     <!-- demo -->
-                    <div class="mail-info">
-                        <div class="mail-author">
-                            <div class="mail-author-info">
-                                <span class="mail-author-name">名称</span>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="text" class="form-control  cEdit" id="cName" value="">
-                    <div class="mail-info">
-                        <div class="mail-author">
-                            <div class="mail-author-info">
-                                <span class="mail-author-name">名称(English)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="text" class="form-control  cEdit" id="cNameE" value="">
-                    <div class="mail-info">
-                        <div class="mail-author">
-                            <div class="mail-author-info">
-                                <span class="mail-author-name">介绍</span>
+                    <span class="mail-author-name">名称</span>
+                    <input type="text" class="form-control  cEdit" id="editName" value="">
 
-                            </div>
-                        </div>
+                    <span class="mail-author-name">名称(English)</span>
+                    <input type="text" class="form-control  cEdit" id="editNameE" value="">
 
-                        <div class="mail-other-info">
-                            <span>18:01</span>
-                        </div>
-
-                    </div>
-                    <input type="text" class="form-control cEdit" id="cDetail" value="">
-                    <div class="mail-info">
-                        <div class="mail-author">
-                            <div class="mail-author-info">
-                                <span class="mail-author-name">照片</span> <span id="BoxButton">点击添加<span id="BoxInfo"></span></span>
-                            </div>
-                        </div>
-
-                    </div>
+                    <span class="mail-author-name">照片</span> <span id="BoxButton">点击添加</span>
                     <div id="ImgBox"></div>
-                    <input class="hidden" type="file" name="file" id="BoxInput"
-                           accept="image/*"/>
-                    <script type="text/javascript" th:inline="javascript">
-                        $(".cEdit").blur(function () {
-                            const id = $("#categories-id").html();
-                            const page = [[${url}]] + "/back/categories/edit";
-                            const type = $(this).attr("id");
-
-                            if (type == "cName") {
-                                $.post(page, {"id": id, "name": $(this).val()})
-                            } else if (type == "cDetail") {
-                                $.post(page, {"id": id, "detail": $(this).val()})
-                            } else if (type == "cNameE") {
-                                $.post(page, {"id": id, "namee": $(this).val()})
-                            }
-                        });
-
-                        $("#BoxButton").click(function () {
-                            $("#BoxInput").trigger("click")
-                        });
-
-                        $("#BoxInput").change(function () {
-                            $("#BoxInfo").text("添加中...")
-                            let id = $("#categories-id").html();
-                            const file = $(this)[0].files[0];
-                            let page = [[${url}]]+"/back/cimg/add"
-                            let formData = new FormData()
-                            formData.append("file", file);
-                            formData.append("id", id);
-                            $.ajax({
-                                url: page,
-                                type: 'POST',
-                                cache: false,
-                                data: formData,
-                                processData: false,
-                                contentType: false,
-                                success:function(){
-                                    let cimgPage = [[${url}]]+"/back/cimg/getCImg";
-                                    $.post(cimgPage,{"id":id},function(res){
-                                        SrcList = res;
-                                        showIMG($("#ImgBox"))
-                                    })
-                                    $("#BoxInfo").text("")
-
-                                }
-                            })
-                        });
-
-                        function showIMG(box) {
-                            box.html("");
-                            const qiniu = [[${qiniu}]];
-                            for (let i = 0; i < SrcList.length; i++) {
-                                const oldBox = box.html();
-                                console.log(SrcList[i].path);
-                                box
-                                    .html(oldBox
-                                        + '<div><img class=""  src="' + qiniu + SrcList[i].path + '" alt=""/><span id="' + SrcList[i].id + '">+</span></div>');
-                            }
-                        }
-
-                        $("#ImgBox").on("click", "span", function () {
-                            if (confirm("确定删除?")){
-                                const index = $(this).attr("id");
-
-                                const page = [[${url}]] + "/back/cimg/delete";
-                                $.post(page, {"id": index}, function () {
-                                    const id = $("#categories-id").html();
-                                    const page = [[${url}]] + "/back/cimg/getCImg";
-                                    $.post(page, {"id": id}, function (res) {
-                                        SrcList = res;
-                                        showIMG($("#ImgBox"))
-                                    })
-                                })
-                            }
-
-                        });
-                        $("#ImgBox").on("click", "img", function () {
-                            const source = $(this).attr("src");
-                            console.log(source);
-                            $("#ShowImage_Form").find("#img_show").html("<image src='" + source + "' class='carousel-inner img-responsive img-rounded' />");
-                            $("#ShowImage_Form").modal();
-
-                        })
-
-                    </script>
                 </div>
+
+                <input class="hidden" type="file" name="file" id="BoxInput"
+                       accept="image/*"/>
+
+                <script type="text/javascript" th:inline="javascript">
+                    $(".cEdit").blur(function () {
+                        let formData = new FormData();
+                        fromData_append(formData, "id", $("#editId").text())
+                        fromData_append(formData, "name", getVal("#editName"))
+                        fromData_append(formData, "namee", getVal("#editNameE"))
+                        postRequest(editCategoriesUrl(), formData)
+                    });
+
+
+                </script>
             </div>
         </div>
-        <div th:replace="back/include::ironJS" id="ironJS"></div>
         <div class="mailbox-compose-overlay"></div>
         <div class="mailbox-item-overlay"></div>
-        <!-- 照片显示模态窗口 -->
-        <div id="ShowImage_Form" class="modal hide">
-            <div class="modal-header">
-                <button data-dismiss="modal" class="close btn btn-info" type="button">关闭</button>
-            </div>
-            <div class="modal-body">
-                <div id="img_show"></div>
-            </div>
-        </div>
-
-
     </body>
 </html>

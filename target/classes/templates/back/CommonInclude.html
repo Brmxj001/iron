@@ -1,0 +1,252 @@
+<footer th:fragment="common">
+    <script type="text/javascript" th:inline="javascript">
+        function showImg(src) {
+            $("#img_show").find("img").attr("src", src)
+            $("#ShowImage_Form").modal();
+        }
+
+        function getVal(id) {
+            return $(id).val();
+        }
+
+        function fromData_append(aFormData, key, value) {
+            aFormData.append(key, value)
+        }
+
+        function fromData_appentFile(aFormData, files) {
+            $.each(files, function (i, file) {
+                aFormData.append('file', file);
+            });
+        }
+
+        function formData_isNull(aFormData) {
+            for (var value of aFormData.values()) {
+                if (value == "") {
+                    return true
+                }
+            }
+            return false
+        }
+
+        function postRequest(page, aFormData) {
+            let result = false
+            $.ajax({
+                url: page,
+                type: 'POST',
+                cache: false,
+                data: aFormData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (res) {
+                    result = res
+                }
+            })
+            return result
+        }
+
+        function getFileTempPath(file) {
+            let result = null;
+            if (window.createObjectURL != undefined) {
+                result = window.createObjectURL(file);
+            } else if (window.URL != undefined) {
+                result = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) {
+                result = window.webkitURL.createObjectURL(file);
+            }
+            return result;
+        }
+
+        function showLoadInfo(id) {
+            $(id).text("正在加载中...")
+        }
+
+        function setValNull(id) {
+            $(id).html("")
+        }
+
+        function getCategoriesImg(cid) {
+            let formData = new FormData();
+            fromData_append(formData, "cid", cid)
+            return postRequest(getCategoriesImgUrl(), formData)
+        }
+
+        function getFormData(key,value) {
+            let formData = new FormData();
+            formData.append(key,value)
+            return formData
+        }
+
+        function  getInputFile(aInput) {
+            return $(aInput)[0].files[0]
+        }
+
+        function toClickInput(button,input) {
+            $(button).click(function(){
+                $(input).trigger("click")
+            })
+        }
+        const Box = {
+            instance: function (button, input, box) {
+                let result = {}
+                result.FileList = []
+                result.SrcList = []
+                result.box = box
+                result.input = input
+                result.button = button
+                result.showBoxImgs = function () {
+                    result.box.html("")
+                    for (let i = 0; i < result.SrcList.length; i++) {
+                        let oldBox = result.box.html();
+                        result.box.html(oldBox + '<div><img src="' + result.SrcList[i] + '" alt=""/><span id="' + i + '">+</span></div>');
+                    }
+                }
+                result.showImg = function () {
+                    result.box.on("click", "img", function () {
+                        showImg($(this).attr("src"))
+                    })
+                }
+                result.openInput = function () {
+                    result.input.change(function () {
+                        const file = $(this)[0].files[0]
+                        let src = getFileTempPath(file)
+                        result.SrcList.push(src)
+                        result.FileList.push(file)
+                        result.showBoxImgs()
+                        $(this).val("")
+                    })
+
+                }
+                result.openButton = function () {
+                    result.button.click(function () {
+                        result.input.trigger("click")
+                    })
+                }
+                result.openDeleteImg = function () {
+                    result.box.on("click", "span", function () {
+                        let index = $(this).attr("id")
+                        result.SrcList.splice(index)
+                        result.FileList.splice(index)
+                        result.showBoxImgs()
+                    })
+                }
+                result.init = function () {
+                    result.openButton()
+                    result.openInput()
+                    result.openDeleteImg()
+                    result.showImg()
+                }
+                return result
+            }
+        }
+
+
+        const BoxPlus = {
+            instance: function (button, input, box) {
+                let result = {}
+                result.SrcList = []
+                result.box = box
+                result.input = input
+                result.button = button
+                result.test= function(){
+                    console.log(result.cid)
+                }
+                result.showBoxImgs = function () {
+                    result.box.html("")
+                    for (let i = 0; i < result.SrcList.length; i++) {
+                        let oldBox = result.box.html();
+                        result.box.html(oldBox + '<div><img src="' + [[${qiniu}]] + result.SrcList[i].path + '" alt=""/><span  id="' + result.SrcList[i].id + '">+</span></div>');
+                    }
+                }
+                result.openInput = function () {
+                    result.input.change(function () {
+                        //上传Categories Img
+                        let addFormData = new FormData()
+                        fromData_append(addFormData, "cid", result.cid)
+                        fromData_append(addFormData, "file", $(this)[0].files[0])
+                        postRequest(addCategoriesImgUrl(), addFormData)
+
+                        result.SrcList = getCategoriesImg(result.cid)
+                        result.showBoxImgs()
+                        $(this).val("")
+                    })
+
+                }
+                result.openButton = function () {
+                    result.button.click(function () {
+                        result.input.trigger("click")
+                    })
+                }
+                result.openDeleteImg = function () {
+                    result.box.on("click", "span", function () {
+                        postRequest(deleteCategoriesImgUrl(), getFormData("id",$(this).attr("id")))
+                        result.SrcList = getCategoriesImg(result.cid)
+                        result.showBoxImgs()
+                    })
+                }
+                result.showImg = function () {
+                    result.box.on("click", "img", function () {
+                        showImg($(this).attr("src"))
+                    })
+                }
+                result.init = function () {
+                    result.openButton()
+                    result.openInput()
+                    result.openDeleteImg()
+                    result.showImg()
+                    result.showBoxImgs()
+                }
+                return result
+            }
+        }
+    </script>
+</footer>
+1
+
+<footer th:fragment="url">
+    <script type="text/javascript" th:inline="javascript">
+        //Categories
+        function addCategoriesUrl() {
+            return [[${url}]] + "/back/addCategories";
+        }
+
+        function editCategoriesUrl() {
+            return [[${url}]] + "/back/editCategories";
+        }
+
+        function deleteCategoriesUrl() {
+            return [[${url}]] + "/back/deleteCategories";
+        }
+
+        function getCategoriesUrl(){
+            return [[${url}]] + "/back/getCategories"
+        }
+
+        //Categories Img
+        function addCategoriesImgUrl() {
+            return [[${url}]] + "/back/addCategoriesImg";
+        }
+
+        function getCategoriesImgUrl() {
+            return [[${url}]] + "/back/getCategoriesImg";
+        }
+
+        function deleteCategoriesImgUrl() {
+            return [[${url}]] + "/back/deleteCategoriesImg";
+        }
+
+        //Product
+        function addProductUrl(){
+            return [[${url}]] + "/back/addProducts";
+        }
+
+        function deleteProductUrl(){
+            return [[${url}]] + "/back/deleteProduct"
+        }
+        //Product Img
+        function addProductImgUrl(){
+            return [[${url}]] + "/back/addProductImg"
+        }
+
+    </script>
+</footer>

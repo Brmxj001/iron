@@ -1,9 +1,11 @@
 package iron.controller;
 
-import iron.bean.img;
-import iron.bean.product;
-import iron.dao.ImgDAO;
+import iron.bean.ProductImg;
+import iron.bean.Product;
+import iron.dao.ProductImgDAO;
 import iron.dao.ProductDAO;
+import iron.service.impl.ProductImgServiceImpl;
+import iron.service.impl.ProductServiceImpl;
 import iron.util.Qiniu;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,11 @@ public class ProductsController {
     @Autowired
     ProductDAO productDAO;
     @Autowired
-    ImgDAO imgDAO;
+    ProductImgDAO productImgDAO;
+    @Autowired
+    ProductServiceImpl productService;
+    @Autowired
+    ProductImgServiceImpl productImgService;
 
     @PostMapping("/back/products/img")
     public String saveProductImg(MultipartFile file) {
@@ -44,37 +50,28 @@ public class ProductsController {
         return "test success";
     }
 
-    @PostMapping("/back/products/addone")
-    public String saveProductAdd(MultipartFile[] file, product product, MultipartFile coverFile) throws IOException {
-        log.info(String.valueOf(file.length));
-		String coverKey = getUuid();
-		Qiniu.getQiniu().getUploadManager().put(coverFile.getBytes(), coverKey,
-                Qiniu.getQiniu().getUpToken());
-		product.setCallon(0);
-        product.setCover(coverKey);
-        Integer pid = productDAO.save(product).getId();
-        for (MultipartFile m : file) {
-            String key = getUuid(pid);
-            saveFile(m, key);
-            img img = new img();
-            img.setPid(pid);
-            img.setPath(key);
-            imgDAO.save(img);
-        }
-        return "添加成功";
+    @PostMapping("/back/addProducts")
+    public Product add(MultipartFile[] file, Product product, MultipartFile coverFile) throws IOException {
+        return productService.add(product, coverFile);
     }
 
-	private String getUuid() {
-		return "cover" + UUID.randomUUID().toString();
-	}
-	private String getUuid(Integer s) {
-		return s + UUID.randomUUID().toString();
-	}
+    @PostMapping("/back/addProductImg")
+    public void addProductImg(MultipartFile[] file, Integer pid) throws IOException {
+        productImgService.add(file, pid);
+    }
+
+    private String getUuid() {
+        return "cover" + UUID.randomUUID().toString();
+    }
+
+    private String getUuid(Integer s) {
+        return s + UUID.randomUUID().toString();
+    }
 
 
     @PostMapping("/back/products/look")
-    public product toProductLook(@RequestParam(value = "id") Integer id) {
-        Optional<product>  opt = productDAO.findById(id);
+    public Product toProductLook(@RequestParam(value = "id") Integer id) {
+        Optional<Product> opt = productDAO.findById(id);
         if (opt.isPresent()) {
             return opt.get();
         }
@@ -83,54 +80,28 @@ public class ProductsController {
     }
 
     @PostMapping("/back/products/look/img")
-    public List<img> toProductLookImg(@RequestParam(value = "pid") Integer pid) {
-        return imgDAO.findByPid(pid);
+    public List<ProductImg> toProductLookImg(@RequestParam(value = "pid") Integer pid) {
+        return productImgDAO.findByPid(pid);
     }
 
     @PostMapping("/back/products/edit")
-    public void toProductLookEdit(product p) {
+    public void toProductLookEdit(Product p) {
         productDAO.save(p);
     }
 
     @PostMapping("/back/products/delete/img")
     public String toProductImgDelete(@RequestParam(value = "iid") Integer iid) {
-        imgDAO.deleteById(iid);
+        productImgDAO.deleteById(iid);
         return "success";
     }
 
     // 产品属性单个编辑
     @PostMapping("/back/products/solelyEdit")
-    public void toProductsSolelyEdit(@RequestParam(value = "id") Integer id, String name, String prize, String intro,
-                                     String model, MultipartFile cover,String namee, String introe, String modele,String prizee,String simple, String simplee) throws Exception {
-        product product = productDAO.getOne(id);
-        if (null != name) {
-            product.setName(name);
-        } else if (null != namee) {
-            product.setNamee(namee);
-        }else if (null != simple) {
-            product.setSimple(simple);
-        } else if (null != simplee) {
-            product.setSimplee(simplee);
-        } else if (null != prize) {
-            product.setPrize(prize);
-        } else if (null != prizee) {
-            product.setPrizee(prizee);
-        }else if (null != intro) {
-            product.setIntroduction(intro);
-        }else if (null != introe) {
-            product.setIntroductione(introe);
-        } else if (null != model) {
-            product.setModel(model);
-        } else if (null != modele) {
-            product.setModele(modele);
-        } else if (null != cover) {
-			String key = getUuid();
-			Qiniu.getQiniu().getUploadManager().put(cover.getBytes(), key, Qiniu.getQiniu().getUpToken());
-            product.setCover(key);
+    public void toProductsSolelyEdit(Product p) throws Exception {
 
-        }
-        productDAO.save(product);
+        productDAO.save(p);
     }
+
 
     @PostMapping("/back/img/addone")
     public void doAddOneImg(MultipartFile file, @RequestParam(value = "pid") Integer pid) {
@@ -138,10 +109,10 @@ public class ProductsController {
             String key = getUuid(pid);
             saveFile(file, key);
 
-            img img = new img();
+            ProductImg img = new ProductImg();
             img.setPid(pid);
             img.setPath(key);
-            imgDAO.save(img);
+            productImgDAO.save(img);
         } catch (IOException ignored) {
         }
     }
@@ -150,8 +121,8 @@ public class ProductsController {
         Qiniu.getQiniu().getUploadManager().put(file.getBytes(), key, Qiniu.getQiniu().getUpToken());
     }
 
-    @PostMapping("/back/product/delete")
+    @PostMapping("/back/deleteProduct")
     public void doProductDelete(Integer id) {
-        productDAO.deleteById(id);
+        productService.delete(id);
     }
 }

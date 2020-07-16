@@ -1,11 +1,12 @@
 package iron.controller;
 
-import iron.bean.categories;
+import iron.bean.Categories;
 import iron.bean.feedback;
-import iron.bean.product;
+import iron.bean.Product;
 import iron.dao.*;
 import iron.service.impl.CategoriesServiceImpl;
 import iron.service.impl.IronUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class BackPageController {
     @Autowired
     CategoriesServiceImpl CategoriesServiceImpl;
@@ -47,7 +49,7 @@ public class BackPageController {
     public String toBackCategories(Model m, @RequestParam(defaultValue = "0", value = "start") Integer start,
                                    @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Pageable pageable = PageRequest.of(start, size, getSort());
-        Page<categories> page = CategoriesDAO.findAll(pageable);
+        Page<Categories> page = CategoriesDAO.findAll(pageable);
         m.addAttribute("page", page);
         m.addAttribute("next", page.hasNext());
         m.addAttribute("pre", page.hasPrevious());
@@ -59,7 +61,8 @@ public class BackPageController {
     public String toBackProducts(Model m, @RequestParam(defaultValue = "0", value = "start") Integer start,
                                  @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Pageable pageable = PageRequest.of(start, size, getSort());
-        Page<product> page = ProductDAO.findAll(pageable);
+        Page<Product> page = ProductDAO.findAll(pageable);
+        log.info(page.getContent().toString());
         m.addAttribute("page", page);
         m.addAttribute("next", page.hasNext());
         m.addAttribute("pre", page.hasPrevious());
@@ -73,7 +76,7 @@ public class BackPageController {
 
     @GetMapping("/back/products/add")
     public String toBackProductsAdd(Model m) {
-        List<categories> categories = CategoriesDAO.findAll();
+        List<Categories> categories = CategoriesDAO.findAll();
         m.addAttribute("categories", categories);
         m.addAttribute("current", "addProducts");
         return "back/addProducts";

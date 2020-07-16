@@ -187,7 +187,10 @@
 			<div id="img_show"><img alt=""/></div>
 		</div>
 	</div>
+	<script type="text/javascript" th:inline="javascript">
 
+
+	</script>
 </footer>
 
 <footer th:fragment="card-list">
@@ -214,18 +217,19 @@
 
 	function getsrc(file){
 		var url = null ;
-		if (window.createObjectURL!=undefined) { // basic
+		if (window.createObjectURL!=undefined) {
 			url = window.createObjectURL(file) ;
-		} else if (window.URL!=undefined) { // mozilla(firefox)
+		} else if (window.URL!=undefined) {
 			url = window.URL.createObjectURL(file) ;
-		} else if (window.webkitURL!=undefined) { // webkit or chrome
+		} else if (window.webkitURL!=undefined) {
 			url = window.webkitURL.createObjectURL(file) ;
 		}
 		return url ;
 	}
 	</script>
 </footer>
-	<footer  th:fragment="box">
+
+<footer  th:fragment="box">
 		<script type="text/javascript" th:inline="javascript">
 			const Box = {
 				instance: function (button,input, box) {
@@ -244,16 +248,16 @@
 					}
 					result.showImg = function () {
 						result.box.on("click", "img", function () {
-							$("#img_show").find("img").attr("src", $(this).attr("src"))
-							$("#ShowImage_Form").modal();
+							showImg($(this).attr("src"))
 						})
 					}
 					result.openInput = function () {
 						result.input.change(function () {
-							const file = $(this)[0].files[0]
-							let src = getsrc(file)
-							result.SrcList.push(src)
-							result.FileList.push(file)
+							let cid = $(this).attr("data-id")
+							let formData = new FormData()
+							fromData_append(formData,"cid", cid)
+							fromData_append(formData,"file", $(this)[0].files[0])
+							let result = postRequest(page,formData)
 							result.showBoxImgs()
 							$(this).val("")
 						})
@@ -285,3 +289,4 @@
 		</script>
 
 	</footer>
+

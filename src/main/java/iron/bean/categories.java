@@ -2,17 +2,17 @@ package iron.bean;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import lombok.Data;
 
+/**
+ * @author wangxiaobo
+ */
 @Entity
 @Data
-public class categories {
+@Table(name = "categories")
+public class Categories {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class categories {
 	private String namee;
 
 	@Transient
-	private List<cimg> imgs;
+	private List<CategoriesImg> imgs;
 
 }

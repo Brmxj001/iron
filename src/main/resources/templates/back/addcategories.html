@@ -111,7 +111,7 @@
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td></td>
+                                                <td><span id = "loadInfo"></span></td>
                                                 <td>
                                                     <button class="btn btn-danger" id="cSubmit">提交</button>
                                                 </td>
@@ -121,11 +121,9 @@
 
                                         <input class="hidden" type="file" name="file" id="BoxInput"
                                                accept="image/*"/>
-                                        <div th:replace="back/include::box"></div>
-                                        <div th:replace="back/includeURL::addCategoriesUrl"></div>
-                                        <div th:replace="include::postRequest"></div>
-                                        <div th:replace="include::formData"></div>
-                                        <div th:replace="include::public"></div>
+                                        <div th:replace="back/CommonInclude::url"></div>
+                                        <div th:replace="back/CommonInclude::common"></div>
+                                        <div th:replace="back/include::showImgModal"></div>
                                         <script type="text/javascript" th:inline="javascript">
                                             let box = Box.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
                                             box.init()
@@ -138,7 +136,12 @@
                                                 if (formData_isNull(formData)) {
                                                     return alert("不能为空")
                                                 }
-                                                postRequest(addCategoriesUrl(), formData)
+                                                showLoadInfo("#loadInfo")
+                                                if (postRequest(addCategoriesUrl(), formData)){
+                                                    setValNull("#loadInfo")
+                                                    alert("添加成功")
+                                                    location.reload()
+                                                }
                                             })
 
 
@@ -162,8 +165,7 @@
 
         </div>
 
-        <div th:replace="back/include::ironJS" id="ironJS"></div>
-        <div th:replace="back/include::showImgModal" id="showImgModal"></div>
+
 
     </body>
 </html>

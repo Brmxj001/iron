@@ -113,14 +113,14 @@
 											<th>删除</th>
 										</thead>
 										<tbody>
-											<th:block th:each="c:${page.content}">
-												<tr class="demo5" th:attr="data-id=${c.id}">
-													<td>[[${c.id}]]</td>
-													<td><img width="20px" alt=""
-														th:src="${qiniu}+${c.cover}" /></td>
-													<td><span>[[${c.name}]]</span></td>
-													<td><span>¥[[${c.prize}]]</span></td>
-													<td><span th:attr="data-id=${c.id}" class="material-icons product-delete iron-red">delete</span></td>
+											<th:block th:each="p:${page.content}">
+												<tr class="demo5" th:attr="data-id=${p.id}">
+													<td>[[${p.id}]]</td>
+													<td><img width="20px" th:src="${qiniu}+${p.cover}" alt=""
+														 /></td>
+													<td><span>[[${p.name}]]</span></td>
+													<td><span>¥[[${p.prize}]]</span></td>
+													<td><span th:attr="data-id=${p.id}" class="material-icons product-delete iron-red">delete</span></td>
 												</tr>
 											</th:block>
 										</tbody>
@@ -132,14 +132,13 @@
 											</a></li>
 										</th:block>
 									</ul>
+									<div th:replace="back/CommonInclude::common"></div>
+									<div th:replace="back/CommonInclude::url"></div>
 									<script type="text/javascript" th:inline="javascript">
 										$(".product-delete").click(function(e){
 											if(confirm("是否要删除")){
-												var page = [[${url}]] + "/back/product/delete"
-												var id = $(this).attr("data-id")
-												$.post(page,{"id":id},function(){
-													location.reload();
-												})
+												postRequest(deleteProductUrl(),getFormData("id",$(this).attr("data-id")))
+												location.reload()
 											}
 											e.stopPropagation()
 										})

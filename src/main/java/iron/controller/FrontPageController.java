@@ -1,8 +1,8 @@
 package iron.controller;
 
 import iron.bean.contact;
-import iron.bean.img;
-import iron.bean.product;
+import iron.bean.ProductImg;
+import iron.bean.Product;
 import iron.dao.*;
 import iron.service.impl.IronUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class FrontPageController {
     @Autowired
     ProductDAO ProductDAO;
     @Autowired
-    ImgDAO ImgDAO;
+    ProductImgDAO ProductImgDAO;
     @Autowired
     ContactDAO ContactDAO;
     @Autowired
@@ -51,7 +51,7 @@ public class FrontPageController {
 
     @GetMapping("/front/index")
     public String toFrontIndex(Model m) {
-        List<product> products = ProductDAO.findAll(Sort.by(Sort.Direction.DESC, "callon"));
+        List<Product> products = ProductDAO.findAll(Sort.by(Sort.Direction.DESC, "callon"));
         ironUtil.doSetHome(m);
         m.addAttribute("products", products);
         m.addAttribute("carousel", homeImgDAO.findAll());
@@ -64,7 +64,7 @@ public class FrontPageController {
                                  @RequestParam(value = "size", defaultValue = "9") Integer size) {
         Pageable pageable = PageRequest.of(start, size);
 
-        Page<product> page = ProductDAO.findAll(pageable);
+        Page<Product> page = ProductDAO.findAll(pageable);
         m.addAttribute("page", page);
         m.addAttribute("cid", 0);
         m.addAttribute("name", 0);
@@ -77,13 +77,13 @@ public class FrontPageController {
     public String toFrontProduct(Integer cid, Model m, @RequestParam(value = "start", defaultValue = "0") Integer start,
                                  @RequestParam(value = "size", defaultValue = "9") Integer size) {
         Pageable pageable = PageRequest.of(start, size);
-        Specification<product> specification = (Root<product> root, CriteriaQuery<?> query,
+        Specification<Product> specification = (Root<Product> root, CriteriaQuery<?> query,
                                                 CriteriaBuilder criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             list.add(criteriaBuilder.equal(root.get("cid"), cid));
             return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
         };
-        Page<product> page = ProductDAO.findAll(specification, pageable);
+        Page<Product> page = ProductDAO.findAll(specification, pageable);
         m.addAttribute("page", page);
         m.addAttribute("cid", cid);
         m.addAttribute("name", 0);
@@ -96,13 +96,13 @@ public class FrontPageController {
     public String toFrontProduct(String name, Model m, @RequestParam(value = "start", defaultValue = "0") Integer start,
                                  @RequestParam(value = "size", defaultValue = "9") Integer size) {
         Pageable pageable = PageRequest.of(start, size);
-        Specification<product> specification = (Root<product> root, CriteriaQuery<?> query,
+        Specification<Product> specification = (Root<Product> root, CriteriaQuery<?> query,
                                                 CriteriaBuilder criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             list.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
             return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
         };
-        Page<product> page = ProductDAO.findAll(specification, pageable);
+        Page<Product> page = ProductDAO.findAll(specification, pageable);
         m.addAttribute("page", page);
         m.addAttribute("name", name);
         m.addAttribute("cid", 0);
@@ -137,11 +137,11 @@ public class FrontPageController {
 
     @GetMapping("/front/prodetail")
     public String toFrontParietal(@RequestParam(value = "pid") Integer pid, Model m) {
-        product product = ProductDAO.findById(pid).get();
-        int callon = product.getCallon() + 1;
-        product.setCallon(callon);
+        Product product = ProductDAO.findById(pid).get();
+        int callon = product.getAccess_total() + 1;
+        product.setAccess_total(callon);
         ProductDAO.save(product);
-        List<img> imgs = ImgDAO.findByPid(pid);
+        List<ProductImg> imgs = ProductImgDAO.findByPid(pid);
         product.setImgs(imgs);
         List<contact> contacts = ContactDAO.findAll();
         product.setContacts(contacts);
