@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import iron.bean.ProductImg;
 
+/**
+ * @author wangxiaobo
+ */
 public interface ProductImgDAO extends JpaRepository<ProductImg, Integer> {
-	public List<ProductImg> findByPid(Integer pid);
+	List<ProductImg> findByPid(Integer pid);
 }

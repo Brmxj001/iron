@@ -158,8 +158,8 @@
 
 						<div class="pro-smallimg-con">
 							<img class="pro-smallimg pro-smallingg" th:src="${qiniu}+${product.cover}" alt="" />
-							<img th:each="img:${product.imgs}" class="pro-smallimg"
-								th:src="${qiniu}+${img.path}" alt="没有" />
+							<img th:each="img:${product.getImgList}" class="pro-smallimg"
+                                 th:src="${qiniu}+${img.path}" alt="没有" />
 
 						</div>
 					</div>

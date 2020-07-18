@@ -2,6 +2,8 @@ package iron.controller;
 
 import iron.bean.Categories;
 import iron.bean.CategoriesImg;
+import iron.service.CategoriesImgService;
+import iron.service.impl.CategoriesImgServiceImpl;
 import iron.service.impl.CategoriesServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class CategoriesController {
 
     @Autowired
     CategoriesServiceImpl CategoriesServiceImpl;
+    @Autowired
+    CategoriesImgServiceImpl categoriesImgService;
 
     @PostMapping("/back/getCategories")
     public Categories get(@RequestParam(name = "id") Integer id) {
@@ -30,13 +34,13 @@ public class CategoriesController {
 
     @PostMapping("/back/addCategories")
     public void add(Categories c, MultipartFile[] files) throws IOException {
-        Integer cid = CategoriesServiceImpl.save(c).getId();
-        CategoriesServiceImpl.addCategoriesImg(files, cid);
+        Integer cid = CategoriesServiceImpl.add(c).getId();
+        categoriesImgService.add(files, cid);
     }
 
     @PostMapping("back/editCategories")
     public void edit(Categories c) {
-        CategoriesServiceImpl.save(c);
+        CategoriesServiceImpl.add(c);
     }
 
     @PostMapping("/back/deleteCategories")
@@ -44,20 +48,5 @@ public class CategoriesController {
         CategoriesServiceImpl.deleteCategories(id);
     }
 
-    @PostMapping("/back/getCategoriesImgUrl")
-    public List<CategoriesImg> getCategoriesImg(Integer cid) {
-        return CategoriesServiceImpl.getAllCategoriesImg(cid);
-    }
 
-    @PostMapping("/back/deleteCategoriesImgUrl")
-    public void deleteCategoriesImg(Integer id) {
-        CategoriesServiceImpl.deleteCategoriesImg(id);
-    }
-
-    @PostMapping("/back/addCategoriesImgUrl")
-    public void addCategoriesImg(Integer cid, MultipartFile file) throws IOException {
-        if (null != file) {
-            CategoriesServiceImpl.addCategoriesImg(file, cid);
-        }
-    }
 }

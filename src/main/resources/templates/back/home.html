@@ -28,8 +28,8 @@
         <link th:href="@{/plugins/font-awesome/css/all.min.css}"
               href="../../assets/plugins/font-awesome/css/all.min.css"
               rel="stylesheet">
-        <link href="../static/css/iron.css" rel="stylesheet"
-              th:href="@{/iron/css/iron.css}">
+        <link th:href="@{/iron/css/iron.css}">
+        <link th:href="@{/iron/css/box.css}">
         <link th:href="@{/iron/css/categories.css}" rel="stylesheet">
         <!-- Theme Styles -->
         <link th:href="@{/css/connect.min.css}"
@@ -134,7 +134,7 @@
                                                 </td>
                                                 <td width="60%">
                                                     <img width="100%" th:id="${share.id}"
-                                                         th:src="${qiniu}+${share.content}"/>
+                                                         th:src="${qiniu}+${share.content}"/></td>
 
                                                 <td><span class="ironHover shareimg">更改</span>
                                                     <span style="color: red" class="loadMSG"></span>
@@ -148,6 +148,7 @@
                                                 <td width="60%">
                                                     <img width="100%" th:id="${top.id}"
                                                          th:src="${qiniu}+${top.content}"/>
+                                                </td>
 
                                                 <td><span class="ironHover topimg">更改</span>
                                                     <span style="color: red" class="loadMSG"></span>
@@ -156,7 +157,7 @@
                                             </tr>
                                             <tr>
                                                 <td>首页轮播图</td>
-                                                <td>
+                                                <td width="60%">
                                                     <div id="ImgBox"></div>
                                                 </td>
                                                 <td>

@@ -14,6 +14,9 @@ import lombok.Data;
 @Table(name = "product")
 public class Product {
 
+    public Product() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -40,7 +43,7 @@ public class Product {
     private Integer access_total;
 
     @Transient
-    private List<ProductImg> imgs;
+    private List<ProductImg> imgList;
 
     @Transient
     private List<contact> contacts;

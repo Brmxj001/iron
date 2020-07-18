@@ -5,7 +5,7 @@ import iron.bean.feedback;
 import iron.bean.Product;
 import iron.dao.*;
 import iron.service.impl.CategoriesServiceImpl;
-import iron.service.impl.IronUtil;
+import iron.util.IronUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class BackPageController {
     @Autowired
-    CategoriesServiceImpl CategoriesServiceImpl;
+    CategoriesServiceImpl categoriesService;
     @Autowired
     CategoriesDAO CategoriesDAO;
     @Autowired
@@ -37,15 +37,15 @@ public class BackPageController {
 
     @GetMapping("/back/index")
     public String toBackIndex() {
-        return "back/index";
+        return "back/products";
     }
 
-    @GetMapping("/back/home")
+    @GetMapping("/back/homePage")
     public String toBackHome(Model m) {
         ironUtil.doSetHome(m);
         return "back/home";
     }
-    @GetMapping("/back/categories")
+    @GetMapping("/back/categoriesPage")
     public String toBackCategories(Model m, @RequestParam(defaultValue = "0", value = "start") Integer start,
                                    @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Pageable pageable = PageRequest.of(start, size, getSort());
@@ -57,7 +57,7 @@ public class BackPageController {
         return "back/categories";
     }
 
-    @GetMapping("/back/products")
+    @GetMapping("/back/productsPage")
     public String toBackProducts(Model m, @RequestParam(defaultValue = "0", value = "start") Integer start,
                                  @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Pageable pageable = PageRequest.of(start, size, getSort());
@@ -67,6 +67,7 @@ public class BackPageController {
         m.addAttribute("next", page.hasNext());
         m.addAttribute("pre", page.hasPrevious());
         m.addAttribute("current", "products");
+        m.addAttribute("categories", categoriesService.getAll());
         return "back/products";
     }
 
@@ -74,7 +75,7 @@ public class BackPageController {
         return Sort.by(Sort.Direction.ASC, "id");
     }
 
-    @GetMapping("/back/products/add")
+    @GetMapping("/back/addProductPage")
     public String toBackProductsAdd(Model m) {
         List<Categories> categories = CategoriesDAO.findAll();
         m.addAttribute("categories", categories);
@@ -82,18 +83,14 @@ public class BackPageController {
         return "back/addProducts";
     }
 
-    @GetMapping("/back/file")
-    public String toBackProduct() {
-        return "back/file";
-    }
 
-    @GetMapping("/back/addcategories")
+    @GetMapping("/back/addCategoriesPage")
     public String toAddCategories(Model m) {
         m.addAttribute("current", "addcategories");
         return "back/addcategories";
     }
 
-    @GetMapping("/back/feedback")
+    @GetMapping("/back/feedbackPage")
     public String toFeedback(Model m, @RequestParam(value = "start", defaultValue = "0") Integer start,
                              @RequestParam(value = "size", defaultValue = "10") Integer size) {
         Pageable pageable = PageRequest.of(start, size, getSort());
@@ -105,7 +102,7 @@ public class BackPageController {
         return "back/feedback";
     }
 
-    @GetMapping("/back/contact")
+    @GetMapping("/back/contactPage")
     public String toBackContact(Model m) {
         m.addAttribute("contactList", ContactDAO.findAll());
         return "back/contact";

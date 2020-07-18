@@ -14,7 +14,20 @@ public interface ProductService<E> {
      * 获取一个Product
      * @return
      */
-    E get();
+    E get(Integer id);
+
+    /**
+     * 获取所有的产品
+     * @return
+     */
+    E getAll();
+
+    /**
+     * 获取分类的所有产品
+     * @param cid
+     * @return
+     */
+    E getAllByCategoriesId(Integer cid);
 
     /**
      * 删除Product

@@ -137,11 +137,11 @@
                                                     return alert("不能为空")
                                                 }
                                                 showLoadInfo("#loadInfo")
-                                                if (postRequest(addCategoriesUrl(), formData)){
+                                                postRequest(addCategoriesUrl(), formData)
                                                     setValNull("#loadInfo")
                                                     alert("添加成功")
                                                     location.reload()
-                                                }
+
                                             })
 
 

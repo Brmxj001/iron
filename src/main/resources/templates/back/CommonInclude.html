@@ -65,27 +65,22 @@
             $(id).html("")
         }
 
-        function getCategoriesImg(cid) {
+        function getFormData(key, value) {
             let formData = new FormData();
-            fromData_append(formData, "cid", cid)
-            return postRequest(getCategoriesImgUrl(), formData)
-        }
-
-        function getFormData(key,value) {
-            let formData = new FormData();
-            formData.append(key,value)
+            formData.append(key, value)
             return formData
         }
 
-        function  getInputFile(aInput) {
+        function getInputFile(aInput) {
             return $(aInput)[0].files[0]
         }
 
-        function toClickInput(button,input) {
-            $(button).click(function(){
+        function toClickInput(button, input) {
+            $(button).click(function () {
                 $(input).trigger("click")
             })
         }
+
         const Box = {
             instance: function (button, input, box) {
                 let result = {}
@@ -141,61 +136,108 @@
         }
 
 
+        function initCategoriesBox(aBox) {
+            aBox.openInput = function () {
+                aBox.input.change(function () {
+                    aBox.button.html("上传中")
+                    //上传Categories Img
+                    let addFormData = new FormData()
+                    fromData_append(addFormData, "cid", aBox.id)
+                    fromData_append(addFormData, "file", $(this)[0].files[0])
+                    postRequest(addCategoriesImgUrl(), addFormData)
+
+                    aBox.imgList = postRequest(getCategoriesImgUrl(), getFormData("cid",aBox.id))
+                    aBox.showBoxImgList()
+                    $(this).val("")
+                    aBox.button.html("点击上传")
+                })
+            }
+            aBox.openDeleteImg = function () {
+                aBox.box.on("click", "span", function () {
+                    postRequest(deleteCategoriesImgUrl(), getFormData("id", $(this).attr("id")))
+                    aBox.imgList = postRequest(getCategoriesImgUrl(), getFormData("cid",aBox.id))
+                    aBox.showBoxImgList()
+                })
+            }
+            aBox.openInput()
+            aBox.openDeleteImg()
+        }
+
+        function openBox(aBox, id, imgList) {
+            aBox.id = id
+            aBox.imgList = imgList
+            aBox.showBoxImgList()
+        }
+
+        function setButtonInfo(aRef){
+            window.setTimeout(set,2000)
+            function set(){
+                aRef.button.html("点击上传")
+            }
+        }
+
+        function initProductBox(aBox) {
+            aBox.openInput = function () {
+                aBox.input.change(function () {
+                    aBox.button.html("上传中")
+                    //上传Categories Img
+                    let addFormData = new FormData()
+                    fromData_append(addFormData, "pid", aBox.id)
+                    fromData_append(addFormData, "file", $(this)[0].files[0])
+                    postRequest(addProductImgUrl(), addFormData)
+
+                    aBox.imgList = postRequest(getProductImgUrl(),getFormData("pid",aBox.id))
+                    aBox.showBoxImgList()
+                    $(this).val("")
+
+                    setButtonInfo(aBox)
+                })
+            }
+            aBox.openDeleteImg = function () {
+                aBox.box.on("click", "span", function () {
+                    postRequest(deleteProductImgUrl(), getFormData("id", $(this).attr("id")))
+                    aBox.imgList = postRequest(getProductImgUrl(),getFormData("pid",aBox.id))
+                    aBox.showBoxImgList()
+                })
+            }
+            aBox.openInput()
+            aBox.openDeleteImg()
+        }
+
         const BoxPlus = {
             instance: function (button, input, box) {
                 let result = {}
-                result.SrcList = []
+                result.imgList = []
                 result.box = box
                 result.input = input
                 result.button = button
-                result.test= function(){
-                    console.log(result.cid)
+                result.id = null
+                result.test = function () {
+                    console.log(result.id)
                 }
-                result.showBoxImgs = function () {
+                result.showBoxImgList = function () {
                     result.box.html("")
-                    for (let i = 0; i < result.SrcList.length; i++) {
+                    for (let i = 0; i < result.imgList.length; i++) {
                         let oldBox = result.box.html();
-                        result.box.html(oldBox + '<div><img src="' + [[${qiniu}]] + result.SrcList[i].path + '" alt=""/><span  id="' + result.SrcList[i].id + '">+</span></div>');
+                        result.box.html(oldBox + '<div><img src="' + [[${qiniu}]] + result.imgList[i].path + '" alt=""/><span  id="' + result.imgList[i].id + '">+</span></div>');
                     }
                 }
-                result.openInput = function () {
-                    result.input.change(function () {
-                        //上传Categories Img
-                        let addFormData = new FormData()
-                        fromData_append(addFormData, "cid", result.cid)
-                        fromData_append(addFormData, "file", $(this)[0].files[0])
-                        postRequest(addCategoriesImgUrl(), addFormData)
 
-                        result.SrcList = getCategoriesImg(result.cid)
-                        result.showBoxImgs()
-                        $(this).val("")
-                    })
-
-                }
                 result.openButton = function () {
                     result.button.click(function () {
                         result.input.trigger("click")
                     })
                 }
-                result.openDeleteImg = function () {
-                    result.box.on("click", "span", function () {
-                        postRequest(deleteCategoriesImgUrl(), getFormData("id",$(this).attr("id")))
-                        result.SrcList = getCategoriesImg(result.cid)
-                        result.showBoxImgs()
-                    })
-                }
+
                 result.showImg = function () {
                     result.box.on("click", "img", function () {
                         showImg($(this).attr("src"))
                     })
                 }
-                result.init = function () {
-                    result.openButton()
-                    result.openInput()
-                    result.openDeleteImg()
-                    result.showImg()
-                    result.showBoxImgs()
-                }
+
+
+                result.openButton()
+                result.showImg()
                 return result
             }
         }
@@ -218,7 +260,7 @@
             return [[${url}]] + "/back/deleteCategories";
         }
 
-        function getCategoriesUrl(){
+        function getCategoriesUrl() {
             return [[${url}]] + "/back/getCategories"
         }
 
@@ -236,16 +278,37 @@
         }
 
         //Product
-        function addProductUrl(){
+        function addProductUrl() {
             return [[${url}]] + "/back/addProducts";
         }
 
-        function deleteProductUrl(){
+        function deleteProductUrl() {
             return [[${url}]] + "/back/deleteProduct"
         }
+
+        function getProductUrl() {
+            return [[${url}]] + "/back/getProduct"
+        }
+
+        function editProductUrl(){
+            return [[${url}]] + "/back/editProduct"
+        }
+
+        function addProductCoverUrl(){
+            return [[${url}]] + "/back/addProductCover"
+        }
+
         //Product Img
-        function addProductImgUrl(){
+        function addProductImgUrl() {
             return [[${url}]] + "/back/addProductImg"
+        }
+
+        function getProductImgUrl(){
+            return [[${url}]] + "/back/getProductImg"
+        }
+
+        function deleteProductImgUrl(){
+            return [[${url}]] + "/back/deleteProductImg"
         }
 
     </script>

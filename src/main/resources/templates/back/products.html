@@ -1,511 +1,349 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Responsive Admin Dashboard Template">
-<meta name="keywords" content="admin,dashboard">
-<meta name="author" content="stacks">
-<!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Admin Dashboard Template">
+    <meta name="keywords" content="admin,dashboard">
+    <meta name="author" content="stacks">
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-<!-- Title -->
-<title>Iron Back Product</title>
+    <!-- Title -->
+    <title>Iron Back Product</title>
 
-<!-- Styles -->
-<link
-	href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-	rel="stylesheet">
-<link th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"
-	href="../../assets/plugins/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link th:href="@{/plugins/font-awesome/css/all.min.css}"
-	href="../../assets/plugins/font-awesome/css/all.min.css"
-	rel="stylesheet">
-<link href="../static/css/iron.css" rel="stylesheet"
-	th:href="@{/iron/css/iron.css}">
+    <!-- Styles -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+    <link th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"
+          href="../../assets/plugins/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link th:href="@{/plugins/font-awesome/css/all.min.css}"
+          href="../../assets/plugins/font-awesome/css/all.min.css"
+          rel="stylesheet">
+    <link href="../static/css/iron.css" rel="stylesheet"
+          th:href="@{/iron/css/iron.css}">
+    <link href="../static/css/box.css" rel="stylesheet"
+          th:href="@{/iron/css/box.css}">
 
-<!-- Theme Styles -->
-<link th:href="@{/css/connect.min.css}"
-	href="../../assets/css/connect.min.css" rel="stylesheet">
-<link th:href="@{/css/admin4.css}" href="../../assets/css/admin4.css"
-	rel="stylesheet">
-<link th:href="@{/css/dark_theme.css}"
-	href="../../assets/css/dark_theme.css" rel="stylesheet">
-<link th:href="@{/css/custom.css}" href="../../assets/css/custom.css"
-	rel="stylesheet">
-<link th:href="@{/iron/css/categories.css}" rel="stylesheet">
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-<link th:href="@{/fileinput/fileinput.css}" rel="stylesheet" />
-<script th:src="@{/fileinput/fileinput.js}"></script>
-<script th:src="@{/fileinput/zh.js}"></script>
-<script th:src="@{/plugins/jquery/jquery-3.4.1.min.js}"
-	src="../../assets/plugins/jquery/jquery-3.4.1.min.js"></script>
-<script th:src="@{/plugins/bootstrap/popper.min.js}"
-	src="../../assets/plugins/bootstrap/popper.min.js"></script>
-<script th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"
-	src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script th:src="@{/plugins/jquery-slimscroll/jquery.slimscroll.min.js}"
-	src="../../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.min.js}"
-	src="../../assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
-<script th:src="@{/plugins/apexcharts/dist/apexcharts.min.js}"
-	src="../../assets/plugins/apexcharts/dist/apexcharts.min.js"></script>
-<script th:src="@{/plugins/blockui/jquery.blockUI.js}"
-	src="../../assets/plugins/blockui/jquery.blockUI.js"></script>
-<script th:src="@{/plugins/flot/jquery.flot.min.js}"
-	src="../../assets/plugins/flot/jquery.flot.min.js"></script>
-<script th:src="@{/plugins/flot/jquery.flot.time.min.js}"
-	src="../../assets/plugins/flot/jquery.flot.time.min.js"></script>
-<script th:src="@{/plugins/flot/jquery.flot.symbol.min.js}"
-	src="../../assets/plugins/flot/jquery.flot.symbol.min.js"></script>
-<script th:src="@{/plugins/flot/jquery.flot.resize.min.js}"
-	src="../../assets/plugins/flot/jquery.flot.resize.min.js"></script>
-<script th:src="@{/plugins/flot/jquery.flot.tooltip.min.js}"
-	src="../../assets/plugins/flot/jquery.flot.tooltip.min.js"></script>
-<script th:src="@{/js/connect.min.js}"
-	src="../../assets/js/connect.min.js"></script>
-<script th:src="@{/js/pages/dashboard.js}"
-	src="../../assets/js/pages/dashboard.js"></script>
-<script src="../../assets/js/pages/mailbox.js"
-	th:src="@{/js/pages/mailbox.js}"></script>
+    <!-- Theme Styles -->
+    <link th:href="@{/css/connect.min.css}"
+          href="../../assets/css/connect.min.css" rel="stylesheet">
+    <link th:href="@{/css/admin4.css}" href="../../assets/css/admin4.css"
+          rel="stylesheet">
+    <link th:href="@{/css/dark_theme.css}"
+          href="../../assets/css/dark_theme.css" rel="stylesheet">
+    <link th:href="@{/css/custom.css}" href="../../assets/css/custom.css"
+          rel="stylesheet">
+    <link th:href="@{/iron/css/categories.css}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link th:href="@{/fileinput/fileinput.css}" rel="stylesheet"/>
+    <script th:src="@{/fileinput/fileinput.js}"></script>
+    <script th:src="@{/fileinput/zh.js}"></script>
+    <script th:src="@{/plugins/jquery/jquery-3.4.1.min.js}"
+            src="../../assets/plugins/jquery/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/plugins/bootstrap/popper.min.js}"
+            src="../../assets/plugins/bootstrap/popper.min.js"></script>
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"
+            src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/plugins/jquery-slimscroll/jquery.slimscroll.min.js}"
+            src="../../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.min.js}"
+            src="../../assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script th:src="@{/plugins/apexcharts/dist/apexcharts.min.js}"
+            src="../../assets/plugins/apexcharts/dist/apexcharts.min.js"></script>
+    <script th:src="@{/plugins/blockui/jquery.blockUI.js}"
+            src="../../assets/plugins/blockui/jquery.blockUI.js"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.min.js}"
+            src="../../assets/plugins/flot/jquery.flot.min.js"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.time.min.js}"
+            src="../../assets/plugins/flot/jquery.flot.time.min.js"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.symbol.min.js}"
+            src="../../assets/plugins/flot/jquery.flot.symbol.min.js"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.resize.min.js}"
+            src="../../assets/plugins/flot/jquery.flot.resize.min.js"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.tooltip.min.js}"
+            src="../../assets/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script th:src="@{/js/connect.min.js}"
+            src="../../assets/js/connect.min.js"></script>
+    <script th:src="@{/js/pages/dashboard.js}"
+            src="../../assets/js/pages/dashboard.js"></script>
+    <script src="../../assets/js/pages/mailbox.js"
+            th:src="@{/js/pages/mailbox.js}"></script>
 
 </head>
 <body>
 
-	<div th:replace="back/include::modal" id="modal"></div>
-	<div class='loader'>
-		<div class='spinner-grow text-primary' role='status'>
-			<span class='sr-only'>Loading...</span>
-		</div>
-	</div>
-	<div class="connect-container align-content-stretch d-flex flex-wrap">
-		<div th:replace="back/include::left" id="left"></div>
-		<div class="page-container">
-			<div class="page-content">
+<div th:replace="back/include::modal" id="modal"></div>
+<div class='loader'>
+    <div class='spinner-grow text-primary' role='status'>
+        <span class='sr-only'>Loading...</span>
+    </div>
+</div>
+<div class="connect-container align-content-stretch d-flex flex-wrap">
+    <div th:replace="back/include::left" id="left"></div>
+    <div class="page-container">
+        <div class="page-content">
 
-				<div class="main-wrapper">
-					<div class="row">
-						<div class="col-lg-3">
-							<div th:replace="back/include::card-list" id="card-list"></div>
-						</div>
-						<div class="col-lg-9">
-							<div class="card">
-								<div class="card-body">
+            <div class="main-wrapper">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div th:replace="back/include::card-list" id="card-list"></div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="card">
+                            <div class="card-body">
 
-									<table class="table table table-hover">
-										<thead class="success">
-											<th>ID</th>
-											<th>头像</th>
-											<th>名字</th>
-											<th>价格</th>
-											<th>删除</th>
-										</thead>
-										<tbody>
-											<th:block th:each="p:${page.content}">
-												<tr class="demo5" th:attr="data-id=${p.id}">
-													<td>[[${p.id}]]</td>
-													<td><img width="20px" th:src="${qiniu}+${p.cover}" alt=""
-														 /></td>
-													<td><span>[[${p.name}]]</span></td>
-													<td><span>¥[[${p.prize}]]</span></td>
-													<td><span th:attr="data-id=${p.id}" class="material-icons product-delete iron-red">delete</span></td>
-												</tr>
-											</th:block>
-										</tbody>
-									</table>
-									<ul class="inbox-list list-unstyled iron-hidden">
-										<th:block th:each="c:${page.content}">
-											<li><a class="ProductsEdit" th:attr="data-id=${c.id}"
-												href="javascript: void(0);"> <span></span>
-											</a></li>
-										</th:block>
-									</ul>
-									<div th:replace="back/CommonInclude::common"></div>
-									<div th:replace="back/CommonInclude::url"></div>
-									<script type="text/javascript" th:inline="javascript">
-										$(".product-delete").click(function(e){
-											if(confirm("是否要删除")){
-												postRequest(deleteProductUrl(),getFormData("id",$(this).attr("data-id")))
-												location.reload()
-											}
-											e.stopPropagation()
-										})
-										$(".demo5").click(function(){
-											var id = $(this).attr("data-id");
-											var demo = ".ProductsEdit[data-id="+id+"]"
-											$(demo).find("span").trigger("click")
-											
-										})
-										function showimg(pid){
-											var imgBox = ".content-img-list";
-											var imgpage = [[${url}]] + "/back/products/look/img"
-											var qiniu = [[${qiniu}]]
-											$.post(imgpage,{"pid":pid},function(res){
-												$(imgBox).html("")
-												$.each(res,function(){
-													var oldBox = $(imgBox).html();
-													$(imgBox).html(oldBox + '<div class="demo"><img class="products-img-show" src="'+qiniu+this.path+'" alt=""><div id="'+this.id+'" class="iron-hidden delete-div"><a>删除</a></div></div>');
-												})
-											})
-										}
-										$("#categories-top").click(function(event){
-											event.stopPropagation()
-										})
-										$(".ProductsEdit").click(function() {
-											var page = [[${url}]] + "/back/products/look"
-											var id = $(this).attr("data-id")
-											$.post(page, {
-												"id" : id
-											}, function(res) {
-												window.products = res
-												$("#products-model").val(res.model)
-												$("#products-modele").val(res.modele)
-												$("#products-name").val(res.name)
-												$("#products-namee").val(res.namee)
-												$("#products-simple").val(res.simple)
-												$("#products-simplee").val(res.simplee)
-												$("#products-introduction").val(res.introduction)
-												$("#products-introductione").val(res.introductione)
-												$("#products-prize").val(res.prize)
-												$("#products-prizee").val(res.prizee)
-												$("#products-id").html(res.id)
-												$("#products-cid").val(res.cid)
-												$("#ProductCover").attr("src",[[${qiniu}]]+res.cover)
-												var place = $(".iron-place")
-												var placee = $(".iron-placee")
-												place.html(res.introduction)
-												placee.html(res.simple)
-												var placeh = place.height()
-												var placeeh = placee.height()
-												place.height(placeh+30)
-												placee.height(placeeh+30)
-											}
-											)
-											var imgpage = [[${url}]] + "/back/products/look/img"
-											var imgBox = ".content-img-list";
-											$(imgBox).html("");
-											var qiniu = [[${qiniu}]]
-											$.post(imgpage,{"pid":id},function(res){
-												$.each(res,function(){
-													var oldBox = $(imgBox).html();
-													$(imgBox).html(oldBox + '<div class="demo"><img class="products-img-show" src="'+qiniu+this.path+'" alt=""><div id="'+this.id+'" class="iron-hidden delete-div"><a>删除</a></div></div>');
-												})
-											})
-											
-											
-											
-											
-											$(".content-img-list").on("mousemove",".demo",function(){
-												$(this).find(".delete-div").removeClass("iron-hidden")
-											})
-											$(".content-img-list").on("mouseout",".demo",function(){
-												$(this).find(".delete-div").addClass("iron-hidden")
-											})
-											$(".content-img-list").on("click","img",function(){
-												console.log("a")
-												var source = $(this).attr("src")
-												  $("#ShowImage_Form").find("#img_show").html("<image src='"+source+"' class='carousel-inner img-responsive img-rounded' />");
-											         $("#ShowImage_Form").modal();
-												
-											})
-											$(".content-img-list").on("click",".delete-div",function(){
-												var page = [[${url}]] + "/back/products/delete/img"
-												var iid = $(this).attr("id")
-												$.post(page,{"iid":iid},function(res){
-													console.log("服务器成功")
-													var pid = $("#products-id").html()
-													showimg(pid);
-												})
-											})
-											
-										})
-										
-									</script>
-									<div class="inbox-pagination">
-										<nav aria-label="">
-											<ul class="pagination">
-												<li><a th:href="@{/back/product(start=${0})}">[首页]</a></li>
-												<li id="pre" th:class="${pre}? active : dislink"><a
-													th:href="@{/back/product(start=${page.Number-1})}">[上一页]</a></li>
-												<li id="next" th:class="${next}? active : dislink"><a
-													th:href="@{/back/product(start=${page.Number+1})}">[下一页]</a></li>
-												<li><a
-													th:href="@{/back/product(start=${page.TotalPages-1})}">[末页]</a></li>
-											</ul>
-										</nav>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="page-footer">
-				<div class="row">
-					<div class="col-md-12">
-						<span class="footer-text">2020 <a href="/iron/front/index">iron</a></span>
-					</div>
-				</div>
-			</div>
-		</div>
+                                <table class="table table table-hover">
+                                    <thead class="success">
+                                    <th>ID</th>
+                                    <th>头像</th>
+                                    <th>名字</th>
+                                    <th>价格</th>
+                                    <th>删除</th>
+                                    </thead>
+                                    <tbody>
+                                    <th:block th:each="p:${page.content}">
+                                        <tr class="toClickEdit" th:attr="data-id=${p.id}">
+                                            <td>[[${p.id}]]</td>
+                                            <td><img width="20px" th:src="${qiniu}+${p.cover}" alt=""
+                                            /></td>
+                                            <td><span>[[${p.name}]]</span></td>
+                                            <td><span>¥[[${p.prize}]]</span></td>
+                                            <td><span th:attr="data-id=${p.id}"
+                                                      class="material-icons delete iron-red">delete</span></td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                                <ul class="inbox-list list-unstyled iron-hidden">
+                                    <th:block th:each="c:${page.content}">
+                                        <li><a class="clickEdit" th:attr="data-id=${c.id}"
+                                               href="javascript: void(0);"> <span></span>
+                                        </a></li>
+                                    </th:block>
+                                </ul>
+                                <div th:replace="back/CommonInclude::common"></div>
+                                <div th:replace="back/CommonInclude::url"></div>
+                                <script type="text/javascript" th:inline="javascript">
+                                    $(".delete").click(function (e) {
+                                        if (confirm("是否要删除")) {
+                                            postRequest(deleteProductUrl(), getFormData("id", $(this).attr("data-id")))
+                                            location.reload()
+                                        }
+                                        e.stopPropagation()
+                                    })
+                                    $(".toClickEdit").click(function () {
+                                        let demo = ".clickEdit[data-id=" + $(this).attr("data-id") + "]"
+                                        $(demo).find("span").trigger("click")
+                                    })
 
-		<div class="mailbox-item">
-			<div class="mail-container">
-				<div class="mail-header">
-					<div class="mail-title">
-						产品编辑<span class="badge info iron-hidden" id="products-id"></span><span>(修改生效)</span>
-					</div>
-				</div>
+                                    $("#categories-top").click(function (event) {
+                                        event.stopPropagation()
+                                    })
+
+                                    $(function () {
+                                        let box = BoxPlus.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
+                                        initProductBox(box)
+                                        openEditPage()
+
+                                        function openEditPage() {
+                                            $(".clickEdit").click(function () {
+                                                let result = postRequest(getProductUrl(), getFormData("id", $(this).attr("data-id")))
+                                                $("#model").val(result.model)
+                                                $("#model_en").val(result.model_en)
+                                                $("#name").val(result.name)
+                                                $("#name_en").val(result.name_en)
+                                                $("#simple_intro").val(result.simple_intro)
+                                                $("#simple_intro_en").val(result.simple_intro_en)
+                                                $("#intro").val(result.intro)
+                                                $("#intro_en").val(result.intro_en)
+                                                $("#prize").val(result.prize)
+                                                $("#prizee").val(result.prizee)
+                                                $("#products-id").html(result.id)
+                                                $("#products-cid").val(result.cid)
+                                                $("#cover").attr("src", [[${qiniu}]] + result.cover)
+                                                window.product = result
+                                                openBox(box, result.id, result.imgList)
+                                                let categories = "#categories option[data-id=" + result.cid + "]"
+                                                $(categories).attr("selected", true)
+                                            })
+                                        }
+                                    })
 
 
-				<!-- demo -->
-				<div class="mail-author-info">
-					<span class="mail-author-name">产品名称:</span>
+                                </script>
+                                <div class="inbox-pagination">
+                                    <nav aria-label="">
+                                        <ul class="pagination">
+                                            <li><a th:href="@{/back/product(start=${0})}">[首页]</a></li>
+                                            <li id="pre" th:class="${pre}? active : dislink"><a
+                                                    th:href="@{/back/product(start=${page.Number-1})}">[上一页]</a></li>
+                                            <li id="next" th:class="${next}? active : dislink"><a
+                                                    th:href="@{/back/product(start=${page.Number+1})}">[下一页]</a></li>
+                                            <li><a
+                                                    th:href="@{/back/product(start=${page.TotalPages-1})}">[末页]</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="footer-text">2020 <a href="/iron/front/index">iron</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				</div>
-
-
-				<input type="text" class="form-control solelyEdit"
-					id="products-name" value="">
-				<div class="mail-author-info">
-					<span class="mail-author-name">产品名称(English):</span>
-				</div>
-				<input type="text" class="form-control solelyEdit"
-					   id="products-namee" value="">
-				<div class="mail-info">
-					<span class="mail-author-name">简单描述</span>
-				</div>
-				<div class="products-introduction-div">
-					<span class="iron-placee">1</span>
-					<textarea class="form-control solelyEdit products-simple" id="products-simple"></textarea>
-				</div>
-
-				<div class="mail-info">
-					<span class="mail-author-name">简单描述(English)</span>
-				</div>
-				<div class="products-introduction-div">
-					<span class="iron-placee">1</span>
-					<textarea class="form-control solelyEdit products-simplee" id="products-simplee"></textarea>
-				</div>
-
-
-
-				<div class="mail-author-info">
-					<span class="mail-author-name" id="alterCover">封面(点击修改)</span> <input
-						class="iron-hidden" type="file" id="alterCoverInput"
-						accept="image/*" />
-				</div>
-				<div class="EditCover">
-					<img alt="" id="ProductCover" />
-				</div>
+    <div class="mailbox-item">
+        <div class="mail-container">
+            <div class="mail-header">
+                <div class="mail-title">
+                    产品编辑<span class="badge info iron-hidden" id="products-id"></span><span>(修改生效)</span>
+                </div>
+            </div>
 
 
-				<div class="mail-info">
-					<span class="mail-author-name">描述</span>
-				</div>
-				<div class="products-introduction-div">
-					<span class="iron-place">1</span>
-					<textarea class="form-control solelyEdit products-introduction"
-						id="products-introduction"></textarea>
-				</div>
-				<div class="mail-info">
-					<span class="mail-author-name">描述(English)</span>
-				</div>
-				<div class="products-introduction-div">
-					<span class="iron-place">1</span>
-					<textarea class="form-control solelyEdit products-introduction"
-							  id="products-introductione"></textarea>
-				</div>
+            <!-- demo -->
+            <span class="mail-author-name">产品名称:</span>
 
-				<div class="mail-info">
-					<span class="mail-author-name">价格</span>
-				</div>
-				<input type="text" class="form-control solelyEdit"
-					id="products-prize" value="">
-				<div class="mail-info">
-					<span class="mail-author-name">价格(美元)</span>
-				</div>
-				<input type="text" class="form-control solelyEdit"
-					   id="products-prizee" value="">
-				<div class="mail-info">
-					<span class="mail-author-name">型号</span>
-				</div>
-				<input type="text" class="form-control solelyEdit"
-					id="products-model" value="">
-				<div class="mail-info">
-					<span class="mail-author-name">型号(English)</span>
-				</div>
-				<input type="text" class="form-control solelyEdit"
-					id="products-modele" value="">
-				<div class="mail-info">
-					<span class="mail-author-name">分类</span>
-				</div>
-				<input type="text" class="form-control" id="products-cid" value="">
-				<div class="mail-info">
-					<div class="mail-author">
-						<div class="mail-author-info">
-							<span class="mail-author-name">照片</span><span style="color: red" class="uploadingInfo iron-hidden">(正在上传)</span>
-						</div>
-					</div>
+            <input type="text" class="form-control "
+                   id="name" value="">
 
-				</div>
-				<div class="content-img">
-					<ul class="content-img-list"></ul>
-					<img alt="" id="add-img" class="add-img"
-						th:src="@{/images/add.png}">
-				</div>
+            <span class="mail-author-name">产品名称(English):</span>
+            <input type="text" class="form-control "
+                   id="name_en" value="">
 
-				<input class="iron-hidden" type="file" value="修改照片" name="file"
-					id="product-addimg-input" accept="image/*" /> <br> <span
-					class="hidden" id="categories-id"></span>
-				<script type="text/javascript" th:inline="javascript">
-					$(".solelyEdit").blur(function(){
-						var id = window.products.id
-						var type = $(this).attr("id").split("-")[1]
-						var page = [[${url}]]+"/back/products/solelyEdit"
-						console.log(type)
-						if(type == "name"){
-							var name = $("#products-name").val()
-							$.post(page,{"id":id,"name":name})
-						}else if(type == "namee"){
-							var name = $("#products-namee").val()
-							$.post(page,{"id":id,"namee":name})
-						}else if(type == "model"){
-							var model = $("#products-model").val()
-							$.post(page,{"id":id,"model":model})
-						}else if(type == "modele"){
-							var model = $("#products-modele").val()
-							$.post(page,{"id":id,"modele":model})
-						}else if(type == "prize"){
-							var prize = $("#products-prize").val()
-							$.post(page,{"id":id,"prize":prize})
-						}else if(type == "prizee"){
-							var prize = $("#products-prizee").val()
-							$.post(page,{"id":id,"prizee":prize})
-						}else if(type == "simple"){
-							var prize = $("#products-simple").val()
-							$.post(page,{"id":id,"simple":prize})
-						}else if(type == "simplee"){
-							var prize = $("#products-simplee").val()
-							$.post(page,{"id":id,"simplee":prize})
-						}else if(type == "introduction"){
-							var introduction = $("#products-introduction").val()
-							$(".products-introduction-div").find("span").html(introduction)
-							$.post(page,{"id":id,"intro":introduction})
-						}else if(type == "introductione"){
-							var introduction = $("#products-introductione").val()
-							$(".products-introduction-div").find("span").html(introduction)
-							$.post(page,{"id":id,"introe":introduction})
-						}
-					})
-					$("#alterCover").click(function(){
-						$("#alterCoverInput").trigger("click")
-					})
-					$("#alterCoverInput").change(function(){
-						var file = $(this)[0].files[0]
-						var src = getsrc(file)
-						$("#ProductCover").attr("src",src)
-						var id = window.products.id
-						var page = [[${url}]]+"/back/products/solelyEdit"
-						var formData = new FormData()
-						formData.append("cover", file);
-						formData.append("id", id);
-						$.ajax({
-						    url: page,
-						    type: 'POST',
-						    cache: false,
-						    data: formData,
-						    processData: false,
-						    contentType: false,
-						    success:function(res){
-						    }
-						})
-						
-					})
-					$("#add-img").click(function(e){
-						e.stopPropagation()
-						$("#product-addimg-input").trigger("click")
-						
-					})
-					$("#product-addimg-input").change(function(){
-						console.log("开始上传")
-						const file = $("#product-addimg-input")[0].files[0];
-						const pid = $("#products-id").html();
-						const page = [[${url}]] + "/back/img/addone";
-						let formData = new FormData();
-						formData.append("file", file);
-						formData.append("pid", pid);
-						$(".uploadingInfo").removeClass("iron-hidden")
-						$.ajax({
-						    url: page,
-						    type: 'POST',
-						    cache: false,
-						    data: formData,
-						    processData: false,
-						    contentType: false,
-						    success:function(res){
-								$(".uploadingInfo").addClass("iron-hidden")
-						    	showimg(pid);
-						    }
-						})
-					})
-					$("#products-edit").click(function(){
-						var id = window.products.id
-						var page = [[${url}]]+"/back/products/edit"
-						var model = $("#products-model").val()
-						var name = $("#products-name").val()
-						var introduction = $("#products-introduction").val()
-						var prize = $("#products-prize").val()
-						var id = $("#products-id").html()
-						var cid = $("#products-cid").val()
-						
-						
-						var formData = new FormData();
-						formData.append("id", id);
-						formData.append("name", name);
-						formData.append("model", model);
-						formData.append("introduction", introduction);
-						formData.append("prize", prize);
-						formData.append("cid", cid);
-						$.ajax({
-						    url: page,
-						    type: 'POST',
-						    cache: false,
-						    data: formData,
-						    processData: false,
-						    contentType: false,
-						    success:function(res){
-						    	$("#productFresh").find("span").trigger("click")
-						    }
-						})
-					})
-					
-					
-					// 滑动
-					
-				</script>
-			</div>
-		</div>
-	</div>
 
-	<div class="mailbox-compose-overlay"></div>
-	<div class="mailbox-item-overlay"></div>
+            <span class="mail-author-name" id="coverButton">封面(点击修改)</span>
+            <input class="iron-hidden" type="file" id="coverInput"
+                    accept="image/*"/>
+            <div class="EditCover">
+                <img alt="" id="cover"/>
+            </div>
 
-	<div th:replace="back/include::showImgModal" id="showImgModal"></div>
-	<div th:replace="back/include::ironJS" id="ironJS"></div>
-	<a class="hidden" href="/iron/back/products" id="productFresh"><span></span></a>
+            <span class="mail-author-name">简单描述</span>
+            <div class="products-introduction-div">
+                <span class="iron-placee">1products-introduction-divproducts-introduction-divproduct
+                    s-introduction-divproducts-introduction-divproducts-introduction-divproducts-introduct
+                    ion-divproducts-introduction-divproducts-introduction-divproducts-introduction-divproduc
+                    ts-introduction-divproducts-introduction-divproducts-introduction-divproducts-introduction
+                    -divproducts-introduction-divproducts-introduction-div
+                    products-introduction-divproducts-introduction-divproducts-introduction-divproducts-introduction-div</span>
+                <textarea class="form-control  products-simple" id="simple_intro"></textarea>
+            </div>
+
+            <span class="mail-author-name">简单描述(English)</span>
+            <div class="products-introduction-div">
+                <span class="iron-placee">1</span>
+                <textarea class="form-control  products-simplee" id="simple_intro_en"></textarea>
+            </div>
+
+
+            <span class="mail-author-name">描述</span>
+            <div class="products-introduction-div">
+                <span class="iron-place">1</span>
+                <textarea class="form-control  products-introduction"
+                          id="intro"></textarea>
+            </div>
+
+            <span class="mail-author-name">描述(English)</span>
+            <div class="products-introduction-div">
+                <span class="iron-place">1</span>
+                <textarea class="form-control  products-introduction"
+                          id="intro_en"></textarea>
+            </div>
+
+            <span class="mail-author-name">价格</span>
+            <input type="text" class="form-control "
+                   id="prize" value="">
+
+            <span class="mail-author-name">价格(美元)</span>
+            <input type="text" class="form-control "
+                   id="prize_en" value="">
+
+                <span class="mail-author-name">型号</span>
+                <input type="text" class="form-control" id="model" value="">
+
+            <span class="mail-author-name">型号(English)</span>
+            <input type="text" class="form-control "
+                   id="model_en" value="">
+
+            <span class="mail-author-name">分类</span>
+            <select id="categories" class="form-control">
+                <th:block th:each="c:${categories}">
+                    <option th:attr="data-id=${c.id}">[[${c.name}]]</option>
+                </th:block>
+            </select>
+
+
+            <span class="mail-author-name">照片</span>
+            <span id="BoxButton">点击上传</span>
+            <div id="ImgBox"></div>
+
+            <input class="iron-hidden" type="file" value="修改照片" name="file"
+                   id="BoxInput" accept="image/*"/>
+            <span class="hidden" id="categories-id"></span>
+            <script type="text/javascript" th:inline="javascript">
+                $(".mailbox-item .form-control").blur(function () {
+                    let formData = getFormData("id", window.product.id)
+                    formData.append("name", getVal("#name"))
+                    formData.append("name_en", getVal("#name_en"))
+                    formData.append("model", getVal("#model"))
+                    formData.append("model_en", getVal("#model_en"))
+                    formData.append("prize", getVal("#prize"))
+                    formData.append("prize_en", getVal("#prize_en"))
+                    formData.append("simple_intro", getVal("#simple_intro"))
+                    formData.append("simple_intro_en", getVal("#simple_intro_en"))
+                    formData.append("intro", getVal("#intro"))
+                    formData.append("intro_en", getVal("#intro_en"))
+                    formData.append("cover", window.product.cover)
+                    formData.append("cid", $("#categories option:selected").attr("data-id"))
+                    postRequest(editProductUrl(), formData);
+
+                })
+                $("#coverButton").click(function () {
+                    $("#coverInput").trigger("click")
+                })
+                $("#coverInput").change(function(){
+                   $("#coverButton").html("封面(修改中)")
+                    let formData = getFormData("id",window.product.id)
+                    formData.append("cover",$(this)[0].files[0])
+                    window.product = postRequest(addProductCoverUrl(),formData)
+                    $("#cover").attr("src",[[${qiniu}]]+window.product.cover)
+                    $("#coverButton").html("封面(点击修改)")
+                })
+
+                // 滑动
+
+            </script>
+        </div>
+    </div>
+</div>
+
+<div class="mailbox-compose-overlay"></div>
+<div class="mailbox-item-overlay"></div>
+
+<div th:replace="back/include::showImgModal" id="showImgModal"></div>
+<a class="hidden" href="/iron/back/products" id="productFresh"><span></span></a>
 
 </body>
 </html>

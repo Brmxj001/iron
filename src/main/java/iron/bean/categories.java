@@ -24,6 +24,7 @@ public class Categories {
 	private String namee;
 
 	@Transient
-	private List<CategoriesImg> imgs;
+	private List<CategoriesImg> imgList
+			;
 
 }

@@ -4,7 +4,7 @@ import iron.bean.contact;
 import iron.bean.ProductImg;
 import iron.bean.Product;
 import iron.dao.*;
-import iron.service.impl.IronUtil;
+import iron.util.IronUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class FrontPageController {
     @Autowired
     ContactDAO ContactDAO;
     @Autowired
-    CImgDAO cImgDAO;
+    CategoriesImgDAO categoriesImgDAO;
     @Autowired
     HomeDAO homeDAO;
     @Autowired
@@ -142,7 +142,7 @@ public class FrontPageController {
         product.setAccess_total(callon);
         ProductDAO.save(product);
         List<ProductImg> imgs = ProductImgDAO.findByPid(pid);
-        product.setImgs(imgs);
+        product.setImgList(imgs);
         List<contact> contacts = ContactDAO.findAll();
         product.setContacts(contacts);
         m.addAttribute("product", product);

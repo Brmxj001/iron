@@ -14,13 +14,13 @@
 				<li class="sidebar-title">List</li>
 <!--				<li class=""><a href="index" class="active"><i-->
 <!--						class="material-icons-outlined">dashboard</i>首页</a></li>-->
-				<li><a href="/iron/back/categories"><i
+				<li><a href="/iron/back/categoriesPage"><i
 						class="material-icons-outlined">inbox</i>产品管理</a></li>
-				<li><a href="/iron/back/feedback"><i
+				<li><a href="/iron/back/feedbackPage"><i
 						class="material-icons-outlined">account_circle</i>反馈</a></li>
-				<li><a href="/iron/back/contact"><i
+				<li><a href="/iron/back/contactPage"><i
 						class="material-icons-outlined">api</i>联系我们</a></li>
-				<li><a href="/iron/back/home"><i
+				<li><a href="/iron/back/homePage"><i
 						class="material-icons-outlined">bookmark</i>主页</a></li>
 			</ul>
 		</div>
@@ -197,14 +197,14 @@
 	<div class="card">
 		<div class="card-body">
 			<ul class="mailbox-menu list-unstyled">
-				<li><a href="/iron/back/categories"
+				<li><a href="/iron/back/categoriesPage"
 					th:class="${current == 'categories'}?active:' '">查看分类<span
 						class="badge badge-pill badge-success float-right">[[${catSize}]]</span></a></li>
-				<li><a href="/iron/back/products"
+				<li><a href="/iron/back/productsPage"
 					th:class="${current == 'products'}?active:' '">查看产品<span
 						class="badge badge-pill badge-warning float-right">[[${proSize}]]</span></a></li>
-				<li><a th:class="${current == 'addProducts'}?active:' '" href="/iron/back/products/add">添加产品</a></li>
-				<li><a th:class="${current == 'addcategories'}?active:' '"  href="/iron/back/addcategories">添加分类</a></li>
+				<li><a th:class="${current == 'addProducts'}?active:' '" href="/iron/back/addProductPage">添加产品</a></li>
+				<li><a th:class="${current == 'addcategories'}?active:' '"  href="/iron/back/addCategoriesPage">添加分类</a></li>
 			</ul>
 
 		</div>

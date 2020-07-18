@@ -1,7 +1,6 @@
 package iron.interceptor;
 
-import iron.bean.Categories;
-import iron.dao.CImgDAO;
+import iron.dao.CategoriesImgDAO;
 import iron.dao.CategoriesDAO;
 import iron.dao.HomeDAO;
 import iron.dao.ProductDAO;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
@@ -49,7 +47,7 @@ public class IronInterceptor implements HandlerInterceptor {
     @Autowired
     CategoriesDAO categoriesDAO;
     @Autowired
-    CImgDAO cImgDAO;
+    CategoriesImgDAO categoriesImgDAO;
     @Autowired
     HomeDAO homeDAO;
 
