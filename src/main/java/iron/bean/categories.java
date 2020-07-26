@@ -21,10 +21,13 @@ public class Categories {
 	private String name;
 
 	private String detail;
+
 	private String namee;
 
+	private  String cover;
 	@Transient
-	private List<CategoriesImg> imgList
-			;
+	private List<CategoriesImg> imgList;
 
+	@Transient
+	private  List<Product> productList;
 }

@@ -1,0 +1,25 @@
+https://t2562.demo.ymcart.com/                        首页
+https://t2562.demo.ymcart.com/h-sitemap-pc.html       产品地图索引
+https://t2562.demo.ymcart.com/HAND-TOOLS-c34572.html  搜索为空
+https://t2562.demo.ymcart.com/h-module-feedback.html  反馈
+https://t2562.demo.ymcart.com/About-Us-n31891.html    关于我们
+
+注意：
+	1. 有个Customer Reviews 是产品评论页面，无此需求（删除
+	2. News （新闻（新产品  无此需求 删除
+	3. 关于订单or用户or购物车类的 （需要注册or登陆才能使用的功能 全部去掉）
+	4. Contact Us 和 About Us 重复且此页面无内容，只拷贝了About（需要我们二次完善此页面
+	5. 有个付款方法or物流方法（单纯的显示,不需要做业务） 此页面无内容，但是可能会有需求，暂留
+	
+	老板需求: 
+		1.产品种类大约十几样 或更少
+	
+
+https://t2562.demo.ymcart.com/Products/list-r1.html   产品分类
+	https://t2562.demo.ymcart.com/POWER-TOOLS-c34573.html  产品分类 - 工具
+		https://t2562.demo.ymcart.com/Defyant-Reversible-Dot-Shorts-p118559.html  产品页面-示例1
+		https://t2562.demo.ymcart.com/cross-colours-camo-print-tank-half-mengo-p118548.html 产品页面-示例2
+	
+https://t2562.demo.ymcart.com/Article/list-r1.html    产品Blog
+	https://t2562.demo.ymcart.com/MAURIS-LACINIA-LECTUS-a1165.html     Blog 页面
+	

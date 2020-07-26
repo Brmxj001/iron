@@ -34,12 +34,10 @@ public class ProductsController {
         return productService.get(id);
     }
 
-
     @PostMapping("/back/editProduct")
     public void editProduct(Product p) {
         productService.edit(p);
     }
-
 
     @PostMapping("/back/deleteProduct")
     public void doProductDelete(Integer id) {

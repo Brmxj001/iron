@@ -4,6 +4,7 @@ import iron.bean.contact;
 import iron.bean.ProductImg;
 import iron.bean.Product;
 import iron.dao.*;
+import iron.service.impl.ProductServiceImpl;
 import iron.util.IronUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class FrontPageController {
     ContactDAO contactDAO;
     @Autowired
     IronUtil ironUtil;
+    private  final  ProductServiceImpl productService;
+    @Autowired
+    public FrontPageController(ProductServiceImpl productService){
+        this.productService = productService;
+    }
 
     @GetMapping("/front/index")
     public String toFrontIndex(Model m) {
@@ -137,12 +143,12 @@ public class FrontPageController {
 
     @GetMapping("/front/prodetail")
     public String toFrontParietal(@RequestParam(value = "pid") Integer pid, Model m) {
-        Product product = ProductDAO.findById(pid).get();
-        int callon = product.getAccess_total() + 1;
-        product.setAccess_total(callon);
+
+        Product product = productService.get(pid);
+        product.setAccessTotal(product.getAccessTotal() + 1);
         ProductDAO.save(product);
-        List<ProductImg> imgs = ProductImgDAO.findByPid(pid);
-        product.setImgList(imgs);
+        List<ProductImg> imgList = ProductImgDAO.findByPid(pid);
+        product.setImgList(imgList);
         List<contact> contacts = ContactDAO.findAll();
         product.setContacts(contacts);
         m.addAttribute("product", product);

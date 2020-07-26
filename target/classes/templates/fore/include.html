@@ -1,0 +1,581 @@
+<footer th:fragment="header">
+    <div id="header_box" class="header_box ">
+        <div id="nav_wrapper" class="nav_warp fixed_header">
+            <div class="nav_box" ymcart_ve_tag='diy_top_nav_json' ymcart_ve_type='navjson'>
+                <ul class="nav">
+
+                    <li>
+
+                        <a href="/iron/fore/index">Home</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}">Products<i class="iconfont icon-arrows-copy"></i></a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                            <li th:each="c:${foreCategoriesList}">
+                                <a th:href="@{/fore/categories(cid=${c.id})}">
+                                    <span>■</span>
+                                    [[${c.name}]]
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+
+                        <a href="/iron/fore/blog">Blog</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="/iron/fore/sitemap">Sitemap</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/iron/fore/aboutUs">About Us</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                </ul>
+                <script>
+                    $(function () {
+                        $('ul.nav > li').first().addClass("home");
+                        $('ul.nav > li').hover(function () {
+                            _this = $(this);
+                            if ($.trim(_this.find('ul.sub_nav > li > a').html()) != "") {
+                                _this.addClass("on")
+                            }
+                        }, function () {
+                            _this = $(this);
+                            _this.removeClass("on")
+                        });
+
+                    });
+                </script>
+            </div>
+            <div class="header_rt">
+                <div id="search_icon" class="search_icon item"><i class="iconfont icon-fangdajing4 hide"></i><i
+                        class="iconfont icon-fangdajing4 show"></i></div>
+                <div class="currency_box item">
+                    <div class="currency_txt" id='currencyBox'><i class="iconfont icon-meiyuan9 hide"></i><i
+                            class="iconfont icon-meiyuan9 show"></i></div>
+                    <div class="dropdown drop_currency" id='currencyCon'>
+                        <i class="arr"></i>
+                        <ul class="currency">
+
+
+                            <li>
+                                <a rel="nofollow" href="/h-module-currency.html?currency=USD">
+                                    <b>US$</b><span>USD</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <script>
+                        $("#currencyCon,.currency_box").hover(function () {
+                            $("#currencyCon").show();
+                        }, function () {
+                            $("#currencyCon").hide();
+                        });
+                    </script>
+                </div>
+
+            </div>
+
+            <div class="clearboth"></div>
+        </div>
+
+
+    </div><!--end header_box-->
+    <div class="search_box" id="search_box">
+        <div id="search" class="search">
+            <span class="close_search iconfont icon-iconfontclose"></span>
+
+            <form id="autocomplete-submit" class="searchform" action="/h-product-search.html" method="get">
+                <input type="text" name="keywords" autocomplete="off" value="Search..." id="autocomplete-ajax"
+                       class="search_input" ymcart_ve_tag='diy_search_default' ymcart_ve_type='text'/>
+
+                <button type="submit" value="Search" id="btn-autocomplete"
+                        class="btn_search iconfont icon-fangdajing2"></button>
+            </form>
+            <script type="text/javascript">
+                var search_key = "Search...";
+                $("input[name=keywords]").focus(function () {
+                    if ($(this).val() == search_key) {
+                        $(this).val('');
+                    }
+                });
+                $("input[name=keywords]").blur(function () {
+                    if ($(this).val() == '') {
+                        $(this).val(search_key);
+                    }
+                });
+                $('#autocomplete-ajax').autocomplete({
+                    serviceUrl: '/h-product-autoComplete.html',
+                    onSelect: function (suggestion) {
+                        var keywords = $('#autocomplete-ajax').val();
+                        keywords = escape(escape(suggestion.value));
+                        window.location.href = "/Search-" + keywords + "/list-r1.html";
+                    },
+                    onFocus: function () {
+                        return false;
+                    }
+                });
+                $('#autocomplete-submit').submit(function () {
+                    var keywords = $('#autocomplete-ajax').val();
+                    keywords = format_keywords(keywords);
+                    if (keywords != "") {
+                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        return false;
+                    }
+                });
+                $('#btn-autocomplete').click(function () {
+                    var keywords = $('#autocomplete-ajax').val();
+                    keywords = format_keywords(keywords);
+                    if (keywords != "") {
+                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        return false;
+                    }
+                });
+                $(function () {
+                    $(".calloff").click(function () {
+                        $("#autocomplete-ajax").val("");
+                    });
+                });
+            </script>
+        </div>
+
+    </div>
+    <script>
+        var show_mini_cart = false;
+        $(function () {
+            $(".cart_box").hover(function () {
+                if (!show_mini_cart) {
+                    $.ajax({
+                        url: "/h-cart-miniCartList.html",
+                        cache: false,
+                        success: function (html) {
+                            $('#minicartlist').html(html);
+                            show_mini_cart = true;
+                        }
+                    })
+                }
+                $("#CartsCon").show();
+            }, function () {
+                $("#CartsCon").hide();
+                show_mini_cart = false;
+            });
+
+            $("#header_box .login  > a").toggle(function () {
+                $(".login_menu").stop().slideDown();
+            }, function () {
+                $(".login_menu").stop().slideUp();
+            });
+
+            var win = $(window);
+            var sticky_id = $("#nav_wrapper");
+            var mtst = $('#nav_wrapper').offset().top;
+            win.on('scroll', function () {
+                var scroll = win.scrollTop();
+                if (scroll > mtst) {
+                    sticky_id.addClass("fixed_header");
+                } else {
+                    sticky_id.removeClass("fixed_header");
+                }
+            });
+
+            $('#search_icon').click(function () {
+                $('.search_box').addClass('open');
+            });
+            $('.close_search').click(function () {
+                $('.search_box').removeClass('open');
+
+            });
+
+        });
+
+    </script>
+    <div class="clear0"></div>
+</footer>
+
+
+<footer th:fragment="foot">
+    <!--#body_box-->
+    <div id="bottom_box">
+        <div class="link_box">
+            <div class="btm_txt" ymcart_ve_tag='diy_btm_txt' ymcart_ve_type='textedit'><img
+                    src="style/images/0ea4fd14ca764314.png" th:src="@{/fore/images/0ea4fd14ca764314.jpg}" alt=""/>
+                <p>
+                    <i class="iconfont icon-dizhi1"></i> 123 Third Street Fifth Avenue, Manhattan, New York, USA
+                </p>
+                <p>
+                    <i class="iconfont icon-dianhua2"></i> +1234 456 789
+                </p>
+                <p>
+                    <i class="iconfont icon-youxiang"></i> i.shopyy.com
+                </p></div>
+            <div class="bottom_rt">
+                <div class="row">
+
+
+                    <dl>
+                        <dt>Company Info
+                            <div class="bor_line"></div>
+                        </dt>
+
+                        <dd>
+                            <a href="/h-module-feedback.html">Feedback</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/About-Us-n31891.html">About Us</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Contact-Us-n31890.html">Contact Us</a>
+                        </dd>
+
+
+                    </dl>
+
+
+                    <dl>
+                        <dt>Payment & Shipping
+                            <div class="bor_line"></div>
+                        </dt>
+
+                        <dd>
+                            <a href="/Customs-Taxes-n31881.html">Customs & Taxes</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Locations-We-Ship-To-n31880.html">Locations We Ship To</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Shipping-Methods-n31879.html">Shipping Methods</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Payment-Methods-n31878.html">Payment Methods</a>
+                        </dd>
+
+                    </dl>
+
+                </div>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+
+
+        <div class="foot">
+            <div class="col-lg-4">
+                <ul class="copyright">
+                    <a href="">About Us</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="">Contact Us</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="">Directory</a>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <div class="copyright" ymcart_ve_tag='diy_copyright_con' ymcart_ve_type='textedit'>
+                    Copyright &copy; 2006-2016 SHOPYY INC. All Rights Reserved.
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="payment" ymcart_ve_tag='diy_payment_con' ymcart_ve_type='textedit'>
+                    <img src="style/images/90c190d0d1850961.png" th:src="@{/fore/images/90c190d0d1850961.jpg}" alt=""/>&nbsp;
+                </div>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        <div class="script_div" style="text-align:center">
+
+            <div id="_ymcart_script_div" class="notranslate"></div>
+            <script>$("#_ymcart_script_div > div").addClass("notranslate");
+            $("#_ymcart_script_div").children("div").each(function () {
+                $(this).appendTo("body");
+            });</script>
+
+        </div>
+    </div><!--end bottom_box-->
+</footer>
+
+<footer th:fragment="simpleHeader">
+    <div id="header_box" class=" fixed_header">
+        <div id="nav_wrapper" class="nav_warp">
+            <div class="nav_box" ymcart_ve_tag='diy_top_nav_json' ymcart_ve_type='navjson'>
+                <ul class="nav">
+
+                    <li>
+
+                        <a href="/iron/fore/index">Home</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}">Products<i class="iconfont icon-arrows-copy"></i></a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                            <li th:each="c:${foreCategoriesList}">
+                                <a th:href="@{/fore/categories(cid=${c.id})}">
+                                    <span>■</span>
+                                    [[${c.name}]]
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+
+                        <a href="/iron/fore/blog">Blog</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="/iron/fore/sitemap">Sitemap</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/iron/fore/aboutUs">About Us</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+
+                </ul>
+                <script>
+                    $(function () {
+                        $('ul.nav > li').first().addClass("home");
+                        $('ul.nav > li').hover(function () {
+                            _this = $(this);
+                            if ($.trim(_this.find('ul.sub_nav > li > a').html()) != "") {
+                                _this.addClass("on")
+                            }
+                        }, function () {
+                            _this = $(this);
+                            _this.removeClass("on")
+                        });
+
+                    });
+                </script>
+            </div>
+            <div class="header_rt">
+                <div id="search_icon" class="search_icon item"><i class="iconfont icon-fangdajing4 hide"></i><i
+                        class="iconfont icon-fangdajing4 show"></i></div>
+
+                <div class="currency_box item">
+                    <div class="currency_txt" id='currencyBox'><i class="iconfont icon-meiyuan9 hide"></i><i
+                            class="iconfont icon-meiyuan9 show"></i></div>
+                    <div class="dropdown drop_currency" id='currencyCon'>
+                        <i class="arr"></i>
+                        <ul class="currency">
+
+
+                            <li>
+                                <a rel="nofollow" href="/h-module-currency.html?currency=USD">
+                                    <b>US$</b><span>USD</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <script>
+                        $("#currencyCon,.currency_box").hover(function () {
+                            $("#currencyCon").show();
+                        }, function () {
+                            $("#currencyCon").hide();
+                        });
+                    </script>
+                </div>
+
+            </div>
+
+            <div class="clearboth"></div>
+        </div>
+
+
+    </div><!--end header_box-->
+    <div class="search_box" id="search_box">
+        <div id="search" class="search">
+            <span class="close_search iconfont icon-iconfontclose"></span>
+
+            <form id="autocomplete-submit" class="searchform" action="/h-product-search.html" method="get">
+                <input type="text" name="keywords" autocomplete="off" value="Search..." id="autocomplete-ajax"
+                       class="search_input" ymcart_ve_tag='diy_search_default' ymcart_ve_type='text'/>
+
+                <button type="submit" value="Search" id="btn-autocomplete"
+                        class="btn_search iconfont icon-fangdajing2"></button>
+            </form>
+            <script type="text/javascript">
+                var search_key = "Search...";
+                $("input[name=keywords]").focus(function () {
+                    if ($(this).val() == search_key) {
+                        $(this).val('');
+                    }
+                });
+                $("input[name=keywords]").blur(function () {
+                    if ($(this).val() == '') {
+                        $(this).val(search_key);
+                    }
+                });
+                $('#autocomplete-ajax').autocomplete({
+                    serviceUrl: '/h-product-autoComplete.html',
+                    onSelect: function (suggestion) {
+                        var keywords = $('#autocomplete-ajax').val();
+                        keywords = escape(escape(suggestion.value));
+                        window.location.href = "/Search-" + keywords + "/list-r1.html";
+                    },
+                    onFocus: function () {
+                        return false;
+                    }
+                });
+                $('#autocomplete-submit').submit(function () {
+                    var keywords = $('#autocomplete-ajax').val();
+                    keywords = format_keywords(keywords);
+                    if (keywords != "") {
+                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        return false;
+                    }
+                });
+                $('#btn-autocomplete').click(function () {
+                    var keywords = $('#autocomplete-ajax').val();
+                    keywords = format_keywords(keywords);
+                    if (keywords != "") {
+                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        return false;
+                    }
+                });
+                $(function () {
+                    $(".calloff").click(function () {
+                        $("#autocomplete-ajax").val("");
+                    });
+                });
+            </script>
+        </div>
+
+    </div>
+</footer>
+
+<footer th:fragment="aboutUsFoot">
+    <div id="bottom_box">
+        <div class="link_box">
+            <div class="btm_txt" ymcart_ve_tag='diy_btm_txt' ymcart_ve_type='textedit'><img
+                    src="style/images/0ea4fd14ca764314.png" alt=""/>
+                <p>
+                    <i class="iconfont icon-dizhi1"></i> 123 Third Street Fifth Avenue, Manhattan, New York, USA
+                </p>
+                <p>
+                    <i class="iconfont icon-dianhua2"></i> +1234 456 789
+                </p>
+                <p>
+                    <i class="iconfont icon-youxiang"></i> i.shopyy.com
+                </p></div>
+            <div class="bottom_rt">
+                <div class="row">
+
+
+                    <dl>
+                        <dt>Company Info
+                            <div class="bor_line"></div>
+                        </dt>
+
+                        <dd>
+                            <a href="/h-module-feedback.html">Feedback</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Comment/list-r1.html">Customer Reviews</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/About-Us-n31891.html">About Us</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Contact-Us-n31890.html">Contact Us</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/article-1.html">News</a>
+                        </dd>
+
+                    </dl>
+
+
+                    <dl>
+                        <dt>Payment & Shipping
+                            <div class="bor_line"></div>
+                        </dt>
+
+                        <dd>
+                            <a href="/Customs-Taxes-n31881.html">Customs & Taxes</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Locations-We-Ship-To-n31880.html">Locations We Ship To</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Shipping-Methods-n31879.html">Shipping Methods</a>
+                        </dd>
+
+                        <dd>
+                            <a href="/Payment-Methods-n31878.html">Payment Methods</a>
+                        </dd>
+
+                    </dl>
+
+                </div>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+
+        <div class="foot">
+            <div class="col-lg-4">
+                <ul class="copyright">
+                    <a href="">About Us</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="">Contact Us</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="">Directory</a>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <div class="copyright" ymcart_ve_tag='diy_copyright_con' ymcart_ve_type='textedit'>
+                    Copyright &copy; 2006-2016 SHOPYY INC. All Rights Reserved.
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="payment" ymcart_ve_tag='diy_payment_con' ymcart_ve_type='textedit'>
+                    <img src="style/images/90c190d0d1850961.png" alt=""/>&nbsp;
+                </div>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        <div class="script_div" style="text-align:center">
+
+            <div id="_ymcart_script_div" class="notranslate"></div>
+            <script>$("#_ymcart_script_div > div").addClass("notranslate");
+            $("#_ymcart_script_div").children("div").each(function () {
+                $(this).appendTo("body");
+            });</script>
+
+        </div>
+    </div><!--end bottom_box-->
+</footer>

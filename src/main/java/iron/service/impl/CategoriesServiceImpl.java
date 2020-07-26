@@ -3,6 +3,7 @@ package iron.service.impl;
 import iron.bean.Categories;
 import iron.dao.CategoriesDAO;
 import iron.dao.CategoriesImgDAO;
+import iron.service.CategoriesImgService;
 import iron.service.CategoriesService;
 import iron.util.IronUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,16 @@ import java.util.List;
 @Service
 public class CategoriesServiceImpl implements CategoriesService<Categories> {
 
+    private final CategoriesDAO categoriesDAO;
+    private final CategoriesImgDAO categoriesImgDAO;
+    private final ProductServiceImpl productService;
+
     @Autowired
-    CategoriesDAO categoriesDAO;
-    @Autowired
-    CategoriesImgDAO categoriesImgDAO;
+    public CategoriesServiceImpl(CategoriesDAO categoriesDAO,CategoriesImgDAO categoriesImgDAO,ProductServiceImpl productService){
+        this.categoriesDAO = categoriesDAO;
+        this.categoriesImgDAO = categoriesImgDAO;
+        this.productService = productService;
+    }
 
     @Override
     public List<Categories> getAll() {
@@ -30,7 +37,8 @@ public class CategoriesServiceImpl implements CategoriesService<Categories> {
 
     @Override
     public Categories get(Integer id) {
-        Categories c = categoriesDAO.findById(id).get();
+        Categories c = categoriesDAO.findById(id).orElse(null);
+        assert c != null;
         c.setImgList(categoriesImgDAO.findByCid(c.getId()));
         return c;
     }
@@ -41,9 +49,19 @@ public class CategoriesServiceImpl implements CategoriesService<Categories> {
     }
 
     @Override
+    public List<Categories> getAllWithProduct() {
+        List<Categories> result = categoriesDAO.findAll();
+        for (Categories categories : result) {
+            categories.setProductList(productService.getAllByCategoriesId(categories.getId()));
+        }
+        return result;
+    }
+
+    @Override
     public void deleteCategories(Integer id) {
         categoriesDAO.deleteById(id);
     }
+
 
 
 }

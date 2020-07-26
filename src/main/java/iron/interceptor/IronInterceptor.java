@@ -4,6 +4,7 @@ import iron.dao.CategoriesImgDAO;
 import iron.dao.CategoriesDAO;
 import iron.dao.HomeDAO;
 import iron.dao.ProductDAO;
+import iron.service.impl.CategoriesServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,37 +20,24 @@ import java.util.Set;
  */
 @Slf4j
 public class IronInterceptor implements HandlerInterceptor {
-    private Set<String> fspath = new HashSet<>();
-    private Set<String> bPath = new HashSet<>();
-    //sets of product page
-    private Set<String> productPages = new HashSet<>();
 
 
-    public IronInterceptor() {
-        fspath.add("/iron/front/product");
-        fspath.add("/iron/front/prodetail");
-        fspath.add("/iron/front/product/categories");
-        fspath.add("/iron/front/index");
-        fspath.add("/iron/front/product/str");
-        fspath.add("/iron/front/contact");
-        fspath.add("/iron/front/feedback");
+    @Autowired
+    CategoriesServiceImpl categoriesService;
 
-        bPath.add("/iron/back/categories");
-        bPath.add("/iron/back/addcategories");
-        bPath.add("/iron/back/products");
+    /**
+     * ForePage 页面数据
+     */
+    private final Set<String> forePage = new HashSet<>();
 
-        productPages.add("/iron/front/product/categories");
+    public IronInterceptor( ) {
+        forePage.add("/iron/fore/index");
+        forePage.add("/iron/fore/categories");
+        forePage.add("/iron/fore/aboutUs");
     }
 
 
-    @Autowired
-    ProductDAO ProductDAO;
-    @Autowired
-    CategoriesDAO categoriesDAO;
-    @Autowired
-    CategoriesImgDAO categoriesImgDAO;
-    @Autowired
-    HomeDAO homeDAO;
+
 
 
     @Override
@@ -62,7 +50,9 @@ public class IronInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest req, HttpServletResponse res, Object o, ModelAndView modelAndView) {
         String uri = req.getRequestURI();
-
+        if (forePage.contains(uri)) {
+            modelAndView.addObject("foreCategoriesList", categoriesService.getAll());
+        }
 
 
     }
