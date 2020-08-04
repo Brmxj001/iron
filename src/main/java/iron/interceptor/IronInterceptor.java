@@ -1,9 +1,6 @@
 package iron.interceptor;
 
-import iron.dao.CategoriesImgDAO;
-import iron.dao.CategoriesDAO;
-import iron.dao.HomeDAO;
-import iron.dao.ProductDAO;
+import iron.dao.*;
 import iron.service.impl.CategoriesServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,8 @@ public class IronInterceptor implements HandlerInterceptor {
 
     @Autowired
     CategoriesServiceImpl categoriesService;
+    @Autowired
+    ContactDAO contactDAO;
 
     /**
      * ForePage 页面数据
@@ -33,7 +32,12 @@ public class IronInterceptor implements HandlerInterceptor {
     public IronInterceptor( ) {
         forePage.add("/iron/fore/index");
         forePage.add("/iron/fore/categories");
+        forePage.add("/iron/fore/categoriesSearch");
         forePage.add("/iron/fore/aboutUs");
+        forePage.add("/iron/fore/product");
+        forePage.add("/iron/fore/blog");
+        forePage.add("/iron/fore/blogChild");
+        forePage.add("/iron/fore/sitemap");
     }
 
 
@@ -52,6 +56,12 @@ public class IronInterceptor implements HandlerInterceptor {
         String uri = req.getRequestURI();
         if (forePage.contains(uri)) {
             modelAndView.addObject("foreCategoriesList", categoriesService.getAll());
+            modelAndView.addObject("contactUs", contactDAO.findAll());
+
+            if (null == req.getSession().getAttribute("language")){
+                req.getSession().setAttribute("language","en");
+            }
+
         }
 
 

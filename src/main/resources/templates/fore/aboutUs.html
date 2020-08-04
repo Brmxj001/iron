@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <title>About Us - t2562.demo.ymcart.com</title>
+    <title>iron-AboutUs</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
 
@@ -174,10 +174,10 @@
 
     <div class="navpage_detail">
 
-        <div class="navpage_detail_2017">
+        <div class="navpage_detail_2017" >
             <div class="newbox">
                 <h1 class="navpage_detail_h1">About Us</h1>
-                <h1 class="navpage_detail_h1">需要你改一下这里</h1>
+                <h1 class="navpage_detail_h1" th:each="c:${contactUsList}">[[${c.name}]]:[[${c.info}]]</h1>
                 <div class="clear5"></div>
                 <div class="navpage_content">
 
@@ -191,7 +191,7 @@
     <div class="clear"></div>
 </div><!--#body_box-->
 <div class="clearboth"></div>
-<th:block th:replace="fore/include::aboutUsFoot">
+<th:block th:replace="fore/include::foot">
 
 
 </th:block>

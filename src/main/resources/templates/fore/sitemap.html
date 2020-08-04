@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <title>Sitemap - t2562.demo.ymcart.com</title>
+    <title>iron-sitmap</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
 
@@ -118,17 +118,28 @@
 
 </head>
 <body>
-<div th:replace="fore/include::header"></div>
+<div th:replace="fore/include::simpleHeader"></div>
+<div th:replace="back/CommonInclude::common"></div>
+<div th:replace="back/CommonInclude::url"></div>
 <div id="body_box">
     <div class="clear"></div>
     <div class="sitemap_pc">
         <div class="sitemap_pc_2017">
-            <h3>Sitemap</h3>
+            <h3>
+                <span th:if="${session.language  == 'ch'}">产品地图</span>
+                <span th:unless="${session.language  == 'ch'}">Sitemap</span>
+            </h3>
             <div class="pcsitemap">
 
                 <dl th:each="c:${categories}">
-                    <dt><a th:href="@{/fore/categories(id=${c.id})}">[[${c.name}]]</a></dt>
-                    <dd th:each="p:${c.productList}"> <a th:href="@{/fore/product(id=${p.id})}" >[[${p.name}]]</a></dd>
+                    <dt><a th:href="@{/fore/categories(cid=${c.id})}">
+                        <span th:if="${session.language  == 'ch'}">[[${c.name}]]</span>
+                        <span th:unless="${session.language  == 'ch'}">[[${c.nameEn}]]</span>
+                    </a></dt>
+                    <dd th:each="p:${c.productList}"> <a th:href="@{/fore/product(pid=${p.id})}" >
+                        <span th:if="${session.language  == 'ch'}">[[${p.name}]]</span>
+                        <span th:unless="${session.language  == 'ch'}">[[${p.nameEn}]]</span>
+                    </a></dd>
                 </dl>
 
 
@@ -141,7 +152,7 @@
     </div>
     <div class="clear"></div>
 </div><!--#body_box-->
-<div th:replace="fore/include::footer"></div>
+<div th:replace="fore/include::foot"></div>
 <div class="mini_detail">
     <div class="mini_detail_bg"></div>
     <div id="mini_detail"><span class="close_icon iconfont icon-iconfontclose"></span></div>

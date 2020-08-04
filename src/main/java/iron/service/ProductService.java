@@ -97,4 +97,8 @@ public interface ProductService<E> {
     List<Product> getByPrizeDesc(Integer total);
     List<Product> getByPrizeDesc(Integer total,Integer cid);
     List<Product> getByPrizeDesc(Integer total,String search);
+
+    List<Product> getByNameLike(String name);
+    List<Product> getByNameLike(String[] name);
+
 }

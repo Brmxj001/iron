@@ -103,10 +103,8 @@
                 }
                 result.openInput = function () {
                     result.input.change(function () {
-                        const file = $(this)[0].files[0]
-                        let src = getFileTempPath(file)
-                        result.SrcList.push(src)
-                        result.FileList.push(file)
+                        result.SrcList.push(getFileTempPath($(this)[0].files[0]))
+                        result.FileList.push($(this)[0].files[0])
                         result.showBoxImgs()
                         $(this).val("")
                     })
@@ -146,7 +144,7 @@
                     fromData_append(addFormData, "file", $(this)[0].files[0])
                     postRequest(addCategoriesImgUrl(), addFormData)
 
-                    aBox.imgList = postRequest(getCategoriesImgUrl(), getFormData("cid",aBox.id))
+                    aBox.imgList = postRequest(getCategoriesImgUrl(), getFormData("cid", aBox.id))
                     aBox.showBoxImgList()
                     $(this).val("")
                     aBox.button.html("点击上传")
@@ -155,7 +153,7 @@
             aBox.openDeleteImg = function () {
                 aBox.box.on("click", "span", function () {
                     postRequest(deleteCategoriesImgUrl(), getFormData("id", $(this).attr("id")))
-                    aBox.imgList = postRequest(getCategoriesImgUrl(), getFormData("cid",aBox.id))
+                    aBox.imgList = postRequest(getCategoriesImgUrl(), getFormData("cid", aBox.id))
                     aBox.showBoxImgList()
                 })
             }
@@ -169,12 +167,14 @@
             aBox.showBoxImgList()
         }
 
-        function setButtonInfo(aRef){
-            window.setTimeout(set,2000)
-            function set(){
+        function setButtonInfo(aRef) {
+            window.setTimeout(set, 2000)
+
+            function set() {
                 aRef.button.html("点击上传")
             }
         }
+
 
         function initProductBox(aBox) {
             aBox.openInput = function () {
@@ -186,7 +186,7 @@
                     fromData_append(addFormData, "file", $(this)[0].files[0])
                     postRequest(addProductImgUrl(), addFormData)
 
-                    aBox.imgList = postRequest(getProductImgUrl(),getFormData("pid",aBox.id))
+                    aBox.imgList = postRequest(getProductImgUrl(), getFormData("pid", aBox.id))
                     aBox.showBoxImgList()
                     $(this).val("")
 
@@ -196,7 +196,7 @@
             aBox.openDeleteImg = function () {
                 aBox.box.on("click", "span", function () {
                     postRequest(deleteProductImgUrl(), getFormData("id", $(this).attr("id")))
-                    aBox.imgList = postRequest(getProductImgUrl(),getFormData("pid",aBox.id))
+                    aBox.imgList = postRequest(getProductImgUrl(), getFormData("pid", aBox.id))
                     aBox.showBoxImgList()
                 })
             }
@@ -290,11 +290,11 @@
             return [[${url}]] + "/back/getProduct"
         }
 
-        function editProductUrl(){
+        function editProductUrl() {
             return [[${url}]] + "/back/editProduct"
         }
 
-        function addProductCoverUrl(){
+        function addProductCoverUrl() {
             return [[${url}]] + "/back/addProductCover"
         }
 
@@ -303,13 +303,81 @@
             return [[${url}]] + "/back/addProductImg"
         }
 
-        function getProductImgUrl(){
+        function getProductImgUrl() {
             return [[${url}]] + "/back/getProductImg"
         }
 
-        function deleteProductImgUrl(){
+        function deleteProductImgUrl() {
             return [[${url}]] + "/back/deleteProductImg"
         }
 
+        //Product Attr
+        function addProductAttrUrl() {
+            return [[${url}]] + "/back/addProductAttr"
+        }
+
+        function deleteProductAttrUrl() {
+            return [[${url}]] + "/back/deleteProductAttr"
+        }
+
+        function getProductAttrUrl() {
+            return [[${url}]] + "/back/getProductAttr"
+        }
+
+        function editProductAttrUrl() {
+            return [[${url}]] + "/back/editProductAttr"
+        }
+
+        //Home img
+        function addHomeCarousel() {
+            return [[${url}]] + "/back/home/Carousel/add";
+        }
+
+        function getHomeCarousel() {
+            return [[${url}]] + "/back/home/Carousel/get";
+        }
+
+        function deleteCarousel() {
+            return [[${url}]] + "/back/home/Carousel/delete";
+        }
+
+        function checkUserUrl() {
+            return [[${url}]] + "/back/checkUser";
+        }
+
+        //Blog
+        function addBlogUrl() {
+            return [[${url}]] + "/back/addBlog";
+        }
+
+        function deleteBlogUrl() {
+            return [[${url}]] + "/back/deleteBlog";
+        }
+
+        function getBlogUrl() {
+            return [[${url}]] + "/back/getBlog";
+        }
+
+        function editBlogUrl() {
+            return [[${url}]] + "/back/editBlog";
+        }
+
+        //Blog Img
+        function deleteBlogImgUrl() {
+            return [[${url}]] + "/back/deleteBlogImg";
+        }
+
+        function getBlogImgUrl() {
+            return [[${url}]] + "/back/getBlogImg";
+        }
+
+        function addBlogImgUrl() {
+            return [[${url}]] + "/back/addBlogImg";
+        }
+
+        //change Language
+        function changeLanguageUrl() {
+            return [[${url}]] + "/fore/changeLanguage";
+        }
     </script>
 </footer>

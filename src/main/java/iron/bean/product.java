@@ -23,6 +23,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer piece;
     /**
      * 产品名称 _en 表示英文名称
      */
@@ -45,7 +46,8 @@ public class Product {
      * 产品价格
      */
     private Integer prize;
-    private Integer prize_en;
+    @Column(name = "max_prize")
+    private Integer maxPrize;
 
     /**
      * 产品型号
@@ -82,9 +84,17 @@ public class Product {
     private Date uploadTime;
 
     @Transient
+    private Categories categories;
+
+    @Transient
     private List<ProductImg> imgList;
 
     @Transient
     private List<contact> contacts;
+    
+    @Transient
+    private  List<ProductAttr> productAttrList;
 
+    @Transient
+    private  List<Product> productLikeList;
 }

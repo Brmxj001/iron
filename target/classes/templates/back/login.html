@@ -1,0 +1,44 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>吧务管理系统</title>
+        <link rel="stylesheet" href="/login/css/bootstrap.min.css" th:href="@{/login/css/bootstrap.min.css}">
+        <link rel="stylesheet" href="/login/css/main.css" th:href="@{/login/css/main.css}">
+        <script th:src="@{/plugins/jquery/jquery-3.4.1.min.js}"></script>
+    </head>
+
+    <body>
+    <div th:replace="back/CommonInclude::common"></div>
+    <div th:replace="back/CommonInclude::url"></div>
+    <div class="sign-in-wrapper">
+            <div class="sign-container">
+                <div class="text-center">
+                    <h4 class="">登陆系统</h4>
+                </div>
+                <form class="sign-in-form" action="userLogin" method="post">
+                    <div class="form-group">
+                        <input name="user" id="user" type="text" class="form-control" placeholder="账号" required="">
+                    </div>
+                    <div class="form-group">
+                        <input name="password" type="password" class="form-control" placeholder="密码" required="">
+                    </div>
+                    <script>
+                        $(function(){
+                            $("#user").keyup(function(){
+                               let result = postRequest(checkUserUrl(),getFormData("user",$(this).val()))
+                                console.log(result)
+                            })
+                        })
+
+                    </script>
+                    <span style="color: red">[[${info}]]</span>
+                    <button type="submit" class="btn btn-info btn-block">登录</button>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>

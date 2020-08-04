@@ -1,12 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <title>MAURIS LACINIA LECTUS - t2562.demo.ymcart.com</title>
+    <title>iron-blog</title>
     <meta name="keywords" content=""/>
-    <meta name="description"
-          content="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec, rhoncus eget, laoreet sit amet."/>
+    <meta name="description" content=""/>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" th:href="@{/fore/css/style.css}" href="style/css/style.css" type="text/css"/>
@@ -30,8 +29,9 @@
     <!--[if IE 6]>
     <script type="text/javascript" th:src="@{/fore/js/pngfix.js}" src="style/js/pngfix.js"></script><![endif]-->
 
+
     <!-- Ymcart Meta Tag -->
-    <link rel="canonical" href="https://t2562.demo.ymcart.com/MAURIS-LACINIA-LECTUS-a1165.html"/>
+    <link rel="canonical" href="https://t2562.demo.ymcart.com/Article/list-r1.html"/>
     <meta property="author" content="t2562.demo.ymcart.com"/>
     <meta name="copyright" content="CopyRight 2020 t2562.demo.ymcart.com, All Rights Reserved"/>
     <meta charset="utf-8"/>
@@ -54,13 +54,6 @@
     <!-- YMCart Monitor Tag -->
 
     <!-- Open Graph -->
-    <meta property="og:title" content="MAURIS LACINIA LECTUS"/>
-    <meta property="og:description" content="MAURIS LACINIA LECTUS t2562.demo.ymcart.com"/>
-    <meta property="og:type" content="product"/>
-    <meta property="og:url"
-          content="https://t2562.demo.ymcart.com/MAURIS-LACINIA-LECTUS-a1165.html?utm_source=sns_share&utm_medium=open_graph"/>
-    <meta property="og:image" content="http://cn01.imgcdn.ymcart.com/29175/2018/07/12/a/d/adccb51f2f5ef17c.jpg"/>
-    <meta property="og:site_name" content="https://t2562.demo.ymcart.com"/>
 
     <!-- Open Graph End -->
 
@@ -81,7 +74,7 @@
         ymcart_store_id = 29175;
         ymcart_user_id = 0;
         ymcart_time_zone = 'Etc/GMT-8';
-        ymcart_page_ca = 'article-detail';
+        ymcart_page_ca = 'article-list';
         ymcart_thumb_quality = '90';
         ymcart_oss_default_query = 'auto-orient,1/quality,Q_90';
         ymcart_user_email = '';
@@ -113,10 +106,8 @@
         ymcart_order_currency_code = '';
         ymcart_order_coupon = '';
         ymcart_order_item = '';
-        ymcart_article = eval('(' + '{\"id\":\"1165\",\"store_id\":\"29175\",\"base_name\":\"MAURIS LACINIA LECTUS\",\"create_time\":\"1531389782\",\"visit_counts\":\"0\",\"image\":\"http:\\/\\/cn01.imgcdn.ymcart.com\\/29175\\/2018\\/07\\/12\\/a\\/d\\/adccb51f2f5ef17c.jpg\",\"title\":\"\",\"keywords\":\"\",\"status\":\"1\",\"descript\":\"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec, rhoncus eget, laoreet sit amet.\"}' + ')');
-        ymcart_data_id = 1165;
         if (typeof (ytag) == 'function') {
-            ytag("article", "MAURIS LACINIA LECTUS", ymcart_user_id, ymcart_data_id);
+            ytag("", "", ymcart_user_id, 0);
         }
     </script>
     <noscript>
@@ -128,74 +119,99 @@
 
 </head>
 <body>
-<div th:replace="fore/include::header"></div>
+<div th:replace="fore/include::simpleHeader"></div>
+<div th:replace="back/CommonInclude::common"></div>
+<div th:replace="back/CommonInclude::url"></div>
+<script>
+    var show_mini_cart = false;
+    $(function () {
+        $(".cart_box").hover(function () {
+            if (!show_mini_cart) {
+                $.ajax({
+                    url: "/h-cart-miniCartList.html",
+                    cache: false,
+                    success: function (html) {
+                        $('#minicartlist').html(html);
+                        show_mini_cart = true;
+                    }
+                })
+            }
+            $("#CartsCon").show();
+        }, function () {
+            $("#CartsCon").hide();
+            show_mini_cart = false;
+        });
+
+        $("#header_box .login  > a").toggle(function () {
+            $(".login_menu").stop().slideDown();
+        }, function () {
+            $(".login_menu").stop().slideUp();
+        });
+
+        var win = $(window);
+        var sticky_id = $("#nav_wrapper");
+        var mtst = $('#nav_wrapper').offset().top;
+        win.on('scroll', function () {
+            var scroll = win.scrollTop();
+            if (scroll > mtst) {
+                sticky_id.addClass("fixed_header");
+            } else {
+                sticky_id.removeClass("fixed_header");
+            }
+        });
+
+        $('#search_icon').click(function () {
+            $('.search_box').addClass('open');
+        });
+        $('.close_search').click(function () {
+            $('.search_box').removeClass('open');
+
+        });
+
+    });
+
+</script>
 <div id="body_box">
     <!--#left_box-->
     <div class="clear"></div>
-    <div class="article_detail">
-
-        <div class="article_detail_2017">
+    <div class="article_list">
+        <div class="article_list_2017">
             <div class="newbox">
-                <h1 class="news_h1">MAURIS LACINIA LECTUS
-                    <div class="article_detail_time notranslate">2018-07-12</div>
+                <h1 class="news_h1">
+                    <span th:if="${session.language  == 'ch'}">日志</span>
+                    <span th:unless="${session.language  == 'ch'}">Blog</span>
                 </h1>
-
-                <div class="clear0"></div>
-                <!--share-->
-                <style type="text/css">
-                    .stButton {
-                        position: relative;
-                        z-index: 1;
-                        text-decoration: none;
-                        color: #000;
-                        display: inline-block;
-                        cursor: pointer;
-                        margin-left: 3px;
-                        font-size: 24px;
-                        line-height: 16px;
-                    }
-
-                    .stButton .stMainServices {
-                        background-repeat: no-repeat;
-                        display: inline-block;
-                        white-space: nowrap;
-                        font-family: Verdana, Helvetica, sans-serif;
-                        font-size: 11px;
-                        height: 16px;
-                        padding-top: 3px;
-                        padding-bottom: 3px;
-                        line-height: 16px;
-                        width: 60px;
-                        position: relative
-                    }
-                </style>
-
-                <div class="clear5"></div>
-
-                <div class="article_image">
-                    <img src="style/images/adccb51f2f5ef17c.jpg" th:src="@{/fore/images/adccb51f2f5ef17c.jpg}"/>
-                    <div class="clear"></div>
-                    <div class="clear5"></div>
-                </div>
-                <div class="article_content">
-
-                </div>
-
-                <div class="article_url_panel">
-                    <p>&gt;&gt; <a href="/MAURIS-LACINIA-LECTUS-a1164.html" title="MAURIS LACINIA LECTUS">MAURIS LACINIA
-                        LECTUS</a></p>
-                </div>
-
+                <ul>
+                    <li th:each="blog:${blogList}">
+                        <a class="newname" th:href="@{/fore/blogChild(id=${blog.getId()})}" >
+                            <span th:if="${session.language  == 'ch'}">[[${blog.name}]]</span>
+                            <span th:unless="${session.language  == 'ch'}">[[${blog.nameEn}]]</span>
+                        </a>
+                        <div class="newtime notranslate" th:text="${#dates.format(blog.getCreateTime(),'yyyy-MM-dd')}">2018-07-12</div>
+                        <div class="newdescript" >
+                            <span th:if="${session.language  == 'ch'}">[[${blog.intro}]]</span>
+                            <span th:unless="${session.language  == 'ch'}">[[${blog.introEn}]]</span>
+                        </div>
+                        <div class="newmore"><a th:href="@{/fore/blogChild(id=${blog.getId()})}">
+                            <span th:if="${session.language  == 'ch'}">更多..</span>
+                            <span th:unless="${session.language  == 'ch'}">View More</span>
+                        </a></div>
+                    </li>
+                </ul>
             </div>
+            <div class="clear"></div>
 
+            <!-- 分类商品列表页分页 -->
+
+            <div class="clear"></div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
-        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
-</div><!--#body_box-->
+</div>
+<div class="clear"></div>
+<!--#body_box-->
 <div class="clear0"></div>
-<div th:replace="fore/include::footer"></div>
+<div th:replace="fore/include::foot"></div>
 <div class="mini_detail">
     <div class="mini_detail_bg"></div>
     <div id="mini_detail"><span class="close_icon iconfont icon-iconfontclose"></span></div>
@@ -206,7 +222,7 @@
     $(function () {
         $('.discount-timer').each(function () {
             $(this).genTimer({
-                beginTime: "2020/07/22 23:17:58",
+                beginTime: "2020/07/22 23:14:21",
                 targetTime: $(this).attr('endTime'),
                 callback: function (time) {
                     this.html(time);

@@ -1,7 +1,7 @@
 <!doctype html>
 <html  xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Feedback - t2562.demo.ymcart.com</title>
+        <title>iron Feedback </title>
                  <meta content="charset=utf-8" />
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
         <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -108,7 +108,7 @@ ytag("","",ymcart_user_id,0);
 <div class="login-main">
 	<div class="login-header notranslate">
     	<div class="logo">
-        	<a href="/"><img src="style/images/7594224e92daa4e8.png" th:src="@{/fore/images/feedbackLog.png}"/></a>
+        	<a href="/iron/fore/index"><img src="style/images/7594224e92daa4e8.png" th:src="@{/fore/images/feedbackLog.png}"/></a>
         </div>
     </div>
 
@@ -116,7 +116,7 @@ ytag("","",ymcart_user_id,0);
 <div class="module_feedback_2019">
     <div class="feedback-box  notranslate">
         <div class="feedback-con">
-        	<h3 class="feedback-title">Feedback</h3>
+
             
                             
             <form action="/iron/fore/addFeedback" method="post" id="message_form" onkeydown="if(event.keyCode==13)return false;" class="commentform">
@@ -129,9 +129,14 @@ ytag("","",ymcart_user_id,0);
                 </div>
                                 <input class="feedback-text feedback-title" type="text" placeholder="Post title" name="subject" value="" />
                 <textarea class="feedback-text feedback-content" placeholder="Content" name="message"></textarea>
-          
-                <input class="feedback-btn common_style_black" type="submit" name="" value="Submit" />
+
+                <div style="display: flex">
+                    <input href="/iron/fore/index" style="margin-right: 100px;" class="feedback-btn common_style_black" id="backButton" type="button"  value="back" />
+                    <input style="" class="feedback-btn common_style_black" type="submit" name="" value="Submit" />
+                </div>
+
             </form>
+            <a href="/iron/fore/index" id = "back"><span></span></a>
             <div th:if="${success}">谢谢您的反馈,<a href="/iron/fore/index">点击这里返回首页</a></div>
         </div>
     </div>
@@ -140,6 +145,9 @@ ytag("","",ymcart_user_id,0);
         
 
 <script type="text/javascript">
+    $("#backButton").click(function () {
+        $("#back").find("span").trigger("click")
+    })
     $("#attachData").change(function () {
         var _this = $(this);
         var file = this.files;

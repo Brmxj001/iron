@@ -137,6 +137,8 @@
                                 </ul>
                                 <div th:replace="back/CommonInclude::common"></div>
                                 <div th:replace="back/CommonInclude::url"></div>
+
+                                <div th:replace="back/include::ProductAttrTemplate"></div>
                                 <script type="text/javascript" th:inline="javascript">
                                     $(".delete").click(function (e) {
                                         if (confirm("是否要删除")) {
@@ -153,6 +155,68 @@
                                     $("#categories-top").click(function (event) {
                                         event.stopPropagation()
                                     })
+
+                                    function deleteProductAttr(e) {
+                                        postRequest(deleteProductAttrUrl(), getFormData("id", $(e).parent(".ProductAttr").attr("data-id")))
+                                        getAttr($(e).parent(".ProductAttr").attr("data-pid"))
+                                        console.log("delete")
+                                        return false
+                                    }
+
+                                    function editAttr(element) {
+                                        let formData = getFormData("id", element.attr("data-id"))
+                                        formData.append("pid", element.attr("data-pid"))
+                                        formData.append("name", element.find(".attrName").val())
+                                        formData.append("nameEn", element.find(".attrNameEn").val())
+                                        formData.append("value", element.find(".attrValue").val())
+                                        formData.append("valueEn", element.find(".attrValueEn").val())
+                                        postRequest(editProductAttrUrl(), formData)
+                                        console.log("edit")
+                                        return false
+                                    }
+
+                                    function getAttr(pid) {
+                                        let result = postRequest(getProductAttrUrl(), getFormData("pid", pid))
+                                        showAttr(result)
+                                        console.log("get")
+                                        return false
+                                    }
+
+                                    function addAttr(event) {
+                                        postRequest(addProductAttrUrl(),getFormData("pid",window.product.id))
+                                        getAttr(window.product.id)
+                                        console.log("add")
+                                        return false
+                                    }
+
+                                    function showAttr(aAttrList) {
+                                        var attrList = $("#productAttrList")
+                                        attrList.html("")
+                                        aAttrList.forEach(function (attr) {
+                                            let attrList = $("#productAttrList")
+                                            attrList.append($("#ProductAttrTemplate").html())
+                                            let newAttr = attrList.find(".ProductAttr").last()
+                                            newAttr.attr("data-id", attr.id)
+                                            newAttr.attr("data-pid", attr.pid)
+                                            newAttr.find(".attrName").val(attr.name)
+                                            newAttr.find(".attrNameEn").val(attr.nameEn)
+                                            newAttr.find(".attrValue").val(attr.value)
+                                            newAttr.find(".attrValueEn").val(attr.valueEn)
+
+                                            newAttr.find(".attrName").change(function () {
+                                                editAttr($(this).parent(".ProductAttr"))
+                                            })
+                                            newAttr.find(".attrNameEn").change(function () {
+                                                editAttr($(this).parent(".ProductAttr"))
+                                            })
+                                            newAttr.find(".attrValue").change(function () {
+                                                editAttr($(this).parent(".ProductAttr"))
+                                            })
+                                            newAttr.find(".attrValueEn").change(function () {
+                                                editAttr($(this).parent(".ProductAttr"))
+                                            })
+                                        })
+                                    }
 
                                     $(function () {
                                         let box = BoxPlus.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
@@ -171,7 +235,8 @@
                                                 $("#intro").val(result.intro)
                                                 $("#intro_en").val(result.intro_en)
                                                 $("#prize").val(result.prize)
-                                                $("#prizee").val(result.prizee)
+                                                $("#piece").val(result.piece)
+                                                $("#maxPrize").val(result.maxPrize)
                                                 $("#products-id").html(result.id)
                                                 $("#products-cid").val(result.cid)
                                                 $("#cover").attr("src", [[${qiniu}]] + result.cover)
@@ -179,6 +244,9 @@
                                                 openBox(box, result.id, result.imgList)
                                                 let categories = "#categories option[data-id=" + result.cid + "]"
                                                 $(categories).attr("selected", true)
+
+                                                //显示属性
+                                                showAttr(result.productAttrList);
                                             })
                                         }
                                     })
@@ -204,13 +272,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-footer">
-            <div class="row">
-                <div class="col-md-12">
-                    <span class="footer-text">2020 <a href="/iron/front/index">iron</a></span>
-                </div>
-            </div>
-        </div>
+        <div th:replace="back/include::foot"></div>
     </div>
 
     <div class="mailbox-item">
@@ -220,14 +282,14 @@
                     产品编辑<span class="badge info iron-hidden" id="products-id"></span><span>(修改生效)</span>
                 </div>
             </div>
-
-
             <!-- demo -->
             <span class="mail-author-name">产品名称:</span>
 
             <input type="text" class="form-control "
                    id="name" value="">
-
+            <span class="mail-author-name">piece:</span>
+            <input type="number" class="form-control "
+                   id="piece" value="" >
             <span class="mail-author-name">产品名称(English):</span>
             <input type="text" class="form-control "
                    id="name_en" value="">
@@ -235,7 +297,7 @@
 
             <span class="mail-author-name" id="coverButton">封面(点击修改)</span>
             <input class="iron-hidden" type="file" id="coverInput"
-                    accept="image/*"/>
+                   accept="image/*"/>
             <div class="EditCover">
                 <img alt="" id="cover"/>
             </div>
@@ -272,16 +334,16 @@
                           id="intro_en"></textarea>
             </div>
 
-            <span class="mail-author-name">价格</span>
+            <span class="mail-author-name">最低价</span>
             <input type="text" class="form-control "
                    id="prize" value="">
 
-            <span class="mail-author-name">价格(美元)</span>
+            <span class="mail-author-name">最高价</span>
             <input type="text" class="form-control "
-                   id="prize_en" value="">
+                   id="maxPrize" value="">
 
-                <span class="mail-author-name">型号</span>
-                <input type="text" class="form-control" id="model" value="">
+            <span class="mail-author-name">型号</span>
+            <input type="text" class="form-control" id="model" value="">
 
             <span class="mail-author-name">型号(English)</span>
             <input type="text" class="form-control "
@@ -293,6 +355,21 @@
                     <option th:attr="data-id=${c.id}">[[${c.name}]]</option>
                 </th:block>
             </select>
+
+            <span class="mail-author-name">
+                产品属性
+                <svg id="addProductAttr" width="3em" height="3em" onclick="addAttr()"
+                     viewBox="0 0 16 16" class="bi bi-file-plus-fill"
+                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M12 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z"/>
+                </svg>
+            </span>
+
+            <div id="productAttrList">
+
+
+            </div>
 
 
             <span class="mail-author-name">照片</span>
@@ -306,11 +383,12 @@
                 $(".mailbox-item .form-control").blur(function () {
                     let formData = getFormData("id", window.product.id)
                     formData.append("name", getVal("#name"))
+                    formData.append("piece", getVal("#piece"))
                     formData.append("name_en", getVal("#name_en"))
                     formData.append("model", getVal("#model"))
                     formData.append("model_en", getVal("#model_en"))
                     formData.append("prize", getVal("#prize"))
-                    formData.append("prize_en", getVal("#prize_en"))
+                    formData.append("maxPrize", getVal("#maxPrize"))
                     formData.append("simple_intro", getVal("#simple_intro"))
                     formData.append("simple_intro_en", getVal("#simple_intro_en"))
                     formData.append("intro", getVal("#intro"))
@@ -323,12 +401,12 @@
                 $("#coverButton").click(function () {
                     $("#coverInput").trigger("click")
                 })
-                $("#coverInput").change(function(){
-                   $("#coverButton").html("封面(修改中)")
-                    let formData = getFormData("id",window.product.id)
-                    formData.append("cover",$(this)[0].files[0])
-                    window.product = postRequest(addProductCoverUrl(),formData)
-                    $("#cover").attr("src",[[${qiniu}]]+window.product.cover)
+                $("#coverInput").change(function () {
+                    $("#coverButton").html("封面(修改中)")
+                    let formData = getFormData("id", window.product.id)
+                    formData.append("cover", $(this)[0].files[0])
+                    window.product = postRequest(addProductCoverUrl(), formData)
+                    $("#cover").attr("src", [[${qiniu}]] + window.product.cover)
                     $("#coverButton").html("封面(点击修改)")
                 })
 

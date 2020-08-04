@@ -53,6 +53,7 @@ public class CategoriesServiceImpl implements CategoriesService<Categories> {
         List<Categories> result = categoriesDAO.findAll();
         for (Categories categories : result) {
             categories.setProductList(productService.getAllByCategoriesId(categories.getId()));
+            categories.setImgList(categoriesImgDAO.findByCid(categories.getId()));
         }
         return result;
     }

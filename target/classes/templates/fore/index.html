@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="zh">
 <head>
 
-    <title>首页</title>
+    <title>home</title>
     <meta name="keywords" content="t2562.demo.ymcart.com"/>
     <meta name="description" content="t2562.demo.ymcart.com"/>
 
@@ -133,23 +133,25 @@
 </head>
 <body>
 
-<div th:replace="fore/include::header"></div>
+<div th:replace="fore/include::simpleHeader"></div>
+<div th:replace="back/CommonInclude::common"></div>
+<div th:replace="back/CommonInclude::url"></div>
 <div id="body_box" class="index_default">
 
 
     <div class="banner_box" ymcart_ve_tag='banner' ymcart_ve_type='banner'>
         <div class="ibanner">
             <ul class="swiper-wrapper">
-                <li class="swiper-slide" th:each="img:${homeImgList}">
-                    <a href="" target="_blank">
-                        <div class="img"><img alt="Electric power cutter  with wet cutting kit"
-                                              title="Electric power cutter  with wet cutting kit"
-                                              th:src="${qiniu}+${img.path}"
-                                              src="style/images/848d9efe0fe5c8d3.jpg"/></div>
+                <li class="swiper-slide" th:each="c:${categoriesListWithProduct}">
+                    <a th:href="@{/fore/categories(cid=${c.getId()})}">
+                        <div class="img">
+                            <img th:alt="${c.getName()}"
+                                 th:title="${c.getName()}"
+                                 th:src="${qiniu}+${c.carousel}"/>
+                        </div>
 
                     </a>
                 </li>
-
 
 
             </ul>
@@ -229,11 +231,20 @@
 
                 <h3 class="title">
                     <div class="pro_change_title">
-                        <a href="/New-Arrivals-rc4152.html">New Arrivals</a>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll},way='newest')}">
+                            <div th:if="${session.language  == 'ch'}">最新</div>
+                            <div th:unless="${session.language  == 'ch'}">New Arrivals</div>
+                        </a>
 
-                        <a href="/Hot-Sales-rc4153.html">Hot Sales</a>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll},way='sale')}">
+                            <div th:if="${session.language  == 'ch'}">热卖</div>
+                            <div th:unless="${session.language  == 'ch'}">Hot Sales</div>
+                        </a>
 
-                        <a href="/Top-Sellers-rc4154.html">Top Sellers</a>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll},way='popular')}">
+                            <div th:if="${session.language  == 'ch'}">畅销品</div>
+                            <div th:unless="${session.language  == 'ch'}">Top Sellers</div>
+                        </a>
 
                     </div>
                 </h3>
@@ -247,34 +258,26 @@
                             <div class="product_inner">
                                 <div class="quickcart_box" goods_id="118553"></div>
                                 <div class="img">
-                                    <a href="/Defyant-Reversible-Dot-Shorts-p118553.html" class="pic"
+                                    <a th:href="@{/fore/product(pid=${p.id})}" class="pic"
                                        title="Defyant Reversible Dot Shorts">
-                                        <img src="style/images/9e11724d274dafe3.jpg"
-                                             th:src="${qiniu}+${p.cover}"
-                                             title="Defyant Reversible Dot Shorts" alt="Defyant Reversible Dot Shorts"/>
-
+                                        <img
+                                                th:src="${qiniu}+${p.cover}"
+                                                th:title="${p.getName()}" alt="iron"/>
                                     </a>
-                                    <a class="quickview" href="javascript:void(0)"><i
-                                            class="iconfont icon-fangdajing4 hide"></i><i
-                                            class="iconfont icon-fangdajing4 show"></i></a>
+
                                 </div>
                                 <div class="pro_content">
-                                    <a href="/Defyant-Reversible-Dot-Shorts-p118553.html"
-                                       title="Defyant Reversible Dot Shorts" class="name">
-                                        [[${p.name}]]
+                                    <a th:href="@{/fore/product(pid=${p.id})}"
+                                       th:title="${p.getName()}" class="name">
+                                        <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
+                                        <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
                                     </a>
                                     <div class="price">
 
-                                        [[${p.prize}]]
+                                        $[[${p.prize}]] - $[[${p.maxPrize}]]
 
                                     </div>
-                                    <div class="review">
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing"></i>
-                                    </div>
+
                                 </div>
 
 
@@ -285,8 +288,6 @@
                         <li class="other"></li>
 
 
-
-
                     </ul>
 
 
@@ -295,31 +296,24 @@
                             <div class="product_inner">
                                 <div class="quickcart_box" goods_id="118553"></div>
                                 <div class="img">
-                                    <a href="/Defyant-Reversible-Dot-Shorts-p118553.html" class="pic"
+                                    <a th:href="@{/fore/product(pid=${p.id})}" class="pic"
                                        title="Defyant Reversible Dot Shorts">
-                                        <img src="style/images/9e11724d274dafe3.jpg"
-                                             th:src="${qiniu}+${p.cover}"
-                                             title="Defyant Reversible Dot Shorts" alt="Defyant Reversible Dot Shorts"/>
+                                        <img
+                                                th:src="${qiniu}+${p.cover}"
+                                                th:title="${p.getName()}" alt="none"/>
                                     </a>
-                                    <a class="quickview" href="javascript:void(0)"><i
-                                            class="iconfont icon-fangdajing4 hide"></i><i
-                                            class="iconfont icon-fangdajing4 show"></i></a>
+
                                 </div>
                                 <div class="pro_content">
-                                    <a href="/Defyant-Reversible-Dot-Shorts-p118553.html"
-                                       title="Defyant Reversible Dot Shorts" class="name">
-                                        [[${p.name}]]
+                                    <a th:href="@{/fore/product(pid=${p.id})}"
+                                       th:title="${p.getName()}" class="name">
+                                        <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
+                                        <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
                                     </a>
                                     <div class="price">
-                                        [[${p.prize}]]
+                                        $[[${p.prize}]] - $[[${p.maxPrize}]]
                                     </div>
-                                    <div class="review">
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing"></i>
-                                    </div>
+
                                 </div>
                             </div>
                         </li>
@@ -330,31 +324,24 @@
                             <div class="product_inner">
                                 <div class="quickcart_box" goods_id="118553"></div>
                                 <div class="img">
-                                    <a href="/Defyant-Reversible-Dot-Shorts-p118553.html" class="pic"
-                                       title="Defyant Reversible Dot Shorts">
-                                        <img src="style/images/9e11724d274dafe3.jpg"
-                                             th:src="${qiniu}+${p.cover}"
-                                             title="Defyant Reversible Dot Shorts" alt="Defyant Reversible Dot Shorts"/>
+                                    <a th:href="@{/fore/product(pid=${p.id})}" class="pic"
+                                       th:title="${p.getName()}">
+                                        <img
+                                                th:src="${qiniu}+${p.cover}"
+                                                th:title="${p.getName()}" alt="iron"/>
                                     </a>
-                                    <a class="quickview" href="javascript:void(0)"><i
-                                            class="iconfont icon-fangdajing4 hide"></i><i
-                                            class="iconfont icon-fangdajing4 show"></i></a>
+
                                 </div>
                                 <div class="pro_content">
-                                    <a href="/Defyant-Reversible-Dot-Shorts-p118553.html"
-                                       title="Defyant Reversible Dot Shorts" class="name">
-                                        [[${p.name}]]
+                                    <a th:href="@{/fore/product(pid=${p.id})}"
+                                       th:title="${p.getName()}" class="name">
+                                        <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
+                                        <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
                                     </a>
                                     <div class="price">
-                                        [[${p.prize}]]
+                                        $[[${p.prize}]] - $[[${p.maxPrize}]]
                                     </div>
-                                    <div class="review">
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing cur"></i>
-                                        <i class="iconfont icon-xing"></i>
-                                    </div>
+
                                 </div>
                             </div>
                         </li>
@@ -368,21 +355,29 @@
     <div class="cate_bg">
 
         <div class="categories_pro" ymcart_ve_tag='diy_home_cate_ids' ymcart_ve_type='cate_select'>
-            <h3 class="tit"><a class="quickview" href="javascript:void(0)">Shopping By Categories</a></h3>
+            <h3 class="tit"><a class="quickview" href="javascript:void(0)">
+
+                <div th:if="${session.language  == 'ch'}">类别产品</div>
+                <div th:unless="${session.language  == 'ch'}">Shopping By Categories</div>
+            </a></h3>
             <ul class="categories">
 
 
                 <li class="foo" th:each="c:${categoriesListWithProduct}">
 
-                    <a href="/POWER-TOOLS-c34573.html" class="pic">
-                        <img src="style/images/bc3650cadd6a3b9f.jpg" th:src="${qiniu}+${c.cover}"/>
+                    <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
+                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.imgList.get(0).path}"/>
                     </a>
                     <dl>
-                        <dt>[[${c.name}]]</dt>
+                        <dt>
+                            <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
+                            <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
+                        </dt>
                         <dd th:each="p:${c.productList}" th:if="${pStat.index}<5">
-                            <a href="/Drills-c34578.html">
+                            <a th:href="@{/fore/product(pid=${p.getId()})}">
                                 <span>■</span>
-                                [[${p.name}]]
+                                <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
+                                <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
                             </a>
                         </dd>
 
@@ -394,65 +389,57 @@
         </div>
     </div>
     <div class="home_text" ymcart_ve_tag='diy_home_text' ymcart_ve_type='textedit'><img
-            src="style/images/b4916cbbacb0f76f.png" th:src="@{/fore/images/adccb51f2f5ef17c.jpg}" alt=""/></div>
+            src="http://qdxbxkkk6.bkt.clouddn.com/home.png" alt=""/></div>
     <div class="default_box">
         <div id="news" class="news">
-            <h3 class="tit"><a href="/article-nc0-1.html">Latest news</a></h3>
+            <h3 class="tit"><a href="/iron/fore/blog">
+                <div th:if="${session.language  == 'ch'}">最新消息</div>
+                <div th:unless="${session.language  == 'ch'}">Latest news</div>
+            </a></h3>
             <ul class="news_con">
 
-                <li class="foo">
+                <li class="foo" th:each="blog:${blogList}">
                     <div class="pic">
-                        <a href="/MAURIS-LACINIA-LECTUS-a1165.html">
-                            <img src="style/images/adccb51f2f5ef17c.jpg" th:src="@{/fore/images/adccb51f2f5ef17c.jpg}"/>
+                        <a th:href="@{/fore/blogChild(id=${blog.id})}">
+                            <img th:src="${qiniu}+${blog.getBlogImgList().get(0).path}"/>
                         </a>
                     </div>
                     <div class="text">
-                        <h5><a href="/MAURIS-LACINIA-LECTUS-a1165.html">MAURIS LACINIA LECTUS</a></h5>
-                        <span class="time">Jul 12, 2018</span>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec,
-                            rhoncus eget, laoreet sit amet.</p>
-                        <a class="more" href="/MAURIS-LACINIA-LECTUS-a1165.html">Read More &#187 </a>
-                    </div>
-
-                </li>
-
-                <li class="foo">
-                    <div class="pic">
-                        <a href="/MAURIS-LACINIA-LECTUS-a1164.html">
-                            <img src="style/images/eabba1b7bbb70b0a.jpg" th:src="@{/fore/images/eabba1b7bbb70b0a.jpg}"/>
+                        <h5><a th:href="@{/fore/blogChild(id=${blog.id})}">
+                            <div th:if="${session.language  == 'ch'}">[[${blog.name}]]</div>
+                            <div th:unless="${session.language  == 'ch'}">[[${blog.nameEn}]]</div>
+                        </a></h5>
+                        <span class="time" th:text="${#dates.format(blog.getCreateTime(),'yyyy-MM-dd')}"></span>
+                        <p>
+                            <div th:if="${session.language  == 'ch'}">[[${blog.intro}]]</div>
+                            <div th:unless="${session.language  == 'ch'}">[[${blog.introEn}]]</div>
+                        </p>
+                        <a class="more" th:href="@{/fore/blogChild(id=${blog.id})}">
+                            <div th:if="${session.language  == 'ch'}">阅读更多 &#187</div>
+                            <div th:unless="${session.language  == 'ch'}">Read More &#187</div>
                         </a>
                     </div>
-                    <div class="text">
-                        <h5><a href="/MAURIS-LACINIA-LECTUS-a1164.html">MAURIS LACINIA LECTUS</a></h5>
-                        <span class="time">Jul 12, 2018</span>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec,
-                            rhoncus eget, laoreet sit amet.</p>
-                        <a class="more" href="/MAURIS-LACINIA-LECTUS-a1164.html">Read More &#187 </a>
-                    </div>
 
                 </li>
-
-
             </ul>
             <div class="clear0"></div>
         </div>
     </div>
     <script type="text/javascript">
-	$(function(){
-		$(".pro_change_title").children("a").addClass("none");
-		$(".pro_change_title").children("a").first().removeClass("none")
-		$(".pro_change_title").children("a").first().addClass("actived first");
-		$("#productbox_tab .common_pro_list1").eq(0).show();
-		$(".pro_change_title a").mouseover(function(){
-			var ind=$(this).index();
-			$(this).addClass("actived").siblings().removeClass("actived");
-			$("#productbox_tab .common_pro_list1").eq(ind).show().siblings(".common_pro_list1").hide();
-    		sr.reveal('.foo');
-		});
+        $(function () {
+            $(".pro_change_title").children("a").addClass("none");
+            $(".pro_change_title").children("a").first().removeClass("none")
+            $(".pro_change_title").children("a").first().addClass("actived first");
+            $("#productbox_tab .common_pro_list1").eq(0).show();
+            $(".pro_change_title a").mouseover(function () {
+                var ind = $(this).index();
+                $(this).addClass("actived").siblings().removeClass("actived");
+                $("#productbox_tab .common_pro_list1").eq(ind).show().siblings(".common_pro_list1").hide();
+                sr.reveal('.foo');
+            });
 
 
-
-	});
+        });
 
 
     </script>
@@ -462,7 +449,8 @@
 <div class="mini_detail">
     <div class="mini_detail_bg"></div>
     <div id="mini_detail"><span class="close_icon iconfont icon-iconfontclose"></span></div>
-    <iframe id="mini_iframe" width="960" scrolling="no" height="610" frameborder="false" allowtransparency="false" style="border: medium none;" src=' + pro_url + ' name="main">
+    <iframe id="mini_iframe" width="960" scrolling="no" height="610" frameborder="false" allowtransparency="false"
+            style="border: medium none;" src=' + pro_url + ' name="main">
 
         <div>aaasdjfkljaskldfjkl</div>
     </iframe>

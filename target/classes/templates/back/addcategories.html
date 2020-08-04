@@ -30,6 +30,8 @@
               rel="stylesheet">
         <link href="../static/css/iron.css" rel="stylesheet"
               th:href="@{/css/iron.css}">
+        <link href="../static/css/iron.css" rel="stylesheet"
+              th:href="@{/iron/css/box.css}">
 
         <!-- Theme Styles -->
         <link th:href="@{/css/connect.min.css}"
@@ -103,6 +105,13 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
+                                                <td>轮播图</td>
+                                                <td width="60%">
+                                                   <img id="carouselImg" width="100%"  alt=""/>
+                                                </td>
+                                                <td><span id="carouselButton">点击添加</span></td>
+                                            </tr>
+                                            <tr>
                                                 <td>分类照片</td>
                                                 <td width="60%">
                                                     <div id="ImgBox"></div>
@@ -119,12 +128,14 @@
                                             </tbody>
                                         </table>
 
-                                        <input class="hidden" type="file" name="file" id="BoxInput"
-                                               accept="image/*"/>
+                                        <input class="hidden" type="file" id="BoxInput" accept="image/*"/>
+                                        <input class="hidden" type="file" id="carouselInput" accept="image/*"/>
                                         <div th:replace="back/CommonInclude::url"></div>
                                         <div th:replace="back/CommonInclude::common"></div>
                                         <div th:replace="back/include::showImgModal"></div>
                                         <script type="text/javascript" th:inline="javascript">
+                                            let carouselFile = "";
+                                            let carouselSrc = "";
                                             let box = Box.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
                                             box.init()
                                             $("#cSubmit").click(function () {
@@ -132,10 +143,12 @@
                                                 fromData_append(formData, "name", getVal("#cName"))
                                                 fromData_append(formData, "namee", getVal("#cNameE"))
                                                 fromData_append(formData, "detail", getVal("#cDetail"))
+                                                fromData_append(formData, "carouselFile", carouselFile)
                                                 fromData_appentFile(formData, box.FileList)
-                                                if (formData_isNull(formData)) {
+                                                if (formData_isNull(formData) || carouselFile === "") {
                                                     return alert("不能为空")
                                                 }
+
                                                 showLoadInfo("#loadInfo")
                                                 postRequest(addCategoriesUrl(), formData)
                                                     setValNull("#loadInfo")
@@ -143,7 +156,14 @@
                                                     location.reload()
 
                                             })
-
+                                            $("#carouselButton").click(function () {
+                                                $("#carouselInput").trigger("click")
+                                            })
+                                            $("#carouselInput").change(function () {
+                                                carouselFile  = $(this)[0].files[0]
+                                                carouselSrc = getFileTempPath(carouselFile)
+                                                $("#carouselImg").attr("src",carouselSrc)
+                                            })
 
                                         </script>
 
@@ -153,14 +173,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="page-footer">
-                    <div class="row">
-                        <div class="col-md-12">
-						<span class="footer-text">2019 © <a
-                                href="http://www.bootstrapmb.com/">stacks</a></span>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="back/include::foot"></div>
             </div>
 
         </div>

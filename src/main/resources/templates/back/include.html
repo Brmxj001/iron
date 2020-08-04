@@ -4,7 +4,7 @@
 <footer th:fragment="left">
 	<div class="page-sidebar">
 		<div class="logo-box">
-			<a href="#" class="logo-text">Connect</a><a href="#"
+			<a href="/iron/fore/index" class="logo-text">home</a><a href="#"
 				id="sidebar-close"><i class="material-icons">close</i></a> <a
 				href="#" id="sidebar-state"><i class="material-icons">adjust</i><i
 				class="material-icons compact-sidebar-icon">panorama_fish_eye</i></a>
@@ -22,10 +22,12 @@
 						class="material-icons-outlined">api</i>联系我们</a></li>
 				<li><a href="/iron/back/homePage"><i
 						class="material-icons-outlined">bookmark</i>主页</a></li>
+				<li><a href="/iron/back/blogPage"><i
+						class="material-icons-outlined">bookmark</i>Blog</a></li>
 			</ul>
 		</div>
 	</div>
-</footer>
+</footer>product
 
 <footer th:fragment="header">
 	<div class="page-header">
@@ -204,7 +206,7 @@
 					th:class="${current == 'products'}?active:' '">查看产品<span
 						class="badge badge-pill badge-warning float-right">[[${proSize}]]</span></a></li>
 				<li><a th:class="${current == 'addProducts'}?active:' '" href="/iron/back/addProductPage">添加产品</a></li>
-				<li><a th:class="${current == 'addcategories'}?active:' '"  href="/iron/back/addCategoriesPage">添加分类</a></li>
+				<li><a th:class="${current == 'addCategories'}?active:' '"  href="/iron/back/addCategoriesPage">添加分类</a></li>
 			</ul>
 
 		</div>
@@ -212,81 +214,39 @@
 
 </footer>
 
-<footer th:fragment="ironJS">
-	<script type="text/javascript" th:inline="javascript">
 
-	function getsrc(file){
-		var url = null ;
-		if (window.createObjectURL!=undefined) {
-			url = window.createObjectURL(file) ;
-		} else if (window.URL!=undefined) {
-			url = window.URL.createObjectURL(file) ;
-		} else if (window.webkitURL!=undefined) {
-			url = window.webkitURL.createObjectURL(file) ;
-		}
-		return url ;
-	}
-	</script>
+
+<footer th:fragment="ProductAttrTemplate">
+
+	<div id="ProductAttrTemplate" class="iron-hidden">
+		<div style="display: flex" class="ProductAttr">
+			<input placeholder="属性名称" value="" style="margin: 5px"
+				   class="attrName form-control"/>
+			<input placeholder="属性值" value="" style="margin: 5px"
+				   class="attrValue form-control"/>
+			<input placeholder="属性名称(英文)" value="" style="margin: 5px"
+				   class="attrNameEn form-control"/>
+			<input placeholder="属性值(英文)" value="" style="margin: 5px"
+				   class="attrValueEn form-control"/>
+			<svg style="margin: 5px" onclick="deleteProductAttr(this)"
+				 width="6em" height="6em" viewBox="0 0 16 16"
+				 class="deleteProductAttr bi bi-backspace-fill"
+				 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd"
+					  d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2V3zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8 5.829 5.854z"/>
+			</svg>
+		</div>
+	</div>
 </footer>
 
-<footer  th:fragment="box">
-		<script type="text/javascript" th:inline="javascript">
-			const Box = {
-				instance: function (button,input, box) {
-					let result = {}
-					result.FileList = []
-					result.SrcList = []
-					result.box = box
-					result.input = input
-					result.button = button
-					result.showBoxImgs = function () {
-						result.box.html("")
-						for (let i = 0; i < result.SrcList.length; i++) {
-							let oldBox = result.box.html();
-							result.box.html(oldBox + '<div><img src="' + result.SrcList[i]+ '" alt=""/><span id="' + i + '">+</span></div>');
-						}
-					}
-					result.showImg = function () {
-						result.box.on("click", "img", function () {
-							showImg($(this).attr("src"))
-						})
-					}
-					result.openInput = function () {
-						result.input.change(function () {
-							let cid = $(this).attr("data-id")
-							let formData = new FormData()
-							fromData_append(formData,"cid", cid)
-							fromData_append(formData,"file", $(this)[0].files[0])
-							let result = postRequest(page,formData)
-							result.showBoxImgs()
-							$(this).val("")
-						})
+<footer th:fragment="foot">
+	<div class="page-footer">
+		<div class="row">
+			<div class="col-md-12">
+						<span class="footer-text">2020 © <a
+								href="/iron/fore/index">首页</a></span>
+			</div>
+		</div>
+	</div>
 
-					}
-					result.openButton = function(){
-						result.button.click(function(){
-							result.input.trigger("click")
-						})
-					}
-					result.openDeleteImg = function(){
-						result.box.on("click", "span", function () {
-							let index = $(this).attr("id")
-							result.SrcList.splice(index)
-							result.FileList.splice(index)
-							result.showBoxImgs()
-						})
-					}
-					result.init = function(){
-						result.openButton()
-						result.openInput()
-						result.openDeleteImg()
-						result.showImg()
-					}
-					return result
-				}
-			}
-
-		</script>
-
-	</footer>
-
+</footer>

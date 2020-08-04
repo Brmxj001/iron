@@ -36,3 +36,7 @@
 #BoxInput{
     visibility: hidden;
 }
+
+.colorRed{
+    color: red;
+}

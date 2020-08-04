@@ -25,6 +25,8 @@ public class Categories {
 	private String namee;
 
 	private  String cover;
+
+	private String carousel;
 	@Transient
 	private List<CategoriesImg> imgList;
 

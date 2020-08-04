@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <title>POWER TOOLS - t2562.demo.ymcart.com</title>
+    <title>Search Product</title>
     <meta name="keywords" content="POWER TOOLS - t2562.demo.ymcart.com"/>
     <meta name="description" content="POWER TOOLS - t2562.demo.ymcart.com"/>
 
@@ -135,8 +135,58 @@
 
 </head>
 <body>
-<div th:replace="fore/include::header"></div>
+<div th:replace="fore/include::simpleHeader"></div>
+<div th:replace="back/CommonInclude::common"></div>
+<div th:replace="back/CommonInclude::url"></div>
+<script>
+    var show_mini_cart = false;
+    $(function () {
+        $(".cart_box").hover(function () {
+            if (!show_mini_cart) {
+                $.ajax({
+                    url: "/h-cart-miniCartList.html",
+                    cache: false,
+                    success: function (html) {
+                        $('#minicartlist').html(html);
+                        show_mini_cart = true;
+                    }
+                })
+            }
+            $("#CartsCon").show();
+        }, function () {
+            $("#CartsCon").hide();
+            show_mini_cart = false;
+        });
 
+        $("#header_box .login  > a").toggle(function () {
+            $(".login_menu").stop().slideDown();
+        }, function () {
+            $(".login_menu").stop().slideUp();
+        });
+
+        var win = $(window);
+        var sticky_id = $("#nav_wrapper");
+        var mtst = $('#nav_wrapper').offset().top;
+        win.on('scroll', function () {
+            var scroll = win.scrollTop();
+            if (scroll > mtst) {
+                sticky_id.addClass("fixed_header");
+            } else {
+                sticky_id.removeClass("fixed_header");
+            }
+        });
+
+        $('#search_icon').click(function () {
+            $('.search_box').addClass('open');
+        });
+        $('.close_search').click(function () {
+            $('.search_box').removeClass('open');
+
+        });
+
+    });
+
+</script>
 <div id="body_box">
     <div class="clear"></div>
 
@@ -155,12 +205,30 @@
                 <span class="iconfont icon-arrows-copy"></span>
                 <form class="showform" style="float: left;margin-right: 10px;" >
                     <select name="po" id="way" class="categoriesPageAccessParamClick">
-                        <option value="relevance"   th:selected="${way}=='relevance'?'selected':''" >Relevance</option>
-                        <option value="popular"     th:selected="${way}=='popular'?'selected':'false'" >Popular</option>
-                        <option value="sale"        th:selected="${way}=='sale'?'selected':'false'" >Sale</option>
-                        <option value="prizeAsc"    th:selected="${way}=='prizeAsc'?'selected':'false'" >Price↑</option>
-                        <option value="prizeDesc"   th:selected="${way}=='prizeDesc'?'selected':'false'" >Price↓</option>
-                        <option value="newest"      th:selected="${way}=='newest'?'selected':'false'" >New In</option>
+                        <option value="relevance"   th:selected="${way}=='relevance'?'selected':''" >
+                            <span th:if="${session.language  == 'ch'}">默认</span>
+                            <span th:unless="${session.language  == 'ch'}">Relevance</span>
+                        </option>
+                        <option value="popular"     th:selected="${way}=='popular'?'selected':'false'" >
+                            <span th:if="${session.language  == 'ch'}">流行</span>
+                            <span th:unless="${session.language  == 'ch'}">Popular</span>
+                        </option>
+                        <option value="sale"        th:selected="${way}=='sale'?'selected':'false'" >
+                            <span th:if="${session.language  == 'ch'}">销量</span>
+                            <span th:unless="${session.language  == 'ch'}">Sale</span>
+                        </option>
+                        <option value="prizeAsc"    th:selected="${way}=='prizeAsc'?'selected':'false'" >
+                            <span th:if="${session.language  == 'ch'}">价格↑</span>
+                            <span th:unless="${session.language  == 'ch'}">Price↑</span>
+                        </option>
+                        <option value="prizeDesc"   th:selected="${way}=='prizeDesc'?'selected':'false'" >
+                            <span th:if="${session.language  == 'ch'}">价格↓</span>
+                            <span th:unless="${session.language  == 'ch'}">Price↓</span>
+                        </option>
+                        <option value="newest"      th:selected="${way}=='newest'?'selected':'false'" >
+                            <span th:if="${session.language  == 'ch'}">新的</span>
+                            <span th:unless="${session.language  == 'ch'}">New In</span>
+                        </option>
                     </select>
                 </form>
                 <!--<a href="/POWER-TOOLS-c34573/list---1------r1.html"  class="cur"  >Popular</a> |-->
@@ -178,7 +246,10 @@
                 <span class="iconfont icon-arrows-copy"></span>
                 <form class="showform">
                     <select class="categoriesPageAccessParamClick" name="psize" id="total">
-                        <option value="200" th:selected="${total}=='200'?'selected':''" >Quantity</option>
+                        <option value="200" th:selected="${total}=='200'?'selected':''" >
+                            <span th:if="${session.language  == 'ch'}">全部</span>
+                            <span th:unless="${session.language  == 'ch'}">Quantity</span>
+                        </option>
                         <option value="20" th:selected="${total}=='20'?'selected':'false'" >20</option>
                         <option value="40" th:selected="${total}=='40'?'selected':'false'" >40</option>
                         <option value="60" th:selected="${total}=='60'?'selected':'false'" >60</option>
@@ -190,10 +261,11 @@
 
 
             <div class="ck_box prolist_nav_stock">
-                <a href="/POWER-TOOLS-c34573/list-----1----r1.html"><b></b>In Stock</a>
+                <a href="/iron/fore/index"><span th:if="${session.language  == 'ch'}">首页 </span>
+                    <span th:unless="${session.language  == 'ch'}">Home</span></a>
             </div>
             <div class="ck_box prolist_nav_freeshipping">
-                <a href="/POWER-TOOLS-c34573/list------1---r1.html"><b></b>Free Shipping</a>
+                <a href="/iron/fore/aboutUs">About Us</a>
             </div>
 
         </div>
@@ -201,25 +273,30 @@
 
             <ul class="common_pro_list1">
 
-
+                <div th:if="${productList.size()}=='0'">
+                    <h1 style="text-align: center">"[[${searchOrAll}]]"</h1>
+                    <h1 style="text-align: center">没有相关产品,换一个关键词试试</h1>
+                    <div style="height: 400px"></div>
+                </div>
                 <li class="foo" th:each="p:${productList}">
                     <div class="product_inner">
                         <div class="quickcart_box" goods_id="118548"></div>
                         <div class="img">
-                            <a href="/cross-colours-camo-print-tank-half-mengo-p118548.html" class="pic"
+                            <a  th:href="@{/fore/product(pid=${p.id})}" class="pic"
                                title="cross colours camo print tank half mengo">
-                                <img src="style/images/1bc44a8ee5e34944.jpg" th:src="${qiniu}+${p.cover}"
-                                     title="cross colours camo print tank half mengo"
-                                     alt="cross colours camo print tank half mengo"/>
+                                <img  th:src="${qiniu}+${p.cover}"
+                                     th:title="${p.getName()}"
+                                     alt="iron"/>
                             </a>
                         </div>
                         <div class="pro_content">
-                            <a href="/cross-colours-camo-print-tank-half-mengo-p118548.html"
-                               title="cross colours camo print tank half mengo" class="name" th:text="${p.name}">cross
-                                colours camo print
-                                tank half mengo</a>
-                            <div class="price" th:text="${p.prize}">
-                                US$ 80.00
+                            <a  th:href="@{/fore/product(pid=${p.id})}"
+                               th:title="${p.getName()}" class="name" >
+                                <span th:if="${session.language  == 'ch'}">[[${p.name}]] </span>
+                                <span th:unless="${session.language  == 'ch'}"> [[${p.name_en}]]</span>
+                            </a>
+                            <div class="price" >
+                                $[[${p.prize}]] - $[[${p.maxPrize}]]
                             </div>
                         </div>
 
@@ -244,7 +321,7 @@
 
     <div class="clear"></div>
 </div><!--#body_box-->
-<div th:replace="fore/include::footer"></div>
+<div th:replace="fore/include::foot"></div>
 <div class="mini_detail">
     <div class="mini_detail_bg"></div>
     <div id="mini_detail"><span class="close_icon iconfont icon-iconfontclose"></span></div>

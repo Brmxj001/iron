@@ -12,7 +12,8 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}">Products<i class="iconfont icon-arrows-copy"></i></a>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}">Products<i
+                                class="iconfont icon-arrows-copy"></i></a>
                         <ul class="sub_nav dropdown dropdown_cate">
                             <li th:each="c:${foreCategoriesList}">
                                 <a th:href="@{/fore/categories(cid=${c.id})}">
@@ -39,6 +40,13 @@
 
                     <li>
                         <a href="/iron/fore/aboutUs">About Us</a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                    <li>
+
+                        <a href="/iron/fore/feedback">Feedback</a>
                         <ul class="sub_nav dropdown dropdown_cate">
                         </ul>
                     </li>
@@ -72,8 +80,13 @@
 
 
                             <li>
-                                <a rel="nofollow" href="/h-module-currency.html?currency=USD">
-                                    <b>US$</b><span>USD</span>
+                                <a rel="nofollow" href="#" id="ch" class="changeLanguage">
+                                    <b>中文</b>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="#" id="en" class="changeLanguage">
+                                    <b>English</b>
                                 </a>
                             </li>
 
@@ -81,6 +94,10 @@
                         </ul>
                     </div>
                     <script>
+                        $(".changeLanguage").click(function () {
+                            postRequest(changeLanguageUrl(), getFormData("language", $(this).attr("id")))
+                            location.reload()
+                        })
                         $("#currencyCon,.currency_box").hover(function () {
                             $("#currencyCon").show();
                         }, function () {
@@ -124,7 +141,7 @@
                     onSelect: function (suggestion) {
                         var keywords = $('#autocomplete-ajax').val();
                         keywords = escape(escape(suggestion.value));
-                        window.location.href = "/Search-" + keywords + "/list-r1.html";
+                        window.location.href = "/iron/fore/categoriesSearch?searchOrAll=" + keywords;
                     },
                     onFocus: function () {
                         return false;
@@ -134,7 +151,7 @@
                     var keywords = $('#autocomplete-ajax').val();
                     keywords = format_keywords(keywords);
                     if (keywords != "") {
-                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        location.href = "/iron/fore/categoriesSearch?searchOrAll=" + keywords;
                         return false;
                     }
                 });
@@ -142,7 +159,7 @@
                     var keywords = $('#autocomplete-ajax').val();
                     keywords = format_keywords(keywords);
                     if (keywords != "") {
-                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        location.href = "/iron/fore/categoriesSearch?searchOrAll=" + keywords;
                         return false;
                     }
                 });
@@ -198,7 +215,6 @@
             });
             $('.close_search').click(function () {
                 $('.search_box').removeClass('open');
-
             });
 
         });
@@ -214,34 +230,39 @@
         <div class="link_box">
             <div class="btm_txt" ymcart_ve_tag='diy_btm_txt' ymcart_ve_type='textedit'><img
                     src="style/images/0ea4fd14ca764314.png" th:src="@{/fore/images/0ea4fd14ca764314.jpg}" alt=""/>
-                <p>
-                    <i class="iconfont icon-dizhi1"></i> 123 Third Street Fifth Avenue, Manhattan, New York, USA
+                <p th:each="contact:${contactUs}">
+                    [[${contact.name}]]: <span style="margin-left: 20px;">[[${contact.info}]]</span>
                 </p>
-                <p>
-                    <i class="iconfont icon-dianhua2"></i> +1234 456 789
-                </p>
-                <p>
-                    <i class="iconfont icon-youxiang"></i> i.shopyy.com
-                </p></div>
+            </div>
             <div class="bottom_rt">
                 <div class="row">
 
 
                     <dl>
-                        <dt>Company Info
+                        <dt><span th:if="${session.language  == 'ch'}">公司信息 </span>
+                            <span th:unless="${session.language  == 'ch'}"> Company Info</span>
                             <div class="bor_line"></div>
                         </dt>
 
                         <dd>
-                            <a href="/h-module-feedback.html">Feedback</a>
+                            <a href="/iron/fore/feedback">
+                                <span th:if="${session.language  == 'ch'}">反馈 </span>
+                                <span th:unless="${session.language  == 'ch'}"> Feedback</span>
+                            </a>
                         </dd>
 
                         <dd>
-                            <a href="/About-Us-n31891.html">About Us</a>
+                            <a href="/iron/fore/aboutUs">
+                                <span th:if="${session.language  == 'ch'}">有关我们 </span>
+                                <span th:unless="${session.language  == 'ch'}"> About Us</span>
+                            </a>
                         </dd>
 
                         <dd>
-                            <a href="/Contact-Us-n31890.html">Contact Us</a>
+                            <a href="/iron/fore/feedback">
+                                <span th:if="${session.language  == 'ch'}">联系我们 </span>
+                                <span th:unless="${session.language  == 'ch'}"> Contact Us</span>
+                            </a>
                         </dd>
 
 
@@ -280,11 +301,23 @@
         <div class="foot">
             <div class="col-lg-4">
                 <ul class="copyright">
-                    <a href="">About Us</a>
+
+                    <a href="/iron/fore/aboutUs">
+                        <span th:if="${session.language  == 'ch'}">有关我们 </span>
+                        <span th:unless="${session.language  == 'ch'}"> About Us</span>
+                    </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="">Contact Us</a>
+                    <a href="/iron/fore/aboutUs">
+                        <span th:if="${session.language  == 'ch'}">联系我们 </span>
+                        <span th:unless="${session.language  == 'ch'}"> Contact Us</span>
+                    </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="">Directory</a>
+
+                    <a href="/iron/fore/feedback">
+                        <span th:if="${session.language  == 'ch'}">反馈 </span>
+                        <span th:unless="${session.language  == 'ch'}"> Feedback </span>
+                    </a>
+
                 </ul>
             </div>
             <div class="col-lg-4">
@@ -319,18 +352,22 @@
 
                     <li>
 
-                        <a href="/iron/fore/index">Home</a>
+                        <a href="/iron/fore/index">
+                            <div th:if="${session.language  == 'ch'}">首页</div>
+                            <div th:unless="${session.language  == 'ch'}">Home</div>
+                        </a>
                         <ul class="sub_nav dropdown dropdown_cate">
                         </ul>
                     </li>
 
                     <li>
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}">Products<i class="iconfont icon-arrows-copy"></i></a>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}"> <span th:if="${session.language  == 'ch'}">分类</span>
+                            <span th:unless="${session.language  == 'ch'}">Categories</span><i class="iconfont icon-arrows-copy"></i></a>
                         <ul class="sub_nav dropdown dropdown_cate">
                             <li th:each="c:${foreCategoriesList}">
                                 <a th:href="@{/fore/categories(cid=${c.id})}">
-                                    <span>■</span>
-                                    [[${c.name}]]
+                                    <span th:if="${session.language  == 'ch'}">■[[${c.namee}]]</span>
+                                    <span th:unless="${session.language  == 'ch'}">■[[${c.name}]]</span>
                                 </a>
                             </li>
                         </ul>
@@ -338,20 +375,40 @@
 
                     <li>
 
-                        <a href="/iron/fore/blog">Blog</a>
+                        <a href="/iron/fore/blog">
+                            <div th:if="${session.language  == 'ch'}">日志</div>
+                            <div th:unless="${session.language  == 'ch'}">Blog</div>
+
+                        </a>
                         <ul class="sub_nav dropdown dropdown_cate">
                         </ul>
                     </li>
 
 
                     <li>
-                        <a href="/iron/fore/sitemap">Sitemap</a>
+                        <a href="/iron/fore/sitemap">
+                            <span th:if="${session.language  == 'ch'}"> 产品地图</span>
+                            <span th:unless="${session.language  == 'ch'}">sitemap</span>
+                        </a>
                         <ul class="sub_nav dropdown dropdown_cate">
                         </ul>
                     </li>
 
                     <li>
-                        <a href="/iron/fore/aboutUs">About Us</a>
+                        <a href="/iron/fore/aboutUs">
+                            <span th:if="${session.language  == 'ch'}">有关我们</span>
+                            <span th:unless="${session.language  == 'ch'}">ABout us</span>
+                        </a>
+                        <ul class="sub_nav dropdown dropdown_cate">
+                        </ul>
+                    </li>
+
+                    <li>
+
+                        <a href="/iron/fore/feedback">
+                            <span th:if="${session.language  == 'ch'}">反馈</span>
+                            <span th:unless="${session.language  == 'ch'}">Feedback</span>
+                        </a>
                         <ul class="sub_nav dropdown dropdown_cate">
                         </ul>
                     </li>
@@ -387,8 +444,13 @@
 
 
                             <li>
-                                <a rel="nofollow" href="/h-module-currency.html?currency=USD">
-                                    <b>US$</b><span>USD</span>
+                                <a rel="nofollow" id="ch" class="changeLanguage">
+                                    <b>中文</b>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" id="en" class="changeLanguage">
+                                    <b>English</b>
                                 </a>
                             </li>
 
@@ -396,6 +458,10 @@
                         </ul>
                     </div>
                     <script>
+                        $(".changeLanguage").click(function () {
+                            postRequest(changeLanguageUrl(), getFormData("language", $(this).attr("id")))
+                            location.reload()
+                        })
                         $("#currencyCon,.currency_box").hover(function () {
                             $("#currencyCon").show();
                         }, function () {
@@ -421,6 +487,7 @@
 
                 <button type="submit" value="Search" id="btn-autocomplete"
                         class="btn_search iconfont icon-fangdajing2"></button>
+
             </form>
             <script type="text/javascript">
                 var search_key = "Search...";
@@ -477,8 +544,8 @@
         <div class="link_box">
             <div class="btm_txt" ymcart_ve_tag='diy_btm_txt' ymcart_ve_type='textedit'><img
                     src="style/images/0ea4fd14ca764314.png" alt=""/>
-                <p>
-                    <i class="iconfont icon-dizhi1"></i> 123 Third Street Fifth Avenue, Manhattan, New York, USA
+                <p th:each="contact:${contactUs}">
+                    <i class="iconfont">[[${contact.name}]]:</i> [[${contact.info}]]
                 </p>
                 <p>
                     <i class="iconfont icon-dianhua2"></i> +1234 456 789
@@ -549,11 +616,21 @@
         <div class="foot">
             <div class="col-lg-4">
                 <ul class="copyright">
-                    <a href="">About Us</a>
+                    <a href="/iron/fore/aboutUs">
+                        <div th:if="${session.language  == 'ch'}">有关我们 </div>
+                        <div th:unless="${session.language  == 'ch'}"> About Us</div>
+                    </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="">Contact Us</a>
+                    <a href="/iron/fore/aboutUs">
+                        <div th:if="${session.language  == 'ch'}">联系我们 </div>
+                        <div th:unless="${session.language  == 'ch'}"> Contact Us</div>
+                    </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="">Directory</a>
+
+                    <a href="/iron/fore/feedback">
+                        <div th:if="${session.language  == 'ch'}">反馈 </div>
+                        <div th:unless="${session.language  == 'ch'}"> Feedback </div>
+                    </a>
                 </ul>
             </div>
             <div class="col-lg-4">
@@ -579,3 +656,4 @@
         </div>
     </div><!--end bottom_box-->
 </footer>
+

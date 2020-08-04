@@ -1,6 +1,7 @@
 package iron.controller;
 
 import iron.bean.Product;
+import iron.dao.ProductAttrDAO;
 import iron.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,8 @@ public class ProductsController {
 
     @Autowired
     ProductServiceImpl productService;
+    @Autowired
+    ProductAttrDAO productAttrDAO;
 
     @PostMapping("/back/addProducts")
     public Product add(MultipartFile[] file, Product product, MultipartFile coverFile) throws IOException {
@@ -43,4 +46,6 @@ public class ProductsController {
     public void doProductDelete(Integer id) {
         productService.delete(id);
     }
+
+
 }

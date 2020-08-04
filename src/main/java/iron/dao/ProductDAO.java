@@ -24,7 +24,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer>, JpaSpecific
 	 * @param name name
 	 * @return List
 	 */
-	List<Product> findAllByNameLike(String name);
+	List<Product> findByNameLike(String name);
 
 	/**
 	 * 获取是否顶置的产品
@@ -32,4 +32,5 @@ public interface ProductDAO extends JpaRepository<Product, Integer>, JpaSpecific
 	 * @return List
 	 */
 	List<Product> findByTop(boolean top);
+
 }
