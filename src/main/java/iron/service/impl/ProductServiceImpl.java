@@ -91,9 +91,7 @@ public class ProductServiceImpl implements ProductService<Product> {
 
     @Override
     public Product add(Product product, MultipartFile file) throws IOException {
-        String cover = ironUtil.getUUID("ProductCover");
-        ironUtil.uploadImg(file, cover);
-        product.setCover(cover);
+        product.setCover( ironUtil.uploadImg(file, "ProductCover_"));
         product.setAccessTotal(0);
         product.setCreateTime(new Date());
         product.setUploadTime(new Date());
@@ -222,12 +220,10 @@ public class ProductServiceImpl implements ProductService<Product> {
 
 
     public Product addProductCover(MultipartFile cover, Integer id) throws IOException {
-        String key = ironUtil.getUUID("ProductCover");
-        ironUtil.uploadImg(cover, key);
         Product product = productDAO.findById(id).orElse(null);
         // 如果 true 程序继续执行
         assert product != null;
-        product.setCover(key);
+        product.setCover( ironUtil.uploadImg(cover, "ProductCover_"));
         return productDAO.save(product);
     }
 

@@ -1,0 +1,64 @@
+package iron.controller.back;
+
+import iron.bean.Categories;
+import iron.bean.CategoriesImg;
+import iron.service.CategoriesImgService;
+import iron.service.impl.CategoriesImgServiceImpl;
+import iron.service.impl.CategoriesServiceImpl;
+import iron.util.IronUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.*;
+
+/**
+ * @author wangxiaobo
+ */
+@RestController
+@Slf4j
+public class CategoriesController {
+
+    @Autowired
+    CategoriesServiceImpl categoriesServiceImpl;
+    @Autowired
+    CategoriesImgServiceImpl categoriesImgService;
+    @Autowired
+    IronUtil ironUtil;
+
+    @PostMapping("/back/getCategories")
+    public Categories get(@RequestParam(name = "id") Integer id) {
+        return categoriesServiceImpl.get(id);
+    }
+
+    @PostMapping("/back/addCategories")
+    public Categories add(Categories c, MultipartFile coverFile, MultipartFile carouselFile) throws IOException {
+        c.setCover(ironUtil.uploadImg(carouselFile, "CategoriesCover_"));
+        c.setCarousel(ironUtil.uploadImg(carouselFile, "CategoriesCarousel_"));
+        return categoriesServiceImpl.add(c);
+    }
+
+    @PostMapping("/back/editCategories")
+    public void edit(Categories c) {
+        System.out.println(c.toString());
+        categoriesServiceImpl.add(c);
+    }
+
+    @PostMapping("/back/uploadFile")
+    public String uploadFile(MultipartFile file,String key) throws IOException {
+        log.info(Arrays.toString(file.getBytes()));
+        return ironUtil.uploadImg(file, key);
+    }
+
+
+    @PostMapping("/back/deleteCategories")
+    public void delete(Integer id) {
+        categoriesServiceImpl.deleteCategories(id);
+    }
+
+
+}

@@ -22,12 +22,12 @@
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/FrontController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/BlogDAO.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/CategoriesDAO.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/back/CategoriesController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/ForePageController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/ProductAttr.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/IronConfig.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/impl/ProductServiceImpl.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/HomeDAO.java
-/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/CategoriesController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/builder/ProductAttrBuilder.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/feedback.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/LoginDAO.java

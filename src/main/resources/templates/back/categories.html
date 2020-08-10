@@ -28,7 +28,8 @@
     <link th:href="@{/plugins/font-awesome/css/all.min.css}"
           href="../../assets/plugins/font-awesome/css/all.min.css"
           rel="stylesheet">
-    <link  rel="stylesheet"  th:href="@{/iron/css/box.css}">
+    <link rel="stylesheet" th:href="@{/iron/css/box.css}">
+    <link rel="stylesheet" th:href="@{/iron/css/iron.css}">
 
     <!-- Theme Styles -->
     <link th:href="@{/css/connect.min.css}"
@@ -82,6 +83,7 @@
 <body>
 <div th:replace="back/include::modal" id="modal"></div>
 <div th:replace="back/include::showImgModal"></div>
+<div th:replace="back/CommonInclude::common"></div>
 <div class='loader'>
     <div class='spinner-grow text-primary' role='status'>
         <span class='sr-only'>Loading...</span>
@@ -145,42 +147,31 @@
                                     $("#categories-top").click(function (event) {
                                         event.stopPropagation()
                                     });
-                                    $(function(){
-                                        let box = BoxPlus.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
-                                        initCategoriesBox(box)
-                                        openCategoriesEdit()
+                                    $(".CategoriesEdit").click(function () {
+                                        let result = postRequest(getCategoriesUrl(), getFormData("id", $(this).attr("data-id")))
+                                        $("#editName").val(result.name);
+                                        $("#editNameE").val(result.namee);
+                                        $("#editId").html(result.id);
+                                        $("#coverImg").attr("src", [[${qiniu}]] + result.cover)
+                                        $("#carouselImg").attr("src", [[${qiniu}]] + result.carousel)
 
-                                        function openCategoriesEdit() {
-                                            $(".CategoriesEdit").click(function () {
-                                                let result = postRequest(getCategoriesUrl(), getFormData("id", $(this).attr("data-id")))
-                                                openBox(box, result.id, result.imgList)
-                                                $("#editName").val(result.name);
-                                                $("#editNameE").val(result.namee);
-                                                $("#editId").html(result.id);
-                                            })
-                                        }
+                                        window.categories = result
                                     })
 
-
-
-                                    $("#test").click(function () {
-                                        console.log("a")
-                                        $("#BoxButton").trigger("click")
-                                    })
 
                                 </script>
                                 <div class="inbox-pagination">
                                     <nav>
                                         <ul class="pagination">
-                                            <li><a th:href="@{/back/categories(start=${0})}">[首页]</a></li>
+                                            <li><a th:href="@{/back/categoriesPage(start=${0})}">[首页]</a></li>
                                             <li id="pre" th:class="${pre}? active : dislink"><a
-                                                    th:href="@{/back/categories(start=${page.Number-1})}">[上一页]</a>
+                                                    th:href="@{/back/categoriesPage(start=${page.Number-1})}">[上一页]</a>
                                             </li>
                                             <li id="next" th:class="${next}? active : dislink"><a
-                                                    th:href="@{/back/categories(start=${page.Number+1})}">[下一页]</a>
+                                                    th:href="@{/back/categoriesPage(start=${page.Number+1})}">[下一页]</a>
                                             </li>
                                             <li><a
-                                                    th:href="@{/back/categories(start=${page.TotalPages-1})}">[末页]</a>
+                                                    th:href="@{/back/categoriesPage(start=${page.TotalPages-1})}">[末页]</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -217,21 +208,61 @@
             <span class="mail-author-name">名称(English)</span>
             <input type="text" class="form-control  cEdit" id="editNameE" value="">
 
-            <span class="mail-author-name">照片</span> <span id="BoxButton">点击添加</span>
-            <div id="ImgBox"></div>
+            <span class="mail-author-name">首页轮播图 <span id="carouselButton" class="colorRed hover"><<修改>></span></span>
+            <div class="width100">
+                <img class="width50" id="carouselImg"/>
+            </div>
+
+            <span class="mail-author-name">首页轮播图 <span id="coverButton" class="colorRed hover"> <<修改>></span></span>
+            <div class="width100">
+                <img class="width50" id="coverImg"/>
+            </div>
         </div>
 
-        <input type="file" name="file" id="BoxInput" accept="image/*"/>
+        <input type="file" name="file" class="iron-hidden" id="BoxInput" accept="image/*"/>
+        <input type="file" name="file"  class="iron-hidden" id="carouselInput" accept="image/*"/>
+        <input type="file" name="file"  class="iron-hidden" id="coverInput" accept="image/*"/>
 
         <script type="text/javascript" th:inline="javascript">
+            $("img").click(function () {
+                console.log("a")
+                showImg($(this).attr("src"))
+            })
+
+            $("#carouselButton").click(function () {
+                $("#carouselInput").trigger("click")
+            })
+            $("#coverButton").click(function () {
+                $("#coverInput").trigger("click")
+            })
+            $("#coverInput").change(function () {
+                let formData = getFormData("file", $(this)[0].files[0])
+                formData.append("key","cover_")
+                window.categories.cover = postRequest(uploadFileUrl(),formData)
+                $("#coverImg").attr("src",getFileTempPath($(this)[0].files[0]))
+                editCategories()
+            })
+            $("#carouselInput").change(function () {
+                let formData = getFormData("file", $(this)[0].files[0])
+                formData.append("key","carousel_")
+                window.categories.carousel = postRequest(uploadFileUrl(),formData)
+                $("#coverImg").attr("src",getFileTempPath($(this)[0].files[0]))
+                editCategories()
+            })
             $(".cEdit").blur(function () {
-                let formData = new FormData();
-                fromData_append(formData, "id", $("#editId").text())
-                fromData_append(formData, "name", getVal("#editName"))
-                fromData_append(formData, "namee", getVal("#editNameE"))
-                postRequest(editCategoriesUrl(), formData)
+                editCategories()
             });
 
+            function editCategories() {
+                window.categories.name = getVal("#editName")
+                window.categories.namee = getVal("#editNameE")
+                let formData = getFormData("id",window.categories.id)
+                formData.append("name",getVal("#editName"))
+                formData.append("namee",getVal("#editNameE"))
+                formData.append("cover",window.categories.cover)
+                formData.append("carousel",window.categories.carousel)
+                postRequest(editCategoriesUrl(), formData)
+            }
 
         </script>
     </div>

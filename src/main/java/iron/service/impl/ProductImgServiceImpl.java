@@ -24,10 +24,8 @@ public class ProductImgServiceImpl implements ProductImgService {
     @Override
     public ProductImg add(MultipartFile file, Integer pid) throws IOException {
         ProductImg img = new ProductImg();
-        String key = ironUtil.getUUID("ProductImg");
-        img.setPath(key);
+        img.setPath(ironUtil.uploadImg(file, "ProductImg_"));
         img.setPid(pid);
-        ironUtil.uploadImg(file, key);
         return productImgDAO.save(img);
     }
 

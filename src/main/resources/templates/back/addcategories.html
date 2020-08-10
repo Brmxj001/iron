@@ -1,184 +1,209 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Responsive Admin Dashboard Template">
-        <meta name="keywords" content="admin,dashboard">
-        <meta name="author" content="stacks">
-        <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Admin Dashboard Template">
+    <meta name="keywords" content="admin,dashboard">
+    <meta name="author" content="stacks">
+    <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <!-- Title -->
-        <title>Connect - Responsive Admin Dashboard Template</title>
+    <!-- Title -->
+    <title>Connect - Responsive Admin Dashboard Template</title>
 
-        <!-- Styles -->
-        <link
-                href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
-                rel="stylesheet">
-        <link
-                href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap"
-                rel="stylesheet">
-        <link
-                href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-                rel="stylesheet">
-        <link th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"
-              href="../../assets/plugins/bootstrap/css/bootstrap.min.css"
-              rel="stylesheet">
-        <link th:href="@{/plugins/font-awesome/css/all.min.css}"
-              href="../../assets/plugins/font-awesome/css/all.min.css"
-              rel="stylesheet">
-        <link href="../static/css/iron.css" rel="stylesheet"
-              th:href="@{/css/iron.css}">
-        <link href="../static/css/iron.css" rel="stylesheet"
-              th:href="@{/iron/css/box.css}">
+    <!-- Styles -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+            rel="stylesheet">
+    <link th:href="@{/plugins/bootstrap/css/bootstrap.min.css}"
+          href="../../assets/plugins/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link th:href="@{/plugins/font-awesome/css/all.min.css}"
+          href="../../assets/plugins/font-awesome/css/all.min.css"
+          rel="stylesheet">
+    <link href="../static/css/iron.css" rel="stylesheet"
+          th:href="@{/iron/css/iron.css}">
+    <link href="../static/css/iron.css" rel="stylesheet"
+          th:href="@{/iron/css/box.css}">
 
-        <!-- Theme Styles -->
-        <link th:href="@{/css/connect.min.css}"
-              href="../../assets/css/connect.min.css" rel="stylesheet">
-        <link th:href="@{/css/admin4.css}" href="../../assets/css/admin4.css"
-              rel="stylesheet">
-        <link th:href="@{/css/dark_theme.css}"
-              href="../../assets/css/dark_theme.css" rel="stylesheet">
-        <link th:href="@{/css/custom.css}" href="../../assets/css/custom.css"
-              rel="stylesheet">
-        <link th:href="@{/iron/css/categories.css}" rel="stylesheet">
-        <link th:href="@{/iron/css/categories.css}" rel="stylesheet">
-        <script th:src="@{/plugins/jquery/jquery-3.4.1.min.js}"></script>
-        <script th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
-        <script th:src="@{/plugins/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
-        <script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.min.js}"></script>
-        <script th:src="@{/plugins/blockui/jquery.blockUI.js}"></script>
-        <script th:src="@{/plugins/flot/jquery.flot.min.js}"></script>
-        <script th:src="@{/plugins/flot/jquery.flot.time.min.js}"></script>
-        <script th:src="@{/plugins/flot/jquery.flot.symbol.min.js}"></script>
-        <script th:src="@{/plugins/flot/jquery.flot.resize.min.js}"></script>
-        <script th:src="@{/plugins/flot/jquery.flot.tooltip.min.js}"></script>
-        <script th:src="@{/js/connect.min.js}"></script>
-        <script th:src="@{/js/pages/mailbox.js}"></script>
+    <!-- Theme Styles -->
+    <link th:href="@{/css/connect.min.css}"
+          href="../../assets/css/connect.min.css" rel="stylesheet">
+    <link th:href="@{/css/admin4.css}" href="../../assets/css/admin4.css"
+          rel="stylesheet">
+    <link th:href="@{/css/dark_theme.css}"
+          href="../../assets/css/dark_theme.css" rel="stylesheet">
+    <link th:href="@{/css/custom.css}" href="../../assets/css/custom.css"
+          rel="stylesheet">
+    <link th:href="@{/iron/css/categories.css}" rel="stylesheet">
+    <link th:href="@{/iron/css/categories.css}" rel="stylesheet">
+    <script th:src="@{/plugins/jquery/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/plugins/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{/plugins/jquery-sparkline/jquery.sparkline.min.js}"></script>
+    <script th:src="@{/plugins/blockui/jquery.blockUI.js}"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.min.js}"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.time.min.js}"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.symbol.min.js}"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.resize.min.js}"></script>
+    <script th:src="@{/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+    <script th:src="@{/js/connect.min.js}"></script>
+    <script th:src="@{/js/pages/mailbox.js}"></script>
 
-    </head>
-    <body>
+</head>
+<body>
 
-        <div th:replace="back/include::modal" id="modal"></div>
-        <div class='loader'>
-            <div class='spinner-grow text-primary' role='status'>
-                <span class='sr-only'>Loading...</span>
-            </div>
-        </div>
-        <div class="connect-container align-content-stretch d-flex flex-wrap">
-            <div th:replace="back/include::left" id="left"></div>
-            <div class="page-container">
-                <div class="page-content">
+<div th:replace="back/include::modal" id="modal"></div>
+<div class='loader'>
+    <div class='spinner-grow text-primary' role='status'>
+        <span class='sr-only'>Loading...</span>
+    </div>
+</div>
+<div class="connect-container align-content-stretch d-flex flex-wrap">
+    <div th:replace="back/include::left" id="left"></div>
+    <div class="page-container">
+        <div class="page-content">
 
-                    <div class="main-wrapper">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div th:replace="back/include::card-list" id="card-list"></div>
-                            </div>
-                            <div class="col-lg-9">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <th>属性</th>
-                                            <th>属性值</th>
-                                            <th></th>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><span>分类名称</span></td>
-                                                <td><input type="text" id="cName" placeholder="点击输入"
-                                                           class="form-control"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>分类名称(English)</span></td>
-                                                <td><input type="text" id="cNameE" placeholder="点击输入"
-                                                           class="form-control"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><span>分类简介</span></td>
-                                                <td><input type="text" id="cDetail" placeholder="点击输入"
-                                                           class="form-control"/></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>轮播图</td>
-                                                <td width="60%">
-                                                   <img id="carouselImg" width="100%"  alt=""/>
-                                                </td>
-                                                <td><span id="carouselButton">点击添加</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>分类照片</td>
-                                                <td width="60%">
-                                                    <div id="ImgBox"></div>
-                                                </td>
-                                                <td><span id="BoxButton">点击添加</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td><span id = "loadInfo"></span></td>
-                                                <td>
-                                                    <button class="btn btn-danger" id="cSubmit">提交</button>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+            <div class="main-wrapper">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div th:replace="back/include::card-list" id="card-list"></div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <th>属性</th>
+                                    <th>属性值</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><span>分类名称</span></td>
+                                        <td><input type="text" id="cName" placeholder="点击输入"
+                                                   class="form-control"/></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>分类名称(English)</span></td>
+                                        <td><input type="text" id="cNameE" placeholder="点击输入"
+                                                   class="form-control"/></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>分类简介</span></td>
+                                        <td><input type="text" id="cDetail" placeholder="没用到可以不填"
+                                                   class="form-control"/></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>轮播图</td>
+                                        <td width="60%">
+                                            <img id="carouselImg" width="100%" alt=""/>
+                                        </td>
+                                        <td><span id="carouselButton">点击添加</span></td>
+                                    </tr>
 
-                                        <input class="hidden" type="file" id="BoxInput" accept="image/*"/>
-                                        <input class="hidden" type="file" id="carouselInput" accept="image/*"/>
-                                        <div th:replace="back/CommonInclude::url"></div>
-                                        <div th:replace="back/CommonInclude::common"></div>
-                                        <div th:replace="back/include::showImgModal"></div>
-                                        <script type="text/javascript" th:inline="javascript">
-                                            let carouselFile = "";
-                                            let carouselSrc = "";
-                                            let box = Box.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
-                                            box.init()
-                                            $("#cSubmit").click(function () {
-                                                let formData = new FormData();
-                                                fromData_append(formData, "name", getVal("#cName"))
-                                                fromData_append(formData, "namee", getVal("#cNameE"))
-                                                fromData_append(formData, "detail", getVal("#cDetail"))
-                                                fromData_append(formData, "carouselFile", carouselFile)
-                                                fromData_appentFile(formData, box.FileList)
-                                                if (formData_isNull(formData) || carouselFile === "") {
-                                                    return alert("不能为空")
-                                                }
+                                    <tr>
+                                        <td>封面图</td>
+                                        <td width="60%">
+                                            <img id="coverImg" width="100%" alt=""/>
+                                        </td>
+                                        <td><span id="coverButton">点击添加</span></td>
+                                    </tr>
+                                    <!--                                    <tr>-->
+                                    <!--                                        <td>分类照片</td>-->
+                                    <!--                                        <td width="60%">-->
+                                    <!--                                            <div id="ImgBox"></div>-->
+                                    <!--                                        </td>-->
+                                    <!--                                        <td><span id="BoxButton">点击添加</span></td>-->
+                                    <!--                                    </tr>-->
+                                    <tr>
+                                        <td></td>
+                                        <td><span id="loadInfo"></span></td>
+                                        <td>
+                                            <button class="btn btn-danger" id="cSubmit">提交</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
-                                                showLoadInfo("#loadInfo")
-                                                postRequest(addCategoriesUrl(), formData)
-                                                    setValNull("#loadInfo")
-                                                    alert("添加成功")
-                                                    location.reload()
+                                <input class="iron-hidden" type="file" id="BoxInput" accept="image/*"/>
+                                <input class="iron-hidden" type="file" id="carouselInput" accept="image/*"/>
+                                <input class="iron-hidden" type="file" id="coverInput" accept="image/*"/>
+                                <div th:replace="back/CommonInclude::url"></div>
+                                <div th:replace="back/CommonInclude::common"></div>
+                                <div th:replace="back/include::showImgModal"></div>
+                                <script type="text/javascript" th:inline="javascript">
+                                    let carouselFile = "";
+                                    let carouselSrc = "";
 
-                                            })
-                                            $("#carouselButton").click(function () {
-                                                $("#carouselInput").trigger("click")
-                                            })
-                                            $("#carouselInput").change(function () {
-                                                carouselFile  = $(this)[0].files[0]
-                                                carouselSrc = getFileTempPath(carouselFile)
-                                                $("#carouselImg").attr("src",carouselSrc)
-                                            })
+                                    let coverFile = "";
+                                    let coverSrc = "";
 
-                                        </script>
+                                    $("#carouselButton").click(function () {
+                                        $("#carouselInput").trigger("click")
+                                    })
+                                    $("#carouselInput").change(function () {
+                                        carouselFile = $(this)[0].files[0]
+                                        carouselSrc = getFileTempPath(carouselFile)
+                                        $("#carouselImg").attr("src", carouselSrc)
+                                    })
 
-                                    </div>
-                                </div>
+                                    $("#coverButton").click(function () {
+                                        $("#coverInput").trigger("click")
+                                    })
+                                    $("#coverInput").change(function () {
+                                        coverFile = $(this)[0].files[0]
+                                        coverSrc = getFileTempPath(coverFile)
+                                        $("#coverImg").attr("src", coverSrc)
+                                    })
+                                    // let box = Box.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
+                                    // box.init()
+                                    $("#cSubmit").click(function () {
+                                        let formData = new FormData();
+                                        fromData_append(formData, "name", getVal("#cName"))
+                                        fromData_append(formData, "namee", getVal("#cNameE"))
+                                        fromData_append(formData, "detail", getVal("#cDetail"))
+                                        fromData_append(formData, "carouselFile", carouselFile)
+                                        fromData_append(formData, "coverFile", coverFile)
+                                        if (getVal("#cName") === "" || getVal("#cNameE") === "") {
+                                            return alert("不能为空")
+                                        }
+                                        if (coverFile === "" || carouselFile === "") {
+                                            return alert("不能为空")
+                                        }
+                                        showLoadInfo("#loadInfo")
+                                        postRequest(addCategoriesUrl(), formData)
+                                        setValNull("#loadInfo")
+                                        alert("添加成功")
+
+                                        location.reload()
+
+                                    })
+
+
+                                </script>
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <div th:replace="back/include::foot"></div>
             </div>
-
         </div>
+        <div th:replace="back/include::foot"></div>
+    </div>
+
+</div>
 
 
-
-    </body>
+</body>
 </html>

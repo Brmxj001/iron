@@ -179,7 +179,7 @@
         function initProductBox(aBox) {
             aBox.openInput = function () {
                 aBox.input.change(function () {
-                    aBox.button.html("上传中")
+                    aBox.button.html("点击上传  上传中")
                     //上传Categories Img
                     let addFormData = new FormData()
                     fromData_append(addFormData, "pid", aBox.id)
@@ -190,7 +190,7 @@
                     aBox.showBoxImgList()
                     $(this).val("")
 
-                    setButtonInfo(aBox)
+                    aBox.button.html("点击上传")
                 })
             }
             aBox.openDeleteImg = function () {
@@ -378,6 +378,10 @@
         //change Language
         function changeLanguageUrl() {
             return [[${url}]] + "/fore/changeLanguage";
+        }
+
+        function uploadFileUrl() {
+            return [[${url}]] + "/back/uploadFile";
         }
     </script>
 </footer>

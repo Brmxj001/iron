@@ -25,9 +25,7 @@ public class CategoriesImgServiceImpl implements CategoriesImgService {
     IronUtil ironUtil;
     @Override
     public void add(MultipartFile file, Integer cid) throws IOException {
-        String key = ironUtil.getUUID("CImg," + "CategoriesID=" + cid + ",");
-        ironUtil.uploadImg(file, key);
-        categoriesImgDAO.save(CategoriesImgBuilder.start().setCId(cid).setPath(key).finish());
+        categoriesImgDAO.save(CategoriesImgBuilder.start().setCId(cid).setPath(ironUtil.uploadImg(file, "CategoriesImg_")).finish());
     }
     @Override
     public void add(MultipartFile[] file, Integer cid) throws IOException {
@@ -46,4 +44,6 @@ public class CategoriesImgServiceImpl implements CategoriesImgService {
     public List<CategoriesImg> getAllByCategoriesId(Integer cid) {
         return categoriesImgDAO.findByCid(cid);
     }
+
+
 }

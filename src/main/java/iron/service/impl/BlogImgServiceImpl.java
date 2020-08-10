@@ -29,11 +29,9 @@ public class BlogImgServiceImpl implements BlogImgService {
 
     @Override
     public void add(Integer id, MultipartFile file) throws IOException {
-        String key = "BlogImg_cid=" + id + "uuid=" + UUID.randomUUID().toString();
-        ironUtil.uploadImg(file, key);
         BlogImg img = new BlogImg();
         img.setBig(id);
-        img.setPath(key);
+        img.setPath(ironUtil.uploadImg(file, "Blog_"));
         blogImgDAO.save(img);
     }
 

@@ -256,13 +256,13 @@
                                 <div class="inbox-pagination">
                                     <nav aria-label="">
                                         <ul class="pagination">
-                                            <li><a th:href="@{/back/product(start=${0})}">[首页]</a></li>
+                                            <li><a th:href="@{/back/productsPage(start=${0})}">[首页]</a></li>
                                             <li id="pre" th:class="${pre}? active : dislink"><a
-                                                    th:href="@{/back/product(start=${page.Number-1})}">[上一页]</a></li>
+                                                    th:href="@{/back/productsPage(start=${page.Number-1})}">[上一页]</a></li>
                                             <li id="next" th:class="${next}? active : dislink"><a
-                                                    th:href="@{/back/product(start=${page.Number+1})}">[下一页]</a></li>
+                                                    th:href="@{/back/productsPage(start=${page.Number+1})}">[下一页]</a></li>
                                             <li><a
-                                                    th:href="@{/back/product(start=${page.TotalPages-1})}">[末页]</a></li>
+                                                    th:href="@{/back/productsPage(start=${page.TotalPages-1})}">[末页]</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -298,8 +298,8 @@
             <span class="mail-author-name" id="coverButton">封面(点击修改)</span>
             <input class="iron-hidden" type="file" id="coverInput"
                    accept="image/*"/>
-            <div class="EditCover">
-                <img alt="" id="cover"/>
+            <div class="width100">
+                <img alt="" class="width50" id="cover"/>
             </div>
 
             <span class="mail-author-name">简单描述</span>

@@ -366,7 +366,7 @@
                 <li class="foo" th:each="c:${categoriesListWithProduct}">
 
                     <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
-                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.imgList.get(0).path}"/>
+                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
                     </a>
                     <dl>
                         <dt>

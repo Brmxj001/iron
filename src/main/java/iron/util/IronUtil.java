@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.UUID;
 
 /**
@@ -19,8 +20,10 @@ public class IronUtil {
 
     @Autowired
     HomeDAO homeDAO;
-    public void uploadImg(MultipartFile file, String key) throws IOException {
-        Qiniu.getQiniu().getUploadManager().put(file.getBytes(), key, Qiniu.getQiniu().getUpToken());
+    public String uploadImg(MultipartFile file, String key) throws IOException {
+        String result = key + Calendar.getInstance().getTime();
+        Qiniu.getQiniu().getUploadManager().put(file.getBytes(), result, Qiniu.getQiniu().getUpToken());
+        return result;
     }
     public String getUUID(){
         return UUID.randomUUID().toString();
