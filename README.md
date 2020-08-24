@@ -6,6 +6,7 @@
  - mysql
  - lombok
  - jpa
+ - tomcat
 ## 设计模式
  ### MVC 设计模式
  
