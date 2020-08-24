@@ -221,6 +221,8 @@
                                     $(function () {
                                         let box = BoxPlus.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
                                         initProductBox(box)
+                                        let DetailBox = BoxPlus.instance($("#DetailImgButton"), $("#DetailImgInput"), $("#DetailImgBox"))
+                                        initProductDetailBox(DetailBox)
                                         openEditPage()
 
                                         function openEditPage() {
@@ -236,12 +238,21 @@
                                                 $("#intro_en").val(result.intro_en)
                                                 $("#prize").val(result.prize)
                                                 $("#piece").val(result.piece)
+                                                $("#amazon").val(result.amazon)
+                                                $("#ThreeD").val(result.threeD)
                                                 $("#maxPrize").val(result.maxPrize)
                                                 $("#products-id").html(result.id)
                                                 $("#products-cid").val(result.cid)
                                                 $("#cover").attr("src", [[${qiniu}]] + result.cover)
+                                                console.log(result)
+                                                if (result.top)  $("#top input[value=1]").attr("checked",true);
+                                                if (result.new)  $("#new input[value=1]").attr("checked",true);
+                                                if (result.hot)  $("#hot input[value=1]").attr("checked",true);
+
+
                                                 window.product = result
                                                 openBox(box, result.id, result.imgList)
+                                                openBox(DetailBox, result.id, result.productDetailImgList)
                                                 let categories = "#categories option[data-id=" + result.cid + "]"
                                                 $(categories).attr("selected", true)
 
@@ -290,10 +301,53 @@
             <span class="mail-author-name">piece:</span>
             <input type="number" class="form-control "
                    id="piece" value="" >
+
             <span class="mail-author-name">产品名称(English):</span>
             <input type="text" class="form-control "
                    id="name_en" value="">
 
+            <span>热门</span>
+            <div id="hot">
+                    <label>
+                        是
+                        <input type="radio" name="hot" value="1"/>
+                    </label>
+                    <label>
+                        否
+                        <input checked="checked" type="radio" name="hot" value="0"/>
+                    </label>
+            </div>
+
+            <span>最新</span>
+            <div id="new">
+                <label>
+                    是
+                    <input type="radio" name="new" value="1"/>
+                </label>
+                <label>
+                    否
+                    <input checked="checked" type="radio" name="new" value="0"/>
+                </label>
+            </div>
+
+            <span>顶置</span>
+            <div id="top">
+                <label>
+                    是
+                    <input type="radio" name="top" value="1"/>
+                </label>
+                <label>
+                    否
+                    <input checked="checked" type="radio" name="top" value="0"/>
+                </label>
+            </div>
+            <span class="mail-author-name">亚马逊链接</span>
+            <input type="text" class="form-control "
+                   id="amazon" value="">
+
+            <span class="mail-author-name">3d模型</span>
+            <input type="text" class="form-control "
+                   id="ThreeD" value="">
 
             <span class="mail-author-name" id="coverButton">封面(点击修改)</span>
             <input class="iron-hidden" type="file" id="coverInput"
@@ -302,22 +356,7 @@
                 <img alt="" class="width50" id="cover"/>
             </div>
 
-            <span class="mail-author-name">简单描述</span>
-            <div class="products-introduction-div">
-                <span class="iron-placee">1products-introduction-divproducts-introduction-divproduct
-                    s-introduction-divproducts-introduction-divproducts-introduction-divproducts-introduct
-                    ion-divproducts-introduction-divproducts-introduction-divproducts-introduction-divproduc
-                    ts-introduction-divproducts-introduction-divproducts-introduction-divproducts-introduction
-                    -divproducts-introduction-divproducts-introduction-div
-                    products-introduction-divproducts-introduction-divproducts-introduction-divproducts-introduction-div</span>
-                <textarea class="form-control  products-simple" id="simple_intro"></textarea>
-            </div>
 
-            <span class="mail-author-name">简单描述(English)</span>
-            <div class="products-introduction-div">
-                <span class="iron-placee">1</span>
-                <textarea class="form-control  products-simplee" id="simple_intro_en"></textarea>
-            </div>
 
 
             <span class="mail-author-name">描述</span>
@@ -375,12 +414,22 @@
             <span class="mail-author-name">照片</span>
             <span id="BoxButton">点击上传</span>
             <div id="ImgBox"></div>
+            <input class="iron-hidden" type="file" value="修改照片" name="file" id="BoxInput" accept="image/*"/>
 
-            <input class="iron-hidden" type="file" value="修改照片" name="file"
-                   id="BoxInput" accept="image/*"/>
+
+            <span class="mail-author-name">详情照片</span>
+            <span id="DetailImgButton" class="BoxButton">点击上传</span>
+            <div id="DetailImgBox" class="ImgBox"></div>
+            <input class="iron-hidden ImgInput" type="file"  value="修改照片" name="file" id="DetailImgInput" accept="image/*"/>
+
+
+
+
+
+
             <span class="hidden" id="categories-id"></span>
             <script type="text/javascript" th:inline="javascript">
-                $(".mailbox-item .form-control").blur(function () {
+                function unloadProduct(){
                     let formData = getFormData("id", window.product.id)
                     formData.append("name", getVal("#name"))
                     formData.append("piece", getVal("#piece"))
@@ -395,9 +444,22 @@
                     formData.append("intro_en", getVal("#intro_en"))
                     formData.append("cover", window.product.cover)
                     formData.append("cid", $("#categories option:selected").attr("data-id"))
+                    formData.append("top", $("#top input:checked").val())
+                    formData.append("new", $("#new input:checked").val())
+                    formData.append("hot", $("#hot input:checked").val())
+                    formData.append("amazon", $("#amazon").val())
+                    formData.append("threeD", $("#ThreeD").val())
                     postRequest(editProductUrl(), formData);
-
+                }
+                $(".mailbox-item .form-control").blur(function () {
+                    unloadProduct()
                 })
+
+                $("input[type=radio]").change(function () {
+                    unloadProduct()
+                })
+
+
                 $("#coverButton").click(function () {
                     $("#coverInput").trigger("click")
                 })

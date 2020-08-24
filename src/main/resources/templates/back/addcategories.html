@@ -113,7 +113,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td>封面图</td>
+                                        <td>封面图 780 * 510</td>
                                         <td width="60%">
                                             <img id="coverImg" width="100%" alt=""/>
                                         </td>
@@ -132,6 +132,21 @@
                                         <td>
                                             <button class="btn btn-danger" id="cSubmit">提交</button>
                                         </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>首页显示</td>
+                                        <td id="isIndex">
+                                            <label>
+                                                是
+                                                <input type="radio" name="isIndex" value="1"/>
+                                            </label>
+                                            <label>
+                                                否
+                                                <input checked="checked" type="radio" name="isIndex" value="0"/>
+                                            </label>
+                                        </td>
+                                        <td></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -173,12 +188,12 @@
                                         fromData_append(formData, "name", getVal("#cName"))
                                         fromData_append(formData, "namee", getVal("#cNameE"))
                                         fromData_append(formData, "detail", getVal("#cDetail"))
-                                        fromData_append(formData, "carouselFile", carouselFile)
+                                        fromData_append(formData, "index", $("#isIndex").find("input:checked").val())
                                         fromData_append(formData, "coverFile", coverFile)
                                         if (getVal("#cName") === "" || getVal("#cNameE") === "") {
                                             return alert("不能为空")
                                         }
-                                        if (coverFile === "" || carouselFile === "") {
+                                        if (coverFile === "") {
                                             return alert("不能为空")
                                         }
                                         showLoadInfo("#loadInfo")

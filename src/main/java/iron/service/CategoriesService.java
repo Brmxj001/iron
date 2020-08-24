@@ -43,6 +43,6 @@ public interface CategoriesService<E> {
      */
     List<E> getAllWithProduct();
 
-
+    List<E> getIndexShow();
 
 }

@@ -50,6 +50,7 @@ public class CategoriesServiceImpl implements CategoriesService<Categories> {
 
     @Override
     public Categories add(Categories categories) {
+        System.out.println(categories);
         return categoriesDAO.save(categories);
     }
 
@@ -68,8 +69,15 @@ public class CategoriesServiceImpl implements CategoriesService<Categories> {
             categories.setProductList(productService.getAllByCategoriesId(categories.getId()));
             categories.setImgList(categoriesImgDAO.findByCid(categories.getId()));
         }
+        System.out.println(result.size());
         return result;
     }
+
+    @Override
+    public List<Categories> getIndexShow(){
+        return categoriesDAO.findByIndex(true);
+    }
+
 
     @Override
     public void deleteCategories(Integer id) {

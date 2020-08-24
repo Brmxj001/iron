@@ -1,7 +1,6 @@
 package iron.service.impl;
 
 import iron.bean.Blog;
-import iron.bean.BlogImg;
 import iron.dao.BlogDAO;
 import iron.service.BlogImgService;
 import iron.service.BlogService;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -55,7 +53,6 @@ public class BlogServiceImpl implements BlogService {
         Pageable pageable = PageRequest.of(0, total, Sort.by(Sort.Direction.DESC, "createTime"));
         List<Blog> result = blogDAO.findAll(pageable).getContent();
         setBlogImgList(result);
-        System.out.println(result);
         return result;
     }
 

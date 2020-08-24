@@ -42,7 +42,7 @@ public class FrontPageController {
     @Autowired
     HomeDAO homeDAO;
     @Autowired
-    HomeImgDAO homeImgDAO;
+    HomeAttrDAO homeAttrDAO;
     @Autowired
     FeedbackDAO feedbackDAO;
     @Autowired
@@ -58,9 +58,8 @@ public class FrontPageController {
     @GetMapping("/front/index")
     public String toFrontIndex(Model m) {
         List<Product> products = ProductDAO.findAll(Sort.by(Sort.Direction.DESC, "callon"));
-        ironUtil.doSetHome(m);
         m.addAttribute("products", products);
-        m.addAttribute("carousel", homeImgDAO.findAll());
+        m.addAttribute("carousel", homeAttrDAO.findAll());
         return "front/index";
     }
 
@@ -152,7 +151,6 @@ public class FrontPageController {
         List<contact> contacts = ContactDAO.findAll();
         product.setContacts(contacts);
         m.addAttribute("product", product);
-        m.addAttribute("share", homeDAO.findByType("share"));
 
         return "front/prodetail";
     }

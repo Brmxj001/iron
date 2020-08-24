@@ -20,9 +20,9 @@ public class ProductImgController {
 
 
     @PostMapping("/back/addProductImg")
-    public void addProductImg(MultipartFile file, Integer pid) throws IOException {
+    public void addProductImg(MultipartFile[] file, Integer pid) throws IOException {
+        System.out.println(file.length);
         if (null != file) {
-
             productImgService.add(file, pid);
         }
     }

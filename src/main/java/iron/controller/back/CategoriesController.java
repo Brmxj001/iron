@@ -37,20 +37,18 @@ public class CategoriesController {
 
     @PostMapping("/back/addCategories")
     public Categories add(Categories c, MultipartFile coverFile, MultipartFile carouselFile) throws IOException {
-        c.setCover(ironUtil.uploadImg(carouselFile, "CategoriesCover_"));
-        c.setCarousel(ironUtil.uploadImg(carouselFile, "CategoriesCarousel_"));
+        c.setCover(ironUtil.uploadImg(coverFile, "CategoriesCover_"));
+        System.out.println("第一次"+c);
         return categoriesServiceImpl.add(c);
     }
 
     @PostMapping("/back/editCategories")
     public void edit(Categories c) {
-        System.out.println(c.toString());
         categoriesServiceImpl.add(c);
     }
 
     @PostMapping("/back/uploadFile")
     public String uploadFile(MultipartFile file,String key) throws IOException {
-        log.info(Arrays.toString(file.getBytes()));
         return ironUtil.uploadImg(file, key);
     }
 

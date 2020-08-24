@@ -27,6 +27,10 @@ public class Categories {
 	private  String cover;
 
 	private String carousel;
+
+	@Column(name = "is_index")
+	private boolean index;
+
 	@Transient
 	private List<CategoriesImg> imgList;
 

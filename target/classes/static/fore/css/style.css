@@ -1266,7 +1266,7 @@ a.view_Askanewquestion:hover{color: #FFF; text-decoration: none;}
 .product_detail_2017 p.iconlink span b{ background:url(img/icon03.gif) no-repeat left top; width:4px; height:6px; display:block; position:absolute; left:-18px; top:5px; _left:-21px;}
 .product_detail_2017 .pricebox{ font-size:20px; color:#C01D1C; padding:10px 0 0;width: 100%;display: inline-block;}
 .product_detail_2017 .pricebox .price{color:#c01d1c;padding-top:4px;}
-.product_detail_2017 .pricebox .goods_price{font-size: 30px; color: #C01D1C;/* margin-left: 60px;*/}
+.product_detail_2017 .pricebox .goods_price{font-size: 30px; color: black;/* margin-left: 60px;*/}
 .product_detail_2017 .pricebox .goods_price_wholesale{font-size:32px;}
 .product_detail_2017 .pricebox sup{ font-size:11px;}
 .product_detail_2017 .pricebox span.product_discount{ color:#C01D1C; font-size:13px; font-weight:bold;}
@@ -7012,4 +7012,43 @@ text-align:center; color:#000000; font-size:16px; font-weight:bold;vertical-alig
 .batch_add_to_cart .lengthgengduo span svg{
 	width:20px;
 	height:20px;
+}
+.carouselTitle{
+    background: #EEEEEE;
+    color: black;
+    text-align: center;
+    padding: 50px;
+}
+.carouselTitle .text{
+    font-size: 18px;
+    margin: 18px;
+    padding: 0 15%;
+}
+.carouselTitle .foot{
+}
+.carouselTitle .foot span{
+    border-bottom:solid 2px black;
+    font-weight: bold;
+    font-size: 20px;
+}
+.carouselTitle .foot span:hover{
+    border-bottom:solid 2px red;
+    color: red;
+}
+.carouselTitle .title{
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.colorBlack{
+    color:black;
+}
+.bolder{
+    font-weight: bolder;
+}
+.fontSize16{
+    font-size: 16px;
+}
+.fontSize30{
+    font-size: 30px;
 }

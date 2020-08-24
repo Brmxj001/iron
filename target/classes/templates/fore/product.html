@@ -1184,30 +1184,30 @@
                 </script>
             </div>
             <div class="viewfontright">
-                <h1 class="product_detail_h1" >
+                <h1 class="product_detail_h1 fontSize30">
                     <span th:if="${session.language  == 'ch'}">[[${product.name}]]</span>
                     <span th:unless="${session.language  == 'ch'}">[[${product.name_en}]]</span>
 
                 </h1>
 
-                <span class="product_itemno notranslate" >[[${product.getPiece()}]] piece</span><span style="margin-left: 20px;" th:text="${#dates.format(product.getCreateTime(),'yyyy-MM-dd')}"></span>
-                <div class="free_shipping_line"></div>
+                <span class="product_itemno notranslate">MOQ [[${product.getPiece()}]] PCS</span><span
+                    style="margin-left: 20px;" th:text="${#dates.format(product.getCreateTime(),'yyyy-MM-dd')}"></span>
+                <!--                <div class="free_shipping_line"></div>-->
                 <div class="pricebox">
                     <div class="goods_price_info">
                         <span class="price"><strong class="goods_price notranslate"
-                                                    id="goods_price">$[[${product.prize}]] - $[[${product.maxPrize}]] </strong></span>
+                                                    id="goods_price">$[[${product.prize}]]  </strong></span>
                     </div>
                 </div>
-                <div class="free_shipping_line"></div>
 
                 <div style="margin:  20px 0">
-                    亚马逊超链接:
-
+                    <a th:href="${product.getAmazon()}">
+                        <span th:if="${session.language  == 'ch'}">亚马逊</span>
+                        <span th:unless="${session.language  == 'ch'}">amazon</span>
+                    </a>
                 </div>
-                <div class="free_shipping_line"></div>
                 <div>
-                    <h3 class="marginTop10px">产品介绍:</h3>
-                    <div class="marginTop10px">
+                    <div class="marginTop10px colorBlack  fontSize16">
                         <span th:if="${session.language  == 'ch'}">[[${product.intro}]]</span>
                         <span th:unless="${session.language  == 'ch'}">[[${product.intro_en}]]</span>
                     </div>
@@ -1279,7 +1279,7 @@
                            class="displayInline marginLeft40px">
                         <tbody>
                         <tr th:each="attr:${product.productAttrList.subList(0,product.productAttrList.size()/2)}">
-                            <td class="parent" ><strong>
+                            <td class="parent"><strong>
                                 <span th:if="${session.language  == 'ch'}">[[${attr.name}]]</span>
                                 <span th:unless="${session.language  == 'ch'}">[[${attr.nameEn}]]</span>
                             </strong></td>
@@ -1293,50 +1293,60 @@
                     </table>
 
                 </div>
-                <div style="border:black solid 1px;">
-                    <iframe width="510" height="582"
-                            src="https://b2b.partcommunity.com/community/partcloud/embedded.html?route=embedded&name=ASSM+PICK+AND+PLACE1&model_id=105919&portal=b2b&showDescription=true&showLicense=true&showDownloadButton=false&showHotspots=false&noAutoload=true&autoRotate=false&hideMenu=false&topColor=%23dde7ed&bottomColor=%23ffffff&cameraParams=false&varsettransfer="
-                            frameborder="0" id="EmbeddedView-Iframe-105919" allowfullscreen></iframe>
-                </div>
 
             </div>
+            <div style="color: black;font-weight: bolder;font-size: 14px;border-bottom: #DFDFDF solid 1px;padding-bottom: 10px" th:if="${product.getThreeD().length()>100}">
+                <span th:if="${session.language  == 'ch'}">3D 模型</span>
+                <span th:unless="${session.language  == 'ch'}">3D model</span>
+            </div>
+            <div id="3d" style="margin: 30px 0;"></div>
+            <script type="text/javascript" th:inline="javascript">
+                $("#3d").append([[${product.getThreeD()}]])
+
+            </script>
+        </div>
+        <div style="color: black;font-weight: bolder;font-size: 14px;border-bottom: #DFDFDF solid 1px;padding-bottom: 10px" th:if="${productDetailImgList.size()>0}">
+            <span th:if="${session.language  == 'ch'}">详情照片</span>
+            <span th:unless="${session.language  == 'ch'}">detail Img</span>
         </div>
 
-
-                        <div class="relevant_list1">
-                            <div><h3 class="boxh3 boxborder_bottom boxbordercolor">You May Also Like</h3></div>
-                            <div class="clear0"></div>
-                            <ul class="common_pro_list4">
-
-
-                                <li class="pro_list5" th:each="p:${product.getProductLikeList()}">
-
-                                    <div class="quickcart_box" goods_id="118549"></div>
-                                    <a th:href="@{/fore/product(pid=${p.getId()})}" class="pic"
-                                       title="Defyant Reversible Dot Shorts"><span></span>
-                                        <img th:src="${qiniu}+${p.cover}" th:title="${p.getName()}"
-                                             th:alt="${p.getName()}"/>
-                                    </a>
-                                    <div class="pro_content">
-                                        <a th:href="@{/fore/product(pid=${p.getId()})}" th:title="${p.getName()}"
-                                           class="name" >
-                                            <span th:if="${session.language  == 'ch'}">[[${p.getName()}]]</span>
-                                            <span th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</span>
-                                        </a>
-                                        <div class="price notranslate">
-                                            $[[${product.prize}]] - $[[${product.maxPrize}]]
-                                        </div>
+        <div th:each="img:${productDetailImgList}" style="margin-top: 30px">
+            <img style="width: 80%" th:src="${qiniu}+${img.getPath()}"/>
+        </div>
+        <div class="relevant_list1">
+            <div><h3 class="boxh3 boxborder_bottom boxbordercolor">You May Also Like</h3></div>
+            <div class="clear0"></div>
+            <ul class="common_pro_list4">
 
 
-                                    </div>
+                <li class="pro_list5" th:each="p:${product.getProductLikeList()}">
 
-
-                                </li>
-
-                                <li class="other"></li>
-
-                            </ul>
+                    <div class="quickcart_box" goods_id="118549"></div>
+                    <a th:href="@{/fore/product(pid=${p.getId()})}" class="pic"
+                       title="Defyant Reversible Dot Shorts"><span></span>
+                        <img th:src="${qiniu}+${p.cover}" th:title="${p.getName()}"
+                             th:alt="${p.getName()}"/>
+                    </a>
+                    <div class="pro_content">
+                        <a th:href="@{/fore/product(pid=${p.getId()})}" th:title="${p.getName()}"
+                           class="name">
+                            <span th:if="${session.language  == 'ch'}">[[${p.getName()}]]</span>
+                            <span th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</span>
+                        </a>
+                        <div class="price notranslate">
+                            $[[${product.prize}]]
                         </div>
+
+
+                    </div>
+
+
+                </li>
+
+                <li class="other"></li>
+
+            </ul>
+        </div>
 
         <div class="clear0"></div>
 

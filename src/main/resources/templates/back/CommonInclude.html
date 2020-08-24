@@ -17,11 +17,15 @@
             $.each(files, function (i, file) {
                 aFormData.append('file', file);
             });
+            console.log((aFormData))
         }
 
         function formData_isNull(aFormData) {
             for (var value of aFormData.values()) {
                 if (value == "") {
+                    return true
+                }
+                if (value == null) {
                     return true
                 }
             }
@@ -204,6 +208,35 @@
             aBox.openDeleteImg()
         }
 
+        function initProductDetailBox(aBox) {
+            aBox.openInput = function () {
+                aBox.input.change(function () {
+                    aBox.button.html("点击上传  上传中")
+                    //上传Categories Img
+                    let addFormData = new FormData()
+                    fromData_append(addFormData, "pid", aBox.id)
+                    fromData_append(addFormData, "file", $(this)[0].files[0])
+                    postRequest(addProductDetailImgUrl(), addFormData)
+
+                    aBox.imgList = postRequest(getProductDetailImgUrl(), getFormData("id", aBox.id))
+                    console.log(aBox.imgList)
+                    aBox.showBoxImgList()
+                    $(this).val("")
+                    console.log("上传")
+                    aBox.button.html("点击上传")
+                })
+            }
+            aBox.openDeleteImg = function () {
+                aBox.box.on("click", "span", function () {
+                    postRequest(deleteProductDetailImgUrl(), getFormData("id", $(this).attr("id")))
+                    aBox.imgList = postRequest(getProductDetailImgUrl(), getFormData("id", aBox.id))
+                    aBox.showBoxImgList()
+                })
+            }
+            aBox.openInput()
+            aBox.openDeleteImg()
+        }
+
         const BoxPlus = {
             instance: function (button, input, box) {
                 let result = {}
@@ -311,6 +344,18 @@
             return [[${url}]] + "/back/deleteProductImg"
         }
 
+        function addProductDetailImgUrl() {
+            return [[${url}]] + "/back/addProductDetailImg"
+        }
+
+        function deleteProductDetailImgUrl() {
+            return [[${url}]] + "/back/deleteProductDetailImg"
+        }
+
+        function getProductDetailImgUrl() {
+            return [[${url}]] + "/back/getProductDetailImg"
+        }
+
         //Product Attr
         function addProductAttrUrl() {
             return [[${url}]] + "/back/addProductAttr"
@@ -326,6 +371,19 @@
 
         function editProductAttrUrl() {
             return [[${url}]] + "/back/editProductAttr"
+        }
+
+        //Home
+        function addHomeUrl() {
+            return [[${url}]] + "/back/addHome"
+        }
+
+        function deleteHomeUrl() {
+            return [[${url}]] + "/back/deleteHome"
+        }
+
+        function editHomeAttr() {
+            return [[${url}]] + "/back/editHomeAttr"
         }
 
         //Home img

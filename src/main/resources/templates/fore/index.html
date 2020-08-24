@@ -142,12 +142,12 @@
     <div class="banner_box" ymcart_ve_tag='banner' ymcart_ve_type='banner'>
         <div class="ibanner">
             <ul class="swiper-wrapper">
-                <li class="swiper-slide" th:each="c:${categoriesListWithProduct}">
-                    <a th:href="@{/fore/categories(cid=${c.getId()})}">
+                <li class="swiper-slide" th:each="h:${home}">
+                    <a th:href="${h.link}" target="_blank" class="carouselLink">
                         <div class="img">
-                            <img th:alt="${c.getName()}"
-                                 th:title="${c.getName()}"
-                                 th:src="${qiniu}+${c.carousel}"/>
+                            <img
+
+                                    th:src="${qiniu}+${h.img}"/>
                         </div>
 
                     </a>
@@ -160,7 +160,10 @@
             <div class="swiper-pagination"></div>
         </div>
 
-        <script>
+        <script type="text/javascript">
+            $(".carouselLink").click(function (e) {
+
+            })
             new Swiper('.ibanner', {
                 navigation: {
                     nextEl: '.ibanner .next',
@@ -180,51 +183,123 @@
             });
         </script>
     </div>
-
+    <div class="carouselTitle">
+        <div class="title" th:text="${title.getContent()}">Gardening & Yard Care Tools</div>
+        <div class="text" th:text="${content.getContent()}">Make a statement with simple, unique tools that allow you explore new creative territory.
+            Make a statement with simple, unique tools that allow you explore new creative territory. Read More
+            Make a statement with simple, unique tools that allow you explore new creative territory. Read More
+            Read More
+        </div>
+        <div class="foot">
+            <a href="/iron/fore/superBlog" style="color: black">
+            <span>Read More</span>
+            </a>
+        </div>
+    </div>
     <div class="clear0"></div>
     <div class="default_box">
-        <div class="home_ad">
+<!--        <div class="home_ad">-->
 
 
-            <div class="ad foo">
-                <a href="" ymcart_ve_tag='diy_home_ad1' ymcart_ve_type='ad'>
-                    <img src="style/images/538384c9e9c717f4.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>
-                    <div class="text">
-                        <h5>Top brands tools sale for online1</h5>
-                        <span>shop now</span>
-                    </div>
-                </a>
-            </div>
-            <div class="ad foo">
-                <a href="" ymcart_ve_tag='diy_home_ad2' ymcart_ve_type='ad'>
-                    <img src="style/images/f51c57cc6ed0a71b.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>
-                    <div class="text">
-                        <h5>Top brands tools sale for online2</h5>
-                        <span>shop now</span>
-                    </div>
-                </a>
-            </div>
-            <div class="ad foo">
-                <a href="" ymcart_ve_tag='diy_home_ad3' ymcart_ve_type='ad'>
-                    <img src="style/images/74ebadd46339311a.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>
-                    <div class="text">
-                        <h5>Hand Tool, Air tools, Power Tool Accessories</h5>
-                        <span>shop now</span>
-                    </div>
-                </a>
-            </div>
-            <div class="ad foo">
-                <a href="" ymcart_ve_tag='diy_home_ad4' ymcart_ve_type='ad'>
-                    <img src="style/images/703717fc781a1dd9.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>
-                    <div class="text">
-                        <h5>Great products Tools and accessories</h5>
-                        <span>shop now</span>
-                    </div>
-                </a>
-            </div>
-            <div class="clearboth"></div>
-        </div>
+<!--            <div class="ad foo">-->
+<!--                <a href="" ymcart_ve_tag='diy_home_ad1' ymcart_ve_type='ad'>-->
+<!--                    <img src="style/images/538384c9e9c717f4.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>-->
+<!--                    <div class="text">-->
+<!--                        <h5>Top brands tools sale for online1</h5>-->
+<!--                        <span>shop now</span>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="ad foo">-->
+<!--                <a href="" ymcart_ve_tag='diy_home_ad2' ymcart_ve_type='ad'>-->
+<!--                    <img src="style/images/f51c57cc6ed0a71b.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>-->
+<!--                    <div class="text">-->
+<!--                        <h5>Top brands tools sale for online2</h5>-->
+<!--                        <span>shop now</span>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="ad foo">-->
+<!--                <a href="" ymcart_ve_tag='diy_home_ad3' ymcart_ve_type='ad'>-->
+<!--                    <img src="style/images/74ebadd46339311a.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>-->
+<!--                    <div class="text">-->
+<!--                        <h5>Hand Tool, Air tools, Power Tool Accessories</h5>-->
+<!--                        <span>shop now</span>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="ad foo">-->
+<!--                <a href="" ymcart_ve_tag='diy_home_ad4' ymcart_ve_type='ad'>-->
+<!--                    <img src="style/images/703717fc781a1dd9.jpg" th:src="@{/fore/images/538384c9e9c717f4.jpg}"/>-->
+<!--                    <div class="text">-->
+<!--                        <h5>Great products Tools and accessories</h5>-->
+<!--                        <span>shop now</span>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="clearboth"></div>-->
+<!--        </div>-->
         <div class="clear"></div>
+
+
+        <div class="categories_pro" ymcart_ve_tag='diy_home_cate_ids' ymcart_ve_type='cate_select'>
+            <h3 class="tit"><a class="quickview" href="javascript:void(0)">
+
+                <div th:if="${session.language  == 'ch'}">类别产品</div>
+                <div th:unless="${session.language  == 'ch'}">Shopping By Categories</div>
+            </a></h3>
+
+            <ul class="categories">
+
+                <li style="width: 50%" class="foo" th:each="c:${categoriesListWithProduct}" th:if="${cStat.index<2}">
+                    <a type="hidden" class="redirect" th:href="@{/fore/categories(cid=${c.getId()})}"><span></span></a>
+                    <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
+                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
+                    </a>
+
+                    <dl>
+
+                        <dt>
+                            <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
+                            <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
+                        </dt>
+                        <dd>
+                            <a th:text="${c.getDetail()}"  th:href="@{/fore/categories(cid=${c.getId()})}" >
+                            </a>
+                            <span class="readMore">Read More</span>
+                        </dd>
+
+
+                    </dl>
+
+
+                </li>
+
+                <li class="clear"></li>
+                <li class="foo" th:each="c:${categoriesListWithProduct}"  th:if="${cStat.index>=2}">
+                    <a type="hidden" class="redirect" th:href="@{/fore/categories(cid=${c.getId()})}"><span></span></a>
+                    <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
+                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
+                    </a>
+
+                    <dl>
+                        <dt>
+                            <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
+                            <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
+                        </dt>
+                        <dd>
+                            <a th:text="${c.getDetail()}"  th:href="@{/fore/categories(cid=${c.getId()})}" >
+                            </a>
+                            <span class="readMore">Read More</span>
+                        </dd>
+
+
+                    </dl>
+
+                </li>
+                <li class="clear"></li>
+            </ul>
+        </div>
         <div class="pro" ymcart_ve_tag='diy_home_tag_ids' ymcart_ve_type='rec_select'>
             <div class="pro_box">
 
@@ -274,7 +349,7 @@
                                     </a>
                                     <div class="price">
 
-                                        $[[${p.prize}]] - $[[${p.maxPrize}]]
+                                        $[[${p.prize}]]
 
                                     </div>
 
@@ -311,7 +386,7 @@
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
                                     </a>
                                     <div class="price">
-                                        $[[${p.prize}]] - $[[${p.maxPrize}]]
+                                        $[[${p.prize}]]
                                     </div>
 
                                 </div>
@@ -339,7 +414,7 @@
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
                                     </a>
                                     <div class="price">
-                                        $[[${p.prize}]] - $[[${p.maxPrize}]]
+                                        $[[${p.prize}]]
                                     </div>
 
                                 </div>
@@ -354,42 +429,17 @@
     </div>
     <div class="cate_bg">
 
-        <div class="categories_pro" ymcart_ve_tag='diy_home_cate_ids' ymcart_ve_type='cate_select'>
-            <h3 class="tit"><a class="quickview" href="javascript:void(0)">
 
-                <div th:if="${session.language  == 'ch'}">类别产品</div>
-                <div th:unless="${session.language  == 'ch'}">Shopping By Categories</div>
-            </a></h3>
-            <ul class="categories">
-
-
-                <li class="foo" th:each="c:${categoriesListWithProduct}">
-
-                    <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
-                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
-                    </a>
-                    <dl>
-                        <dt>
-                            <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
-                            <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
-                        </dt>
-                        <dd th:each="p:${c.productList}" th:if="${pStat.index}<5">
-                            <a th:href="@{/fore/product(pid=${p.getId()})}">
-                                <span>■</span>
-                                <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
-                                <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
-                            </a>
-                        </dd>
-
-                    </dl>
-
-                </li>
-                <li class="clear"></li>
-            </ul>
-        </div>
     </div>
-    <div class="home_text" ymcart_ve_tag='diy_home_text' ymcart_ve_type='textedit'><img
-            src="http://qdxbxkkk6.bkt.clouddn.com/home.png" alt=""/></div>
+    <script type="text/javascript">
+        $(".readMore").click(function () {
+
+            $(this).parents("li").first().find("a:first span").trigger("click")
+
+        })
+    </script>
+    <div class="home_text" ymcart_ve_tag='diy_home_text' ymcart_ve_type='textedit'><a th:href="${detailImgLink.getContent()}"><img
+            src="http://qdxbxkkk6.bkt.clouddn.com/home.png" th:src="${qiniu}+${detailImg.getContent()}" alt=""/></a></div>
     <div class="default_box">
         <div id="news" class="news">
             <h3 class="tit"><a href="/iron/fore/blog">
@@ -411,8 +461,8 @@
                         </a></h5>
                         <span class="time" th:text="${#dates.format(blog.getCreateTime(),'yyyy-MM-dd')}"></span>
                         <p>
-                            <div th:if="${session.language  == 'ch'}">[[${blog.intro}]]</div>
-                            <div th:unless="${session.language  == 'ch'}">[[${blog.introEn}]]</div>
+                        <div th:if="${session.language  == 'ch'}">[[${blog.intro}]]</div>
+                        <div th:unless="${session.language  == 'ch'}">[[${blog.introEn}]]</div>
                         </p>
                         <a class="more" th:href="@{/fore/blogChild(id=${blog.id})}">
                             <div th:if="${session.language  == 'ch'}">阅读更多 &#187</div>

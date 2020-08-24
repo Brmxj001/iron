@@ -280,3 +280,9 @@
 .width100{
 	width: 100%;
 }
+.fontRed{
+	color: red;
+}
+.fontRed:hover{
+	border-bottom: 1px solid red;
+}

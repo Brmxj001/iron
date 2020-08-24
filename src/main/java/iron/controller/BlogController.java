@@ -1,15 +1,11 @@
 package iron.controller;
 
 import iron.bean.Blog;
-import iron.dao.BlogDAO;
 import iron.service.BlogService;
 import iron.service.impl.BlogServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

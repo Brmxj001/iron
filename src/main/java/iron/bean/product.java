@@ -71,17 +71,32 @@ public class Product {
     @Column(name = "is_top")
     private boolean top;
 
+    @Column(name = "is_hot")
+    private boolean hot;
+
+    @Column(name = "is_new")
+    private boolean New;
+
+    private String amazon;
+
     /**
      * 访问次数
      */
     @Column(name = "access_total")
     private Integer accessTotal;
 
+    /**
+     * 3d模型
+     */
+    @Column(name = "three_d")
+    private  String threeD;
+
     @Column(name = "create_time")
     private Date createTime;
 
     @Column(name = "upload_time")
     private Date uploadTime;
+
 
     @Transient
     private Categories categories;
@@ -94,6 +109,9 @@ public class Product {
     
     @Transient
     private  List<ProductAttr> productAttrList;
+
+    @Transient
+    private List<ProductDetailImg> productDetailImgList;
 
     @Transient
     private  List<Product> productLikeList;

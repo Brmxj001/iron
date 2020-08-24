@@ -134,11 +134,11 @@
                 <dl th:each="c:${categories}">
                     <dt><a th:href="@{/fore/categories(cid=${c.id})}">
                         <span th:if="${session.language  == 'ch'}">[[${c.name}]]</span>
-                        <span th:unless="${session.language  == 'ch'}">[[${c.nameEn}]]</span>
+                        <span th:unless="${session.language  == 'ch'}">[[${c.getNamee()}]]</span>
                     </a></dt>
                     <dd th:each="p:${c.productList}"> <a th:href="@{/fore/product(pid=${p.id})}" >
                         <span th:if="${session.language  == 'ch'}">[[${p.name}]]</span>
-                        <span th:unless="${session.language  == 'ch'}">[[${p.nameEn}]]</span>
+                        <span th:unless="${session.language  == 'ch'}">[[${p.name_en}]]</span>
                     </a></dd>
                 </dl>
 

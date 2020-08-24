@@ -83,8 +83,10 @@
 
 </head>
 <body>
-
 <div th:replace="back/include::modal" id="modal"></div>
+<div th:replace="back/include::showImgModal"></div>
+<div th:replace="back/CommonInclude::common"></div>
+<div th:replace="back/CommonInclude::url"></div>
 <div class='loader'>
     <div class='spinner-grow text-primary' role='status'>
         <span class='sr-only'>Loading...</span>
@@ -100,74 +102,30 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="inbox-options">
-                                    <div class="inbox-page-count">联系方式</div>
+                                    <div class="inbox-page-count">首页轮播图</div>
                                 </div>
                                 <table class="table table table-hover">
                                     <thead class="success">
-                                    <th>ID</th>
-                                    <th>属性</th>
-                                    <th>其他</th>
+                                    <th>照片</th>
+                                    <th>链接</th>
+                                    <th> ...</th>
                                     </thead>
                                     <tbody>
 
-                                    <tr>
-                                        <td>首页轮播图</td>
-                                        <td width="60%">
-                                            <div id="ImgBox" style="width: 100%"></div>
+                                    <tr th:each="h:${home}">
+                                        <td width="40%">
+                                            <img class="width50" th:src="${qiniu}+${h.img}" alt=""/>
                                         </td>
                                         <td>
-                                            <span id="BoxButton">点击添加</span>
-                                            <input style="display: none" type="file" name="file" id="BoxInput"
-                                                   accept="image/*"/>
-                                            <div id="info"></div>
+                                            <span th:text="${h.link}"></span>
+                                        </td>
+                                        <td>
+                                            <span id="homeDeleteButton" class="fontRed"
+                                                  th:attr="data-id=${h.id}">删除</span>
                                         </td>
                                     </tr>
                                     <div th:replace="back/CommonInclude::common"></div>
                                     <div th:replace="back/CommonInclude::url"></div>
-                                    <script type="text/javascript" th:inline="javascript">
-                                        function showHomeImg() {
-                                            let imgList= postRequest(getHomeCarousel())
-                                            let box = $("#ImgBox")
-                                            box.html("")
-                                            for (let i = 0; i < imgList.length; i++) {
-                                                let oldBox = box.html();
-                                                box.html(oldBox + '<div><img src="' + [[${qiniu}]] + imgList[i].path + '" alt=""/><span id="' + imgList[i].id + '">+</span></div>');
-                                            }
-                                        }
-
-                                        $(function () {
-                                            $("#BoxButton").click(function () {
-                                                $("#BoxInput").trigger("click")
-                                                $("#info").html("上传中...")
-                                            })
-
-                                            $("#ImgBox").on("click", "span", function () {
-                                                postRequest(deleteCarousel(),getFormData("id",$(this).attr("id")))
-                                                showHomeImg()
-                                            })
-
-                                            $("#BoxInput").change(function () {
-                                                postRequest(addHomeCarousel(),getFormData("file",$(this)[0].files[0]))
-                                                showHomeImg()
-                                                $(this).html("")
-                                                $("#info").html("上传成功")
-                                                setInterval(removeInfo,3000)
-                                            })
-
-                                            $("#ImgBox").on("click", "img", function () {
-                                                showImg($(this).attr("src"))
-                                            })
-
-                                            showHomeImg()
-
-                                            function removeInfo(){
-                                                $("#info").html("")
-                                            }
-                                        })
-
-                                    </script>
-
-
                                     </tbody>
                                 </table>
 
@@ -178,6 +136,195 @@
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
+                                <table>
+                                    <thead class="success">
+                                    <th><span id="carouselButton" class="fontRed">照片(添加1400*600)</span></th>
+                                    <th>链接</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+
+                                        <td width="40%">
+                                            <img class="width50" id="carouselImg"/>
+                                            <input type="file" class="iron-hidden" id="carouselInput" accept="image/*"/>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="homeLink" type="text">
+                                        </td>
+                                        <td>
+                                            <button class="btn-info btn" id="addHomeButton">添加</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <script type="text/javascript" th:inline="javascript">
+
+                                    $("#homeDeleteButton").click(function () {
+                                        postRequest(deleteHomeUrl(), getFormData("id", $(this).attr("data-id")))
+                                        location.reload()
+                                    })
+                                    $("#carouselButton").click(function () {
+                                        $("#carouselInput").trigger("click")
+                                    })
+
+                                    $("#carouselInput").change(function () {
+                                        let file = $(this)[0].files[0]
+                                        $("#carouselImg").attr("src", getFileTempPath(file))
+
+
+                                    })
+                                    $("#addHomeButton").click(function () {
+                                        let formData = getFormData("file", $("#carouselInput")[0].files[0])
+                                        formData.append("key", "homeCarousel_")
+                                        let img = postRequest(uploadFileUrl(), formData)
+                                        console.log(img)
+                                        let homeFormData = getFormData("img", img)
+                                        homeFormData.append("link", $("#homeLink").val())
+                                        postRequest(addHomeUrl(), homeFormData)
+                                        alert("上传成功")
+                                        location.reload()
+                                    })
+                                </script>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="inbox-options">
+                                    <div class="inbox-page-count">首页文本</div>
+                                </div>
+                                <table class="table table table-hover">
+                                    <thead class="success">
+                                    <th>属性</th>
+                                    <th>值</th>
+                                    <th> ...</th>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td width="20%">
+                                            <span th:text="${title.getTitle()}"></span>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="homeTitleAttr"
+                                                   th:value="${title.getContent()}"/>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%">
+                                            <span th:text="${content.getTitle()}"></span>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="homeContentAttr"
+                                                   th:value="${content.getContent()}"/>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%">
+                                            <span th:text="${img.getTitle()}"></span>
+                                        </td>
+                                        <td width="60%">
+                                            <img style="width: 100%" id="HomeImg" th:src="${qiniu}+${img.content}">
+                                        </td>
+                                        <td>
+                                            <span class="fontRed" id="editHomeImgButton">修改</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">
+                                            <span th:text="${detailImg.getTitle()}"></span>
+                                        </td>
+                                        <td width="60%">
+                                            <img style="width: 100%" id="HomeDetailImg" th:src="${qiniu}+${detailImg.content}">
+                                        </td>
+                                        <td>
+                                            <span class="fontRed" id="editHomeDetailImgButton">修改</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%">
+                                            <span th:text="${detailImgLink.getTitle()}"></span>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" id="homeDetailImgLinkAttr"
+                                                   th:value="${detailImgLink.getContent()}"/>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <div th:replace="back/CommonInclude::common"></div>
+                                    <div th:replace="back/CommonInclude::url"></div>
+                                    </tbody>
+                                </table>
+                                <input class="iron-hidden" type="file" value="修改照片" name="file" id="HomeImgAttr" accept="image/*"/>
+                                <input class="iron-hidden" type="file" value="修改照片" name="file" id="HomeDetailImgInput" accept="image/*"/>
+                                <script type="text/javascript" th:inline="javascript">
+                                    $("#editHomeImgButton").click(function () {
+                                        $("#HomeImgAttr").trigger("click")
+                                    })
+                                    $("#editHomeDetailImgButton").click(function () {
+                                        $("#HomeDetailImgInput").trigger("click")
+                                    })
+                                    $("#HomeImgAttr").change(function () {
+                                        let formData = getFormData("file", $(this)[0].files[0])
+                                        formData.append("key", "HomeImgAttr_")
+                                        let result = postRequest(uploadFileUrl(), formData)
+
+                                        let homeImgFormData = getFormData("id", [[${img.id}]])
+                                        homeImgFormData.append("title", [[${img.title}]])
+                                        homeImgFormData.append("content", result)
+                                        postRequest(editHomeAttr(), homeImgFormData)
+
+                                        $("#HomeImg").attr("src", [[${qiniu}]] + result)
+                                    })
+                                    $("#HomeDetailImgInput").change(function () {
+                                        let formData = getFormData("file", $(this)[0].files[0])
+                                        formData.append("key", "HomeDetailImgAttr_")
+                                        let result = postRequest(uploadFileUrl(), formData)
+
+                                        let homeImgFormData = getFormData("id", [[${detailImg.id}]])
+                                        homeImgFormData.append("title", [[${detailImg.title}]])
+                                        homeImgFormData.append("content", result)
+                                        postRequest(editHomeAttr(), homeImgFormData)
+
+                                        $("#HomeDetailImg").attr("src", [[${qiniu}]] + result)
+                                    })
+                                    $("#homeTitleAttr").blur(function () {
+                                        let formData = getFormData("id", [[${title.id}]])
+                                        formData.append("title", [[${title.title}]])
+                                        formData.append("content", $(this).val())
+                                        postRequest(editHomeAttr(), formData)
+                                    })
+
+                                    $("#homeContentAttr").blur(function () {
+                                        let formData = getFormData("id", [[${content.id}]])
+                                        formData.append("title", [[${content.title}]])
+                                        formData.append("content", $(this).val())
+                                        postRequest(editHomeAttr(), formData)
+                                    })
+
+                                    $("#homeDetailImgLinkAttr").blur(function () {
+                                        let formData = getFormData("id", [[${detailImgLink.id}]])
+                                        formData.append("title", [[${detailImgLink.title}]])
+                                        formData.append("content", $(this).val())
+                                        postRequest(editHomeAttr(), formData)
+                                    })
+
+                                </script>
 
 
                             </div>
@@ -201,8 +348,6 @@
 <div class="mailbox-compose-overlay"></div>
 <div class="mailbox-item-overlay"></div>
 
-<div th:replace="back/include::showImgModal" id="showImgModal"></div>
-<div th:replace="back/include::ironJS" id="ironJS"></div>
 <a class="hidden" href="/iron/back/products" id="productFresh"><span></span></a>
 
 </body>

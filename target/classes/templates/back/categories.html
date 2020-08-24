@@ -154,7 +154,7 @@
                                         $("#editId").html(result.id);
                                         $("#coverImg").attr("src", [[${qiniu}]] + result.cover)
                                         $("#carouselImg").attr("src", [[${qiniu}]] + result.carousel)
-
+                                        if (result.index)  $("#isIndex input[value=1]").attr("checked",true);
                                         window.categories = result
                                     })
 
@@ -200,7 +200,17 @@
                 </div>
             </div>
 
-
+            <span>首页显示</span>
+            <div id="isIndex">
+                    <label>
+                        是
+                        <input type="radio" name="isIndex" value="1"/>
+                    </label>
+                    <label>
+                        否
+                        <input checked="checked" type="radio" name="isIndex" value="0"/>
+                    </label>
+            </div>
             <!-- demo -->
             <span class="mail-author-name">名称</span>
             <input type="text" class="form-control  cEdit" id="editName" value="">
@@ -213,7 +223,7 @@
                 <img class="width50" id="carouselImg"/>
             </div>
 
-            <span class="mail-author-name">首页轮播图 <span id="coverButton" class="colorRed hover"> <<修改>></span></span>
+            <span class="mail-author-name">封面<span id="coverButton" class="colorRed hover"> <<修改>></span></span>
             <div class="width100">
                 <img class="width50" id="coverImg"/>
             </div>
@@ -224,6 +234,9 @@
         <input type="file" name="file"  class="iron-hidden" id="coverInput" accept="image/*"/>
 
         <script type="text/javascript" th:inline="javascript">
+            $("input[type=radio]").change(function () {
+                editCategories()
+            })
             $("img").click(function () {
                 console.log("a")
                 showImg($(this).attr("src"))
@@ -243,10 +256,11 @@
                 editCategories()
             })
             $("#carouselInput").change(function () {
+                console.log("carousel")
                 let formData = getFormData("file", $(this)[0].files[0])
                 formData.append("key","carousel_")
                 window.categories.carousel = postRequest(uploadFileUrl(),formData)
-                $("#coverImg").attr("src",getFileTempPath($(this)[0].files[0]))
+                $("#carouselImg").attr("src",getFileTempPath($(this)[0].files[0]))
                 editCategories()
             })
             $(".cEdit").blur(function () {
@@ -261,6 +275,7 @@
                 formData.append("namee",getVal("#editNameE"))
                 formData.append("cover",window.categories.cover)
                 formData.append("carousel",window.categories.carousel)
+                formData.append("index", $("#isIndex input:checked").val())
                 postRequest(editCategoriesUrl(), formData)
             }
 

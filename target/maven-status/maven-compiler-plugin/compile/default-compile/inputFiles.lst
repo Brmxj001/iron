@@ -1,3 +1,4 @@
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/HomeAttr.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/CategoriesService.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/builder/CategoriesImgBuilder.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/BlogController.java
@@ -18,7 +19,6 @@
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/HomeController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/ProductsController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/BlogImg.java
-/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/homeimg.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/FrontController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/BlogDAO.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/CategoriesDAO.java
@@ -36,8 +36,10 @@
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/ConfigBean.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/ProductImgService.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/IronApplicationRuner.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/HomeAttrDAO.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/BlogImgService.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/contact.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/ProductDetailImgDAO.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/BlogImgController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/util/Qiniu.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/util/IronUtil.java
@@ -55,7 +57,8 @@
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/home.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/FeedbackDAO.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/impl/BlogImgServiceImpl.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/ProductDetailImg.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/BackPageController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/Login.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/IronJunit.java
-/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/HomeImgDAO.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/back/ProductDetailImgController.java

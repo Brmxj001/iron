@@ -168,17 +168,19 @@ span.discount-timer{ background:none; text-indent:5px; padding:0;}
 
 .index_default .cate_bg{ background:#f5f5f5; padding:75px;}
 .index_default .categories_pro{ min-height:50px;}
-.index_default .categories{ overflow:hidden;}
-.index_default .categories li{ width:25%; margin:0; padding:0 15px; box-sizing:border-box; position:relative;}
+.index_default .categories{ overflow:hidden; text-align: center;}
+.index_default .categories li{ width:33%; margin:0; padding:0 15px; box-sizing:border-box; position:relative;}
 .index_default .categories li .pic{ width:100%; height:auto; line-height:normal;}
 .index_default .categories li .pic img{ max-width:100%; max-height:100%;}
 .index_default .categories li dl{ margin-top:30px; width:100%;}
-.index_default .categories li dl dt{ font-size:21px; line-height:32px; margin-bottom:10px; border-bottom:none; font-weight:normal;}
+.index_default .categories li dl dt{ font-size:35px;  line-height:32px; margin-bottom:10px; border-bottom:none; font-weight:bold;}
 .index_default .categories li dl dd{ border-bottom:1px solid #e1e1e1; padding:5px 0;}
 .index_default .categories li dl dd:last-child{ border:0;}
-.index_default .categories li dl dd a{ height:auto; font-size:14px; line-height:24px; letter-spacing:1px;}
-.index_default .categories li dl dd a:hover{ color:#ff8418 ;}
+.index_default .categories li dl dd a{ height:auto; color: black;  font-size:20px; line-height:24px; letter-spacing:1px;}
+.index_default .categories li dl dd a:hover{ color:black ;}
 .index_default .categories li dl dd a span{ float: left; font-size: 10px; margin-right: 10px; margin-top: -1px;}
+.index_default .categories li  .readMore{ height:auto; color: black; font-weight: bold; border-bottom: solid 2px black;  font-size:20px; line-height:84px; letter-spacing:1px; margin-bottom: 39px;}
+.index_default .categories li  .readMore:hover{ color: red;border-bottom-color: red}
 
 .index_default .home_text img{ width:100%;}
 

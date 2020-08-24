@@ -13,6 +13,6 @@ public class home {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String type;
-    private String content;
+    private String link;
+    private String img;
 }

@@ -5,6 +5,7 @@ import iron.bean.ProductAttr;
 import iron.dao.CategoriesDAO;
 import iron.dao.ProductAttrDAO;
 import iron.dao.ProductDAO;
+import iron.dao.ProductDetailImgDAO;
 import iron.service.ProductService;
 import iron.util.IronUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +36,16 @@ public class ProductServiceImpl implements ProductService<Product> {
     private final ProductImgServiceImpl productImgService;
     private final ProductAttrDAO productAttrDAO;
     private final CategoriesDAO categoriesDAO;
+    private final ProductDetailImgDAO productDetailImgDAO;
+
 
     private static final String PRODUCT_UPLOAD_TIME = "uploadTime";
     private static final String PRODUCT_ACCESS_TOTAL = "accessTotal";
     private static final String PRODUCT_PRIZE = "prize";
 
     @Autowired
-    public ProductServiceImpl(IronUtil ironUtil, ProductDAO productDAO, ProductImgServiceImpl productImgService, ProductAttrDAO productAttrDAO, CategoriesDAO categoriesDAO) {
+    public ProductServiceImpl(ProductDetailImgDAO productDetailImgDAO,IronUtil ironUtil, ProductDAO productDAO, ProductImgServiceImpl productImgService, ProductAttrDAO productAttrDAO, CategoriesDAO categoriesDAO) {
+        this.productDetailImgDAO = productDetailImgDAO;
         this.ironUtil = ironUtil;
         this.productDAO = productDAO;
         this.productImgService = productImgService;
@@ -56,6 +60,7 @@ public class ProductServiceImpl implements ProductService<Product> {
         result.setImgList(productImgService.getAllByProductId(result.getId()));
         result.setProductAttrList(productAttrDAO.findByPid(id));
         result.setCategories(categoriesDAO.findById(result.getCid()).get());
+        result.setProductDetailImgList(productDetailImgDAO.findByPid(result.getId()));
         return result;
     }
 

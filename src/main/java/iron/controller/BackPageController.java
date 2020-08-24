@@ -27,7 +27,8 @@ public class BackPageController {
     private final ProductDAO productDAO;
     private final FeedbackDAO feedbackDAO;
     private final ContactDAO contactDAO;
-    private final IronUtil ironUtil;
+    private final HomeDAO homeDAO;
+    private final HomeAttrDAO homeAttrDAO;
 
     private final BlogDAO blogDAO;
 
@@ -38,14 +39,17 @@ public class BackPageController {
                               CategoriesDAO categoriesDAO,
                               IronUtil ironUtil,
                               ContactDAO contactDAO,
-                              FeedbackDAO feedbackDAO) {
+                              FeedbackDAO feedbackDAO,
+                                HomeAttrDAO homeAttrDAO,
+                              HomeDAO homeDAO) {
+        this.homeDAO = homeDAO;
         this.blogDAO = blogDAO;
         this.categoriesService = categoriesService;
         this.categoriesDAO = categoriesDAO;
         this.productDAO = productDAO;
         this.feedbackDAO = feedbackDAO;
         this.contactDAO = contactDAO;
-        this.ironUtil = ironUtil;
+        this.homeAttrDAO = homeAttrDAO;
     }
 
     @GetMapping("/back/index")
@@ -55,7 +59,12 @@ public class BackPageController {
 
     @GetMapping("/back/homePage")
     public String toBackHome(Model m) {
-        ironUtil.doSetHome(m);
+        m.addAttribute("home", homeDAO.findAll());
+        m.addAttribute("title", homeAttrDAO.findByTitle("title"));
+        m.addAttribute("content", homeAttrDAO.findByTitle("content"));
+        m.addAttribute("img", homeAttrDAO.findByTitle("img"));
+        m.addAttribute("detailImg", homeAttrDAO.findByTitle("detail_img"));
+        m.addAttribute("detailImgLink", homeAttrDAO.findByTitle("detail_img_link"));
         return "back/home";
     }
 
@@ -76,7 +85,6 @@ public class BackPageController {
                                  @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Pageable pageable = PageRequest.of(start, size, getSort());
         Page<Product> page = productDAO.findAll(pageable);
-        log.info(page.getContent().toString());
         m.addAttribute("page", page);
         m.addAttribute("next", page.hasNext());
         m.addAttribute("pre", page.hasPrevious());

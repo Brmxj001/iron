@@ -4,9 +4,7 @@ package iron.controller;
 import iron.bean.Categories;
 import iron.bean.Product;
 import iron.bean.feedback;
-import iron.dao.ContactDAO;
-import iron.dao.FeedbackDAO;
-import iron.dao.HomeImgDAO;
+import iron.dao.*;
 import iron.service.BlogService;
 import iron.service.CategoriesService;
 import iron.service.ProductService;
@@ -17,10 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,12 +27,15 @@ import java.util.List;
 public class ForePageController {
 
 
-    private final HomeImgDAO homeImgDAO;
+    private final HomeAttrDAO homeAttrDAO;
     private final ProductService<Product> productService;
     private final CategoriesService<Categories> categoriesService;
     private final FeedbackDAO feedbackDAO;
     private final BlogService blogService;
     private final ContactDAO contactDAO;
+    private final HomeDAO homeDAO;
+    private final ProductDetailImgDAO productDetailImgDAO;
+
     /**
      * 分类排序方式
      */
@@ -46,24 +46,33 @@ public class ForePageController {
     private final static String NEWEST = "newest";
 
     @Autowired
-    public ForePageController(HomeImgDAO homeImgDAO, ProductServiceImpl productService, ContactDAO contactDAO, CategoriesServiceImpl categoriesService, FeedbackDAO feedbackDAO, BlogServiceImpl blogService) {
-        this.homeImgDAO = homeImgDAO;
+    public ForePageController(ProductDetailImgDAO productDetailImgDAO,HomeDAO homeDAO, HomeAttrDAO homeAttrDAO, ProductServiceImpl productService, ContactDAO contactDAO, CategoriesServiceImpl categoriesService, FeedbackDAO feedbackDAO, BlogServiceImpl blogService) {
+        this.homeAttrDAO = homeAttrDAO;
         this.productService = productService;
         this.categoriesService = categoriesService;
         this.feedbackDAO = feedbackDAO;
         this.blogService = blogService;
         this.contactDAO = contactDAO;
+        this.homeDAO = homeDAO;
+        this.productDetailImgDAO  = productDetailImgDAO;
     }
 
     @GetMapping("/fore/index")
     public String toIndexPage(Model m) {
-        m.addAttribute("homeImgList", homeImgDAO.findAll());
+        m.addAttribute("homeImgList", homeAttrDAO.findAll());
         m.addAttribute("newest", productService.getNewest(14));
         m.addAttribute("hottest", productService.getHottest(14));
         m.addAttribute("top", productService.getTop());
-        m.addAttribute("categoriesListWithProduct", categoriesService.getAllWithProduct());
+        m.addAttribute("categoriesListWithProduct", categoriesService.getIndexShow());
         m.addAttribute("blogList", blogService.getLatest(4));
+        m.addAttribute("home", homeDAO.findAll());
+        m.addAttribute("title", homeAttrDAO.findByTitle("title"));
+        m.addAttribute("content", homeAttrDAO.findByTitle("content"));
+        m.addAttribute("img", homeAttrDAO.findByTitle("img"));
+        m.addAttribute("detailImg", homeAttrDAO.findByTitle("detail_img"));
+        m.addAttribute("detailImgLink", homeAttrDAO.findByTitle("detail_img_link"));
         return "fore/index";
+
     }
 
     @GetMapping("/fore/categories")
@@ -162,6 +171,8 @@ public class ForePageController {
         Product result = productService.get(pid);
         result.setProductLikeList(productService.getByNameLike(nameSplitSign(result.getName())));
         m.addAttribute("product", result);
+        m.addAttribute("productDetailImgList", productDetailImgDAO.findByPid(pid));
+        result.setThreeD(HtmlUtils.htmlUnescape(result.getThreeD()));
         return "fore/product";
     }
 
@@ -183,8 +194,16 @@ public class ForePageController {
 
     @ResponseBody
     @PostMapping("/fore/changeLanguage")
-    public void changeLanguage(HttpSession session, String language){
+    public void changeLanguage(HttpSession session, String language) {
         session.removeAttribute("language");
-        session.setAttribute("language",language);
+        session.setAttribute("language", language);
+    }
+
+    @GetMapping("/fore/superBlog")
+    public String toSuperBlogPage(Model m) {
+        m.addAttribute("title", homeAttrDAO.findByTitle("title"));
+        m.addAttribute("content", homeAttrDAO.findByTitle("content"));
+        m.addAttribute("img", homeAttrDAO.findByTitle("img"));
+        return "fore/superBlog";
     }
 }
