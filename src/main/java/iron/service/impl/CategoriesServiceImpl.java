@@ -43,7 +43,7 @@ public class CategoriesServiceImpl implements CategoriesService<Categories> {
     @Override
     public Categories get(Integer id) {
         Categories c = categoriesDAO.findById(id).orElse(null);
-        assert c != null;
+        if (null == c) return null;
         c.setImgList(categoriesImgDAO.findByCid(c.getId()));
         return c;
     }

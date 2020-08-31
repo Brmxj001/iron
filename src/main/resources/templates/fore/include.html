@@ -213,9 +213,7 @@
             $('#search_icon').click(function () {
                 $('.search_box').addClass('open');
             });
-            $('.close_search').click(function () {
-                $('.search_box').removeClass('open');
-            });
+
 
         });
 
@@ -228,70 +226,62 @@
     <!--#body_box-->
     <div id="bottom_box">
         <div class="link_box">
-            <div class="btm_txt" ymcart_ve_tag='diy_btm_txt' ymcart_ve_type='textedit'><img
-                    src="style/images/0ea4fd14ca764314.png" th:src="@{/fore/images/0ea4fd14ca764314.jpg}" alt=""/>
-                <p th:each="contact:${contactUs}">
-                    [[${contact.name}]]: <span style="margin-left: 20px;">[[${contact.info}]]</span>
-                </p>
-            </div>
+
             <div class="bottom_rt">
                 <div class="row">
 
 
                     <dl>
-                        <dt><span th:if="${session.language  == 'ch'}">公司信息 </span>
-                            <span th:unless="${session.language  == 'ch'}"> Company Info</span>
-                            <div class="bor_line"></div>
-                        </dt>
-
                         <dd>
-                            <a href="/iron/fore/feedback">
-                                <span th:if="${session.language  == 'ch'}">反馈 </span>
-                                <span th:unless="${session.language  == 'ch'}"> Feedback</span>
+                            <a href="/iron/fore/aboutUs">
+                                <span th:if="${session.language  == 'ch'}">有关我们</span>
+                                <span th:unless="${session.language  == 'ch'}">ABOUT US</span>
                             </a>
                         </dd>
 
                         <dd>
                             <a href="/iron/fore/aboutUs">
-                                <span th:if="${session.language  == 'ch'}">有关我们 </span>
-                                <span th:unless="${session.language  == 'ch'}"> About Us</span>
+                                <span th:if="${session.language  == 'ch'}">我们公司</span>
+                                <span th:unless="${session.language  == 'ch'}">Our company</span>
                             </a>
                         </dd>
 
                         <dd>
-                            <a href="/iron/fore/feedback">
-                                <span th:if="${session.language  == 'ch'}">联系我们 </span>
-                                <span th:unless="${session.language  == 'ch'}"> Contact Us</span>
+                            <a href="javascript:void(0);">
+                                <span th:if="${session.language  == 'ch'}">我们的邮箱:</span>
+                                <span th:unless="${session.language  == 'ch'}"> Our e-mail: </span>
+                                <span th:text="${email.getContent()}"></span>
                             </a>
                         </dd>
 
+<!--                        <dd>-->
+<!--                            <a href="/iron/fore/feedback">-->
+<!--                                <span th:if="${session.language  == 'ch'}">常见问题 </span>-->
+<!--                                <span th:unless="${session.language  == 'ch'}"> FAQ </span>-->
+<!--                            </a>-->
+<!--                        </dd>-->
+
 
                     </dl>
 
-
-                    <dl>
-                        <dt>Payment & Shipping
-                            <div class="bor_line"></div>
-                        </dt>
+                    <dl style="margin-left: 200px">
+                        <dd>
+                        <a th:href="${followUs.getContent()}">
+                            <span th:if="${session.language  == 'ch'}">关注我们 </span>
+                            <span th:unless="${session.language  == 'ch'}"> Follow us </span>
+                        </a>
+                    </dd>
 
                         <dd>
-                            <a href="/Customs-Taxes-n31881.html">Customs & Taxes</a>
-                        </dd>
-
-                        <dd>
-                            <a href="/Locations-We-Ship-To-n31880.html">Locations We Ship To</a>
-                        </dd>
-
-                        <dd>
-                            <a href="/Shipping-Methods-n31879.html">Shipping Methods</a>
-                        </dd>
-
-                        <dd>
-                            <a href="/Payment-Methods-n31878.html">Payment Methods</a>
+                            <div class="footImg" style="display: flex">
+                                <a th:href="${facebook.getContent()}"><img alt="" width="30px" th:src="@{/fore/facebook.png}"/></a>
+                                <a th:href="${youtube.getContent()}"><img alt="" width="30px" th:src="@{/fore/youtube.png}"/></a>
+                                <a th:href="${twitter.getContent()}"><img alt="" width="30px" th:src="@{/fore/twitter.png}"/></a>
+                                <a th:href="${linked.getContent()}"><img alt="" width="30px" th:src="@{/fore/linkedin.png}"/></a>
+                            </div>
                         </dd>
 
                     </dl>
-
                 </div>
             </div>
             <div class="clearboth"></div>
@@ -302,27 +292,17 @@
             <div class="col-lg-4">
                 <ul class="copyright">
 
-                    <a href="/iron/fore/aboutUs">
-                        <span th:if="${session.language  == 'ch'}">有关我们 </span>
-                        <span th:unless="${session.language  == 'ch'}"> About Us</span>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/iron/fore/aboutUs">
-                        <span th:if="${session.language  == 'ch'}">联系我们 </span>
-                        <span th:unless="${session.language  == 'ch'}"> Contact Us</span>
-                    </a>
+
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                    <a href="/iron/fore/feedback">
-                        <span th:if="${session.language  == 'ch'}">反馈 </span>
-                        <span th:unless="${session.language  == 'ch'}"> Feedback </span>
-                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
                 </ul>
             </div>
             <div class="col-lg-4">
                 <div class="copyright" ymcart_ve_tag='diy_copyright_con' ymcart_ve_type='textedit'>
-                    Copyright &copy; 2006-2016 SHOPYY INC. All Rights Reserved.
+                   [[${foot.getContent()}]]
                 </div>
             </div>
             <div class="col-lg-4">
@@ -361,8 +341,10 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}"> <span th:if="${session.language  == 'ch'}">分类</span>
-                            <span th:unless="${session.language  == 'ch'}">Categories</span><i class="iconfont icon-arrows-copy"></i></a>
+                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}"> <span
+                                th:if="${session.language  == 'ch'}">分类</span>
+                            <span th:unless="${session.language  == 'ch'}">Categories</span><i
+                                    class="iconfont icon-arrows-copy"></i></a>
                         <ul class="sub_nav dropdown dropdown_cate">
                             <li th:each="c:${foreCategoriesList}">
                                 <a th:href="@{/fore/categories(cid=${c.id})}">
@@ -479,7 +461,7 @@
     </div><!--end header_box-->
     <div class="search_box" id="search_box">
         <div id="search" class="search">
-            <span class="close_search iconfont icon-iconfontclose"></span>
+            <span class="close_search iconfont icon-iconfontclose" style="color: black"></span>
 
             <form id="autocomplete-submit" class="searchform" action="/h-product-search.html" method="get">
                 <input type="text" name="keywords" autocomplete="off" value="Search..." id="autocomplete-ajax"
@@ -506,7 +488,7 @@
                     onSelect: function (suggestion) {
                         var keywords = $('#autocomplete-ajax').val();
                         keywords = escape(escape(suggestion.value));
-                        window.location.href = "/Search-" + keywords + "/list-r1.html";
+                        window.location.href = "/iron/fore/categoriesSearch?searchOrAll=" + keywords;
                     },
                     onFocus: function () {
                         return false;
@@ -516,7 +498,7 @@
                     var keywords = $('#autocomplete-ajax').val();
                     keywords = format_keywords(keywords);
                     if (keywords != "") {
-                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        location.href = "/iron/fore/categoriesSearch?searchOrAll=" + keywords;
                         return false;
                     }
                 });
@@ -524,7 +506,7 @@
                     var keywords = $('#autocomplete-ajax').val();
                     keywords = format_keywords(keywords);
                     if (keywords != "") {
-                        location.href = '/Search-' + keywords + '/list-r1.html';
+                        location.href = "/iron/fore/categoriesSearch?searchOrAll=" + keywords;
                         return false;
                     }
                 });
@@ -533,10 +515,59 @@
                         $("#autocomplete-ajax").val("");
                     });
                 });
+
             </script>
         </div>
 
     </div>
+    <script>
+        var show_mini_cart = false;
+        $(function () {
+            $(".cart_box").hover(function () {
+                if (!show_mini_cart) {
+                    $.ajax({
+                        url: "/h-cart-miniCartList.html",
+                        cache: false,
+                        success: function (html) {
+                            $('#minicartlist').html(html);
+                            show_mini_cart = true;
+                        }
+                    })
+                }
+                $("#CartsCon").show();
+            }, function () {
+                $("#CartsCon").hide();
+                show_mini_cart = false;
+            });
+
+            $("#header_box .login  > a").toggle(function () {
+                $(".login_menu").stop().slideDown();
+            }, function () {
+                $(".login_menu").stop().slideUp();
+            });
+
+            var win = $(window);
+            var sticky_id = $("#nav_wrapper");
+            var mtst = $('#nav_wrapper').offset().top;
+            win.on('scroll', function () {
+                var scroll = win.scrollTop();
+                if (scroll > mtst) {
+                    sticky_id.addClass("fixed_header");
+                } else {
+                    sticky_id.removeClass("fixed_header");
+                }
+            });
+
+            $('#search_icon').click(function () {
+                $('.search_box').addClass('open');
+            });
+            $('.close_search').click(function () {
+                $('.search_box').removeClass('open');
+            });
+
+        });
+
+    </script>
 </footer>
 
 <footer th:fragment="aboutUsFoot">
@@ -617,19 +648,19 @@
             <div class="col-lg-4">
                 <ul class="copyright">
                     <a href="/iron/fore/aboutUs">
-                        <div th:if="${session.language  == 'ch'}">有关我们 </div>
+                        <div th:if="${session.language  == 'ch'}">有关我们</div>
                         <div th:unless="${session.language  == 'ch'}"> About Us</div>
                     </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="/iron/fore/aboutUs">
-                        <div th:if="${session.language  == 'ch'}">联系我们 </div>
+                        <div th:if="${session.language  == 'ch'}">联系我们</div>
                         <div th:unless="${session.language  == 'ch'}"> Contact Us</div>
                     </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                     <a href="/iron/fore/feedback">
-                        <div th:if="${session.language  == 'ch'}">反馈 </div>
-                        <div th:unless="${session.language  == 'ch'}"> Feedback </div>
+                        <div th:if="${session.language  == 'ch'}">反馈</div>
+                        <div th:unless="${session.language  == 'ch'}"> Feedback</div>
                     </a>
                 </ul>
             </div>

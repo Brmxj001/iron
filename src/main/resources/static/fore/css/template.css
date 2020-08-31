@@ -140,7 +140,7 @@ a{-webkit-transition: color .25s ease;-moz-transition: color .25s ease;-o-transi
 .common_pro_list1 li .pro_content{ padding:0; text-align:center; margin-top:10px;}
 .common_pro_list1 li .name,.product_list_2017 .common_pro_list1 li .name{ color:#878787; font-size:16px; font-weight:500; padding:0; margin-bottom:10px; letter-spacing:1.5px;}
 .common_pro_list1 li .name:hover{color:#000;}
-.common_pro_list1 li .price{ margin-bottom:5px; font-weight:700; font-size:20px; line-height:24px; color:#000;}
+.common_pro_list1 li .price{ margin-bottom:5px; font-weight:700; font-size:20px;  color:#000;}
 .common_pro_list1 li .price .sale{ color:#fa6b6b;}
 .common_pro_list1 li span.oldprice{ line-height:normal;}
 .common_pro_list1 li .timer_box i{ background:none; font-size:15px; margin:0 0 -4px 0; font-weight:bold;}
@@ -179,7 +179,7 @@ span.discount-timer{ background:none; text-indent:5px; padding:0;}
 .index_default .categories li dl dd a{ height:auto; color: black;  font-size:20px; line-height:24px; letter-spacing:1px;}
 .index_default .categories li dl dd a:hover{ color:black ;}
 .index_default .categories li dl dd a span{ float: left; font-size: 10px; margin-right: 10px; margin-top: -1px;}
-.index_default .categories li  .readMore{ height:auto; color: black; font-weight: bold; border-bottom: solid 2px black;  font-size:20px; line-height:84px; letter-spacing:1px; margin-bottom: 39px;}
+.index_default .categories li  .readMore{ height:auto; color: black; font-weight: bold; border-bottom: solid 2px black;  font-size:20px;  letter-spacing:1px; margin-bottom: 39px;}
 .index_default .categories li  .readMore:hover{ color: red;border-bottom-color: red}
 
 .index_default .home_text img{ width:100%;}

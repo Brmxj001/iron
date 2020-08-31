@@ -151,6 +151,8 @@
                                         let result = postRequest(getCategoriesUrl(), getFormData("id", $(this).attr("data-id")))
                                         $("#editName").val(result.name);
                                         $("#editNameE").val(result.namee);
+                                        $("#editDetail").val(result.detail);
+                                        $("#editDetailE").val(result.detailEn);
                                         $("#editId").html(result.id);
                                         $("#coverImg").attr("src", [[${qiniu}]] + result.cover)
                                         $("#carouselImg").attr("src", [[${qiniu}]] + result.carousel)
@@ -218,12 +220,18 @@
             <span class="mail-author-name">名称(English)</span>
             <input type="text" class="form-control  cEdit" id="editNameE" value="">
 
-            <span class="mail-author-name">首页轮播图 <span id="carouselButton" class="colorRed hover"><<修改>></span></span>
-            <div class="width100">
-                <img class="width50" id="carouselImg"/>
-            </div>
+            <span class="mail-author-name">简介</span>
+            <input type="text" class="form-control  cEdit" id="editDetail" value="">
 
-            <span class="mail-author-name">封面<span id="coverButton" class="colorRed hover"> <<修改>></span></span>
+            <span class="mail-author-name">简介(English)</span>
+            <input type="text" class="form-control  cEdit" id="editDetailE" value="">
+
+<!--            <span class="mail-author-name">首页轮播图 <span id="carouselButton" class="colorRed hover"><<修改>></span></span>-->
+<!--            <div class="width100">-->
+<!--                <img class="width50" id="carouselImg"/>-->
+<!--            </div>-->
+
+            <span class="mail-author-name">封面 780 × 520<span id="coverButton" class="colorRed hover"> <<修改>></span></span>
             <div class="width100">
                 <img class="width50" id="coverImg"/>
             </div>
@@ -273,6 +281,8 @@
                 let formData = getFormData("id",window.categories.id)
                 formData.append("name",getVal("#editName"))
                 formData.append("namee",getVal("#editNameE"))
+                formData.append("detail",getVal("#editDetail"))
+                formData.append("detailEn",getVal("#editDetailE"))
                 formData.append("cover",window.categories.cover)
                 formData.append("carousel",window.categories.carousel)
                 formData.append("index", $("#isIndex input:checked").val())

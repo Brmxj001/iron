@@ -100,20 +100,26 @@
                                     </tr>
                                     <tr>
                                         <td><span>分类简介</span></td>
-                                        <td><input type="text" id="cDetail" placeholder="没用到可以不填"
+                                        <td><input type="text" id="cDetail" placeholder="中文简介"
                                                    class="form-control"/></td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>轮播图</td>
-                                        <td width="60%">
-                                            <img id="carouselImg" width="100%" alt=""/>
-                                        </td>
-                                        <td><span id="carouselButton">点击添加</span></td>
+                                        <td><span>分类简介(en)</span></td>
+                                        <td><input type="text" id="cDetailEn" placeholder="英文简介"
+                                                   class="form-control"/></td>
+                                        <td></td>
                                     </tr>
+                                    <!--                                    <tr>-->
+                                    <!--                                        <td>轮播图</td>-->
+                                    <!--                                        <td width="60%">-->
+                                    <!--                                            <img id="carouselImg" width="100%" alt=""/>-->
+                                    <!--                                        </td>-->
+                                    <!--                                        <td><span id="carouselButton">点击添加</span></td>-->
+                                    <!--                                    </tr>-->
 
                                     <tr>
-                                        <td>封面图 780 * 510</td>
+                                        <td>封面图 780 × 520</td>
                                         <td width="60%">
                                             <img id="coverImg" width="100%" alt=""/>
                                         </td>
@@ -184,13 +190,15 @@
                                     // let box = Box.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
                                     // box.init()
                                     $("#cSubmit").click(function () {
+                                        $(this).removeAttr("id")
                                         let formData = new FormData();
                                         fromData_append(formData, "name", getVal("#cName"))
                                         fromData_append(formData, "namee", getVal("#cNameE"))
                                         fromData_append(formData, "detail", getVal("#cDetail"))
+                                        fromData_append(formData, "detailEn", getVal("#cDetailEn"))
                                         fromData_append(formData, "index", $("#isIndex").find("input:checked").val())
                                         fromData_append(formData, "coverFile", coverFile)
-                                        if (getVal("#cName") === "" || getVal("#cNameE") === "") {
+                                        if (getVal("#cName") === "" || getVal("#cNameE") === "" || getVal("#cDetail") === "" || getVal("#cDetailEn") === "") {
                                             return alert("不能为空")
                                         }
                                         if (coverFile === "") {
@@ -202,6 +210,8 @@
                                         alert("添加成功")
 
                                         location.reload()
+
+                                        $(this).stop
 
                                     })
 

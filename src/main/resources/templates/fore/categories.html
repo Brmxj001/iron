@@ -284,13 +284,13 @@
                             </a>
                         </div>
                         <div class="pro_content">
-                            <a  th:href="@{/fore/product(pid=${p.id})}"
+                            <a  th:href="@{/fore/product(pid=${p.id})}" style="height: 64px;overflow: hidden"
                                th:title="${p.getName()}" class="name" th:text="${p.name}">
                                 <span th:if="${session.language  == 'ch'}">[[${p.name}]]</span>
                                 <span th:unless="${session.language  == 'ch'}">[[${p.name_en}]]</span>
                             </a>
                             <div class="price" >
-                                $[[${p.prize}]] - $[[${p.maxPrize}]]
+                                $[[${p.prize}]]
                             </div>
                         </div>
 

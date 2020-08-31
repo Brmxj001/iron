@@ -123,7 +123,8 @@
                                     </tr>
                                     <tr>
                                         <td>piece</td>
-                                        <td><input placeholder="piece" id="productPiece" type="number"
+                                        <td><input placeholder="piece" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                   onafterpaste="this.value=this.value.replace(/\D/g,'')" id="productPiece" type="number"
                                                    class="form-control"/></td>
                                         <td></td>
                                     </tr>
@@ -170,6 +171,14 @@
                                         <td></td>
                                     </tr>
                                     <tr>
+                                        <td>权重</td>
+                                        <td>
+                                            <input onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                                   onafterpaste="this.value=this.value.replace(/\D/g,'')" type="number" id="weight"  value="0"/>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
                                         <td>3d模型</td>
                                         <td><input placeholder="3D 模型" id="ThreeD"
                                                    class="form-control"/></td>
@@ -183,7 +192,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td>封面 610 * 460</td>
+                                        <td>封面 750 × 1000</td>
                                         <td width="60%"><img alt="" id="ProductCover"/>
                                         </td>
                                         <td><a id="ProductCoverAdd">添加</a></td>
@@ -214,17 +223,17 @@
                                     </tr>
 
                                     <tr>
-                                        <td>最低价格</td>
+                                        <td>价格</td>
                                         <td><input placeholder="请输入产品价格" id="productPrize" type="number"
                                                    class="form-control"/></td>
                                         <td></td>
                                     </tr>
-                                    <tr>
-                                        <td>最高价</td>
-                                        <td><input placeholder="请输入美元价格" id="productPrizee" type="number"
-                                                   class="form-control"/></td>
-                                        <td></td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td>最高价</td>-->
+<!--                                        <td><input placeholder="请输入美元价格" id="productPrizee" type="number"-->
+<!--                                                   class="form-control"/></td>-->
+<!--                                        <td></td>-->
+<!--                                    </tr>-->
                                     <tr>
                                         <td>分类</td>
                                         <td><select id="proCat" class="form-control">
@@ -247,7 +256,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>照片 (<a id="BoxButton">选择照片</a>)610 * 460
+                                        <td>照片 (<a id="BoxButton">选择照片</a>)750 × 1000
                                         </td>
                                         <td width="78%" colspan="2">
                                             <div id="ImgBox"></div>
@@ -256,7 +265,7 @@
 
 
                                     <tr>
-                                        <td>详情照片照片 (<a id="DetailImgButton" class="BoxButton">选择照片</a>)1100*700
+                                        <td>详情照片照片 (<a id="DetailImgButton" class="BoxButton">选择照片</a>)1920 × 无限制
                                         </td>
                                         <td width="78%" colspan="2">
                                             <div id="DetailImgBox" class="ImgBox"></div>
@@ -282,6 +291,7 @@
                                 <div th:replace="back/CommonInclude::url"></div>
                                 <div th:replace="back/include::ProductAttrTemplate"></div>
                                 <script type="text/javascript" th:inline="javascript">
+                                    $("#ThreeD").val(" ")
                                     $("#test").click(function () {
                                         console.log($("#top").find("input:checked").val())
                                         console.log($("#new").find("input:checked").val())
@@ -307,6 +317,7 @@
                                         $("#ProductCoverAdd").html("修改")
                                     })
                                     $("#productUpload").click(function () {
+                                        $(this).removeAttr("id")
 
 
                                         if (getInputFile("#ProductCoverInput") == null) {
@@ -324,10 +335,10 @@
                                         formData.append("intro", getVal("#productDescribe"))
                                         formData.append("intro_en", getVal("#productDescribeE"))
                                         formData.append("prize", getVal("#productPrize"))
-                                        formData.append("maxPrize", getVal("#productPrizee"))
                                         formData.append("model", getVal("#productModel"))
                                         formData.append("model_en", getVal("#productModelE"))
                                         formData.append("cid", $('#proCat option:selected').attr("data-id"))
+                                        formData.append("weight", $("#weight").val())
                                         formData.append("coverFile", getInputFile("#ProductCoverInput"))
 
                                         if ($('#proCat option:selected').attr("data-id") == null) {

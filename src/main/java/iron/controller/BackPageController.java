@@ -3,6 +3,7 @@ package iron.controller;
 import iron.bean.*;
 import iron.dao.*;
 import iron.service.impl.CategoriesServiceImpl;
+import iron.service.impl.ProductServiceImpl;
 import iron.util.IronUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,22 @@ public class BackPageController {
     private final ContactDAO contactDAO;
     private final HomeDAO homeDAO;
     private final HomeAttrDAO homeAttrDAO;
+    private final ProductServiceImpl productService;
 
     private final BlogDAO blogDAO;
 
     @Autowired
     public BackPageController(BlogDAO blogDAO,
+                              ProductServiceImpl productService,
                               ProductDAO productDAO,
                               CategoriesServiceImpl categoriesService,
                               CategoriesDAO categoriesDAO,
                               IronUtil ironUtil,
                               ContactDAO contactDAO,
                               FeedbackDAO feedbackDAO,
-                                HomeAttrDAO homeAttrDAO,
+                              HomeAttrDAO homeAttrDAO,
                               HomeDAO homeDAO) {
+        this.productService =productService;
         this.homeDAO = homeDAO;
         this.blogDAO = blogDAO;
         this.categoriesService = categoriesService;
@@ -61,10 +65,20 @@ public class BackPageController {
     public String toBackHome(Model m) {
         m.addAttribute("home", homeDAO.findAll());
         m.addAttribute("title", homeAttrDAO.findByTitle("title"));
+        m.addAttribute("title_en", homeAttrDAO.findByTitle("title_en"));
+        m.addAttribute("content_en", homeAttrDAO.findByTitle("content_en "));
         m.addAttribute("content", homeAttrDAO.findByTitle("content"));
         m.addAttribute("img", homeAttrDAO.findByTitle("img"));
         m.addAttribute("detailImg", homeAttrDAO.findByTitle("detail_img"));
         m.addAttribute("detailImgLink", homeAttrDAO.findByTitle("detail_img_link"));
+        //foot
+        m.addAttribute("twitter", homeAttrDAO.findByTitle("twitter"));
+        m.addAttribute("facebook", homeAttrDAO.findByTitle("facebook"));
+        m.addAttribute("youtube", homeAttrDAO.findByTitle("youtube"));
+        m.addAttribute("linked", homeAttrDAO.findByTitle("linked"));
+        m.addAttribute("email", homeAttrDAO.findByTitle("email"));
+        m.addAttribute("followUs", homeAttrDAO.findByTitle("followUs"));
+        m.addAttribute("foot", homeAttrDAO.findByTitle("foot"));
         return "back/home";
     }
 
@@ -82,14 +96,22 @@ public class BackPageController {
 
     @GetMapping("/back/productsPage")
     public String toBackProducts(Model m, @RequestParam(defaultValue = "0", value = "start") Integer start,
-                                 @RequestParam(value = "size", defaultValue = "5") Integer size) {
+                                 @RequestParam(value = "size", defaultValue = "10") Integer size,String query) {
         Pageable pageable = PageRequest.of(start, size, getSort());
-        Page<Product> page = productDAO.findAll(pageable);
+        Page<Product> page = null;
+
+        if (query != null){
+            page = productDAO.findAll(productService.getSpecificationLickName(query), pageable);
+        }else{
+            page = productDAO.findAll(pageable);
+        }
+
         m.addAttribute("page", page);
         m.addAttribute("next", page.hasNext());
         m.addAttribute("pre", page.hasPrevious());
         m.addAttribute("current", "products");
         m.addAttribute("categories", categoriesService.getAll());
+        m.addAttribute("query", query);
         return "back/products";
     }
 
@@ -148,4 +170,8 @@ public class BackPageController {
         return "back/blog";
     }
 
+    @GetMapping("/back/userPage")
+    public String toUserPage(){
+        return "back/user";
+    }
 }

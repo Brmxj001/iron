@@ -18,7 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 public class Qiniu {
 	
 	private static  Qiniu QINIU;
-	private Configuration cfg = new Configuration(Region.region2()); // 华南
+//	private Configuration cfg = new Configuration(Region.region2()); // 华南
+	private Configuration cfg = new Configuration(Region.regionNa0()); // 北美
 	private UploadManager uploadManager = new UploadManager(cfg);
 	private Auth auth;
 	private BucketManager bucketManager;

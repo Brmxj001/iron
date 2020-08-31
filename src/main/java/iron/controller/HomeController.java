@@ -50,6 +50,9 @@ public class HomeController {
 
     @PostMapping("/back/addHome")
     public void addHome(home home) {
+        if (!home.getLink().startsWith("http")) {
+            home.setLink("http://" + home.getLink());
+        }
         homeDAO.save(home);
     }
 
@@ -59,8 +62,13 @@ public class HomeController {
     }
 
     @PostMapping("/back/editHomeAttr")
-    public void editHomeAttr(HomeAttr homeAttr){
+    public void editHomeAttr(HomeAttr homeAttr) {
         System.out.println(homeAttr);
+        if (homeAttr.getTitle().equals("detail_img_link")) {
+            if (!homeAttr.getContent().startsWith("http")) {
+                homeAttr.setContent("http://" + homeAttr.getContent());
+            }
+        }
         homeAttrDAO.save(homeAttr);
     }
 }

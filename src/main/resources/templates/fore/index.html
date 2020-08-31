@@ -124,7 +124,7 @@
         }
     </script>
     <noscript>
-        <div style="display:inline;"><img height="1" width="1" style="border-style:none;"
+        <div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt=""
                                           src="//cn01-analysis.ymcart.com/get?s=0&store_id=29175"/></div>
     </noscript>
     <!-- YMCart Analysis End -->
@@ -136,6 +136,55 @@
 <div th:replace="fore/include::simpleHeader"></div>
 <div th:replace="back/CommonInclude::common"></div>
 <div th:replace="back/CommonInclude::url"></div>
+<script>
+    var show_mini_cart = false;
+    $(function () {
+        $(".cart_box").hover(function () {
+            if (!show_mini_cart) {
+                $.ajax({
+                    url: "/h-cart-miniCartList.html",
+                    cache: false,
+                    success: function (html) {
+                        $('#minicartlist').html(html);
+                        show_mini_cart = true;
+                    }
+                })
+            }
+            $("#CartsCon").show();
+        }, function () {
+            $("#CartsCon").hide();
+            show_mini_cart = false;
+        });
+
+        $("#header_box .login  > a").toggle(function () {
+            $(".login_menu").stop().slideDown();
+        }, function () {
+            $(".login_menu").stop().slideUp();
+        });
+
+        var win = $(window);
+        var sticky_id = $("#nav_wrapper");
+        var mtst = $('#nav_wrapper').offset().top;
+        win.on('scroll', function () {
+            var scroll = win.scrollTop();
+            if (scroll > mtst) {
+                sticky_id.addClass("fixed_header");
+            } else {
+                sticky_id.removeClass("fixed_header");
+            }
+        });
+
+        $('#search_icon').click(function () {
+            $('.search_box').addClass('open');
+        });
+        $('.close_search').click(function () {
+            $('.search_box').removeClass('open');
+
+        });
+
+    });
+
+</script>
 <div id="body_box" class="index_default">
 
 
@@ -145,9 +194,7 @@
                 <li class="swiper-slide" th:each="h:${home}">
                     <a th:href="${h.link}" target="_blank" class="carouselLink">
                         <div class="img">
-                            <img
-
-                                    th:src="${qiniu}+${h.img}"/>
+                            <img th:src="${qiniu}+${h.img}" alt=""/>
                         </div>
 
                     </a>
@@ -155,12 +202,22 @@
 
 
             </ul>
-            <button class="prev iconfont icon-202-copy-copy"></button>
-            <button class="next iconfont icon-jiantou-copy-copy2"></button>
-            <div class="swiper-pagination"></div>
+<!--            <button class="prev iconfont icon-202-copy-copy"></button>-->
+<!--            <button class="next iconfont icon-jiantou-copy-copy2"></button>-->
+            <div class="swiper-pagination" ><span></span></div>
         </div>
 
         <script type="text/javascript">
+            $(function () {
+                $(".ibanner .swiper-pagination span").mouseover(function () {
+                    $(this).trigger("click")
+                })
+            })
+
+            // function swiperOver(e){
+            //     $(e).find("span").first().trigger("click")
+            //     console.log(e)
+            // }
             $(".carouselLink").click(function (e) {
 
             })
@@ -171,7 +228,7 @@
                 },
                 pagination: {
                     el: '.swiper-pagination',
-                    clickable: true,
+                    clickable: true
                 },
                 spaceBetween: 0,
                 autoplay: {
@@ -184,11 +241,13 @@
         </script>
     </div>
     <div class="carouselTitle">
-        <div class="title" th:text="${title.getContent()}">Gardening & Yard Care Tools</div>
-        <div class="text" th:text="${content.getContent()}">Make a statement with simple, unique tools that allow you explore new creative territory.
-            Make a statement with simple, unique tools that allow you explore new creative territory. Read More
-            Make a statement with simple, unique tools that allow you explore new creative territory. Read More
-            Read More
+        <div class="title">
+            <div th:if="${session.language  == 'ch'}">[[${title.getContent()}]]</div>
+            <div th:unless="${session.language  == 'ch'}">[[${title_en.getContent()}]]</div>
+        </div>
+        <div class="text">
+            <div th:if="${session.language  == 'ch'}">[[${content.getContent()}]]</div>
+            <div th:unless="${session.language  == 'ch'}">[[${content_en.getContent()}]]</div>
         </div>
         <div class="foot">
             <a href="/iron/fore/superBlog" style="color: black">
@@ -251,23 +310,26 @@
 
             <ul class="categories">
 
-                <li style="width: 50%" class="foo" th:each="c:${categoriesListWithProduct}" th:if="${cStat.index<2}">
+                <li style="width: 50%" class="foo categoriesIndex" th:each="c:${categoriesListWithProduct}" th:if="${cStat.index<2}">
                     <a type="hidden" class="redirect" th:href="@{/fore/categories(cid=${c.getId()})}"><span></span></a>
                     <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
-                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
+                        <img alt="" th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
                     </a>
 
-                    <dl>
+                    <dl style="height: 200px;">
 
-                        <dt>
+                        <dt style="height: 30px;overflow: hidden">
                             <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
                             <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
                         </dt>
-                        <dd>
-                            <a th:text="${c.getDetail()}"  th:href="@{/fore/categories(cid=${c.getId()})}" >
+                        <dd style="height:70%">
+                            <a style="height: 50%;overflow: hidden"   th:href="@{/fore/categories(cid=${c.getId()})}" >
+                                <div th:if="${session.language  == 'ch'}">[[${c.getDetail()}]]</div>
+                                <div th:unless="${session.language  == 'ch'}">[[${c.getDetailEn()}]]</div>
                             </a>
                             <span class="readMore">Read More</span>
                         </dd>
+
 
 
                     </dl>
@@ -276,21 +338,23 @@
                 </li>
 
                 <li class="clear"></li>
-                <li class="foo" th:each="c:${categoriesListWithProduct}"  th:if="${cStat.index>=2}">
+                <li class="foo categoriesIndex" th:each="c:${categoriesListWithProduct}"  th:if="${cStat.index>=2}">
                     <a type="hidden" class="redirect" th:href="@{/fore/categories(cid=${c.getId()})}"><span></span></a>
                     <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
-                        <img th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
+                        <img alt="" th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
                     </a>
 
-                    <dl>
-                        <dt>
+                    <dl style="height: 250px">
+                        <dt style="height: 60px;">
                             <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
                             <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
                         </dt>
                         <dd>
-                            <a th:text="${c.getDetail()}"  th:href="@{/fore/categories(cid=${c.getId()})}" >
+                            <a style="height: 100px; "  th:href="@{/fore/categories(cid=${c.getId()})}" >
+                                <div th:if="${session.language  == 'ch'}">[[${c.getDetail()}]]</div>
+                                <div th:unless="${session.language  == 'ch'}">[[${c.getDetailEn()}]]</div>
                             </a>
-                            <span class="readMore">Read More</span>
+                            <span class="readMore" >Read More</span>
                         </dd>
 
 
@@ -298,6 +362,11 @@
 
                 </li>
                 <li class="clear"></li>
+                <script type="text/javascript">
+                        $("#categoriesIndex").click(function () {
+                            $(this).find(".redirect").find("span").trigger("click");
+                        })
+                </script>
             </ul>
         </div>
         <div class="pro" ymcart_ve_tag='diy_home_tag_ids' ymcart_ve_type='rec_select'>
@@ -341,8 +410,8 @@
                                     </a>
 
                                 </div>
-                                <div class="pro_content">
-                                    <a th:href="@{/fore/product(pid=${p.id})}"
+                                <div class="pro_content" style="height: 100px;">
+                                    <a th:href="@{/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
                                        th:title="${p.getName()}" class="name">
                                         <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
@@ -379,8 +448,8 @@
                                     </a>
 
                                 </div>
-                                <div class="pro_content">
-                                    <a th:href="@{/fore/product(pid=${p.id})}"
+                                <div class="pro_content" style="height: 100px;">
+                                    <a th:href="@{/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
                                        th:title="${p.getName()}" class="name">
                                         <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
@@ -407,8 +476,8 @@
                                     </a>
 
                                 </div>
-                                <div class="pro_content">
-                                    <a th:href="@{/fore/product(pid=${p.id})}"
+                                <div class="pro_content" style="height: 100px;">
+                                    <a th:href="@{/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
                                        th:title="${p.getName()}" class="name">
                                         <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
@@ -451,7 +520,7 @@
                 <li class="foo" th:each="blog:${blogList}">
                     <div class="pic">
                         <a th:href="@{/fore/blogChild(id=${blog.id})}">
-                            <img th:src="${qiniu}+${blog.getBlogImgList().get(0).path}"/>
+                            <img alt="" th:src="${qiniu}+${blog.getBlogImgList().get(0).path}"/>
                         </a>
                     </div>
                     <div class="text">

@@ -23,11 +23,14 @@ public class IronInterceptor implements HandlerInterceptor {
     CategoriesServiceImpl categoriesService;
     @Autowired
     ContactDAO contactDAO;
+    @Autowired
+    HomeAttrDAO homeAttrDAO;
 
     /**
      * ForePage 页面数据
      */
     private final Set<String> forePage = new HashSet<>();
+    private final Set<String> backPage = new HashSet<>();
 
     public IronInterceptor( ) {
         forePage.add("/iron/fore/index");
@@ -38,6 +41,18 @@ public class IronInterceptor implements HandlerInterceptor {
         forePage.add("/iron/fore/blog");
         forePage.add("/iron/fore/blogChild");
         forePage.add("/iron/fore/sitemap");
+
+        backPage.add("/iron/back/index");
+        backPage.add("/iron/back/homePage");
+        backPage.add("/iron/back/productsPage");
+        backPage.add("/iron/back/categoriesPage");
+        backPage.add("/iron/back/addProductPage");
+        backPage.add("/iron/back/addCategoriesPage");
+        backPage.add("/iron/back/feedbackPage");
+        backPage.add("/iron/back/contactPage");
+        backPage.add("/iron/back/blogPage");
+        backPage.add("/iron/back/addBlogPage");
+        backPage.add("/iron/back/userPage");
     }
 
 
@@ -46,6 +61,14 @@ public class IronInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String uri = request.getRequestURI();
+        if (backPage.contains(uri)){
+            if (null == request.getSession().getAttribute("isLogin") || !(boolean) request.getSession().getAttribute("isLogin")){
+                request.getSession().setAttribute("isLogin", false);
+                response.sendRedirect("/iron/back/login");
+            }
+        }
+
 
 
         return true;
@@ -57,6 +80,15 @@ public class IronInterceptor implements HandlerInterceptor {
         if (forePage.contains(uri)) {
             modelAndView.addObject("foreCategoriesList", categoriesService.getAll());
             modelAndView.addObject("contactUs", contactDAO.findAll());
+
+            //foot
+            modelAndView.addObject("twitter", homeAttrDAO.findByTitle("twitter"));
+            modelAndView.addObject("facebook", homeAttrDAO.findByTitle("facebook"));
+            modelAndView.addObject("youtube", homeAttrDAO.findByTitle("youtube"));
+            modelAndView.addObject("linked", homeAttrDAO.findByTitle("linked"));
+            modelAndView.addObject("email", homeAttrDAO.findByTitle("email"));
+            modelAndView.addObject("followUs", homeAttrDAO.findByTitle("followUs"));
+            modelAndView.addObject("foot", homeAttrDAO.findByTitle("foot"));
 
             if (null == req.getSession().getAttribute("language")){
                 req.getSession().setAttribute("language","en");

@@ -38,7 +38,6 @@ public class CategoriesController {
     @PostMapping("/back/addCategories")
     public Categories add(Categories c, MultipartFile coverFile, MultipartFile carouselFile) throws IOException {
         c.setCover(ironUtil.uploadImg(coverFile, "CategoriesCover_"));
-        System.out.println("第一次"+c);
         return categoriesServiceImpl.add(c);
     }
 

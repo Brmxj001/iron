@@ -1,6 +1,7 @@
 package iron.controller;
 
 
+import iron.bean.Blog;
 import iron.bean.Categories;
 import iron.bean.Product;
 import iron.bean.feedback;
@@ -46,7 +47,9 @@ public class ForePageController {
     private final static String NEWEST = "newest";
 
     @Autowired
-    public ForePageController(ProductDetailImgDAO productDetailImgDAO,HomeDAO homeDAO, HomeAttrDAO homeAttrDAO, ProductServiceImpl productService, ContactDAO contactDAO, CategoriesServiceImpl categoriesService, FeedbackDAO feedbackDAO, BlogServiceImpl blogService) {
+    public ForePageController(ProductDetailImgDAO productDetailImgDAO, HomeDAO homeDAO, HomeAttrDAO homeAttrDAO,
+                              ProductServiceImpl productService, ContactDAO contactDAO,
+                              CategoriesServiceImpl categoriesService, FeedbackDAO feedbackDAO, BlogServiceImpl blogService) {
         this.homeAttrDAO = homeAttrDAO;
         this.productService = productService;
         this.categoriesService = categoriesService;
@@ -54,7 +57,7 @@ public class ForePageController {
         this.blogService = blogService;
         this.contactDAO = contactDAO;
         this.homeDAO = homeDAO;
-        this.productDetailImgDAO  = productDetailImgDAO;
+        this.productDetailImgDAO = productDetailImgDAO;
     }
 
     @GetMapping("/fore/index")
@@ -67,10 +70,15 @@ public class ForePageController {
         m.addAttribute("blogList", blogService.getLatest(4));
         m.addAttribute("home", homeDAO.findAll());
         m.addAttribute("title", homeAttrDAO.findByTitle("title"));
+        m.addAttribute("title_en", homeAttrDAO.findByTitle("title_en"));
+        m.addAttribute("content_en", homeAttrDAO.findByTitle("content_en"));
         m.addAttribute("content", homeAttrDAO.findByTitle("content"));
         m.addAttribute("img", homeAttrDAO.findByTitle("img"));
         m.addAttribute("detailImg", homeAttrDAO.findByTitle("detail_img"));
         m.addAttribute("detailImgLink", homeAttrDAO.findByTitle("detail_img_link"));
+        System.out.println(homeDAO.findAll());
+
+
         return "fore/index";
 
     }
@@ -78,6 +86,8 @@ public class ForePageController {
     @GetMapping("/fore/categories")
     public String toCategoriesPage(@RequestParam(defaultValue = "200") Integer total, @RequestParam(defaultValue = "relevance") String way, Integer cid, Model m) {
         List<Product> list;
+        Categories c = categoriesService.get(cid);
+        if (null == c) return "redirect:index";
         switch (way) {
             case PRIZE_ASC -> list = productService.getByPrizeAsc(total, cid);
             case PRIZE_DESC -> list = productService.getByPrizeDesc(total, cid);
@@ -85,7 +95,7 @@ public class ForePageController {
             case POPULAR, SALE -> list = productService.getHottest(total, cid);
             default -> list = productService.getAll(total, cid);
         }
-        Categories c = categoriesService.get(cid);
+
         c.setProductList(list);
         m.addAttribute("categories", c);
         m.addAttribute("total", total);
@@ -145,7 +155,9 @@ public class ForePageController {
 
     @GetMapping("/fore/blogChild")
     public String toBlogChildPage(Integer id, Model m) {
-        m.addAttribute("blog", blogService.get(id));
+        Blog blog = blogService.get(id);
+        if (null == blog) return "redirect:index";
+        m.addAttribute("blog", blog);
         return "fore/blogChild";
     }
 
@@ -169,6 +181,7 @@ public class ForePageController {
     @GetMapping("fore/product")
     public String toProductPage(Model m, Integer pid) {
         Product result = productService.get(pid);
+        if (null == result) return "redirect:index";
         result.setProductLikeList(productService.getByNameLike(nameSplitSign(result.getName())));
         m.addAttribute("product", result);
         m.addAttribute("productDetailImgList", productDetailImgDAO.findByPid(pid));

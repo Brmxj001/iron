@@ -146,11 +146,11 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>Blog照片</td>
+                                        <td>Blog照片 </td>
                                         <td width="60%">
                                             <div id="ImgBox"></div>
                                         </td>
-                                        <td><span id="BoxButton">点击添加</span></td>
+                                        <td><span id="BoxButton">点击添加780 × 520</span></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -170,6 +170,7 @@
                                     let box = Box.instance($("#BoxButton"), $("#BoxInput"), $("#ImgBox"))
                                     box.init()
                                     $("#submit").click(function () {
+                                        $(this).removeAttr("id")
                                         let formData = new FormData();
                                         fromData_append(formData, "name", getVal("#name"))
                                         fromData_append(formData, "nameEn", getVal("#nameEn"))
@@ -179,6 +180,10 @@
                                         if (formData_isNull(formData)) {
                                             return alert("不能为空")
                                         }
+                                        if (box.SrcList.length <= 0) {
+                                            return alert("添加照片")
+                                        }
+                                        fromData_appentFile(formData,box.FileList);
                                         showLoadInfo("#loadInfo")
                                         postRequest(addBlogUrl(), formData)
                                         setValNull("#loadInfo")

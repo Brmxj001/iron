@@ -45,7 +45,7 @@ public class Product {
     /**
      * 产品价格
      */
-    private Integer prize;
+    private Double prize;
     @Column(name = "max_prize")
     private Integer maxPrize;
 
@@ -97,6 +97,7 @@ public class Product {
     @Column(name = "upload_time")
     private Date uploadTime;
 
+    private Integer weight;
 
     @Transient
     private Categories categories;

@@ -34,16 +34,25 @@ public class UserLoginController {
         return "success";
     }
 
+    @ResponseBody
+    @PostMapping("/back/uploadUser")
+    public void doUploadUser(String oldUser, String newUser, String oldPassword, String newPassword) {
+        Login user = loginDAO.findByUser(oldUser);
+        if (null != user){
+            if (user.getPassword().equals(oldPassword)){
+                user.setUser(newUser);
+                user.setPassword(newPassword);
+                loginDAO.save(user);
+            }
+        }
+    }
 
     @PostMapping("/back/userLogin")
     public String userLogin(Login login, HttpSession session, Model m) {
 
         Login result = loginDAO.findByUser(login.getUser());
-        System.out.println(login.getPassword());
         if (result != null) {
-            System.out.println("1");
-            if (result.getPassword().equals(login.getPassword())){
-                System.out.println("2");
+            if (result.getPassword().equals(login.getPassword())) {
                 session.setAttribute("isLogin", true);
                 return "redirect:/back/index";
             }

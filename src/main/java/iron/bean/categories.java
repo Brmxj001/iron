@@ -27,6 +27,9 @@ public class Categories {
 	private  String cover;
 
 	private String carousel;
+	
+	@Column(name = "detail_en")
+	private String detailEn;
 
 	@Column(name = "is_index")
 	private boolean index;

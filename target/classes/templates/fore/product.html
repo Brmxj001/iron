@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <title th:text="${product.getName()}"></title>
+        <title th:if="${session.language  == 'ch'}">[[${product.getName()}]]</title>
+        <title th:unless="${session.language  == 'ch'}">[[${product.getName_en()}]]</title>
     <meta name="keywords" content="Defyant Reversible Dot Shorts,POWER TOOLS - t2562.demo.ymcart.com"/>
     <meta name="description" content="Defyant Reversible Dot Shorts,POWER TOOLS - t2562.demo.ymcart.com"/>
 
@@ -1117,10 +1118,15 @@
                 });
             });
         </script>
-
+<div><a href="www.baidu.com"> a</a></div>
         <div class="crumb"><a href="/iron/fore/index">Home</a>&gt;<a
-                th:href="@{/fore/categories(cid=${product.categories.id})}" th:text="${product.categories.name}">POWER
-            TOOLS</a>&gt;<span th:text="${product.name}">Defyant Reversible Dot Shorts</span>
+                th:href="@{/fore/categories(cid=${product.categories.id})}" th:text="${product.categories.name}">
+            <span th:if="${session.language  == 'ch'}">[[${product.categories.name}]]</span>
+            <span th:unless="${session.language  == 'ch'}">[[${product.categories.namee}]]</span>
+            </a>&gt;<span>
+                 <span th:if="${session.language  == 'ch'}">[[${product.name}]]</span>
+                    <span th:unless="${session.language  == 'ch'}">[[${product.name_en}]]</span>
+        </span>
         </div>
         <div class="viewbox">
             <div class="viewpicleft ">
@@ -1305,21 +1311,21 @@
 
             </script>
         </div>
-        <div style="color: black;font-weight: bolder;font-size: 14px;border-bottom: #DFDFDF solid 1px;padding-bottom: 10px" th:if="${productDetailImgList.size()>0}">
+        <div style="color: black;margin-bottom: 20px;;font-weight: bolder;font-size: 14px;border-bottom: #DFDFDF solid 1px;padding-bottom: 10px" th:if="${productDetailImgList.size()>0}">
             <span th:if="${session.language  == 'ch'}">详情照片</span>
             <span th:unless="${session.language  == 'ch'}">detail Img</span>
         </div>
 
-        <div th:each="img:${productDetailImgList}" style="margin-top: 30px">
-            <img style="width: 80%" th:src="${qiniu}+${img.getPath()}"/>
+        <div th:each="img:${productDetailImgList}" >
+            <img style="width: 100%" th:src="${qiniu}+${img.getPath()}"/>
         </div>
         <div class="relevant_list1">
-            <div><h3 class="boxh3 boxborder_bottom boxbordercolor">You May Also Like</h3></div>
+            <div><h3 class="boxh3 boxborder_bottom boxbordercolor" style="margin-top: 30px">You May Also Like</h3></div>
             <div class="clear0"></div>
             <ul class="common_pro_list4">
 
 
-                <li class="pro_list5" th:each="p:${product.getProductLikeList()}">
+                <li class="pro_list5" th:each="p:${product.getProductLikeList()}" th:if="${pStat.index < 10}">
 
                     <div class="quickcart_box" goods_id="118549"></div>
                     <a th:href="@{/fore/product(pid=${p.getId()})}" class="pic"

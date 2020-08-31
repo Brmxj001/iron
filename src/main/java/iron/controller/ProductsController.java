@@ -24,6 +24,10 @@ public class ProductsController {
 
     @PostMapping("/back/addProducts")
     public Product add(MultipartFile[] file, Product product, MultipartFile coverFile) throws IOException {
+        product.setMaxPrize(0);
+        if (!product.getAmazon().startsWith("http")){
+            product.setAmazon("http://" + product.getAmazon());
+        }
         return productService.add(product, coverFile);
     }
 

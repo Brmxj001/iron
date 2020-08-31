@@ -159,7 +159,6 @@
                                     function deleteProductAttr(e) {
                                         postRequest(deleteProductAttrUrl(), getFormData("id", $(e).parent(".ProductAttr").attr("data-id")))
                                         getAttr($(e).parent(".ProductAttr").attr("data-pid"))
-                                        console.log("delete")
                                         return false
                                     }
 
@@ -243,6 +242,7 @@
                                                 $("#maxPrize").val(result.maxPrize)
                                                 $("#products-id").html(result.id)
                                                 $("#products-cid").val(result.cid)
+                                                $("#weight").val(result.weight)
                                                 $("#cover").attr("src", [[${qiniu}]] + result.cover)
                                                 console.log(result)
                                                 if (result.top)  $("#top input[value=1]").attr("checked",true);
@@ -265,17 +265,32 @@
 
                                 </script>
                                 <div class="inbox-pagination">
+
                                     <nav aria-label="">
-                                        <ul class="pagination">
-                                            <li><a th:href="@{/back/productsPage(start=${0})}">[首页]</a></li>
+
+                                        <ul class="pagination searchProduct">
+                                            <li><input type="text" id="query" placeholder="搜索名字"/></li>
+                                            <li><button id="searchButton">搜索</button></li>
+                                            <li><a th:href="@{/back/productsPage(start=${0},query=${query})}">[首页]</a></li>
                                             <li id="pre" th:class="${pre}? active : dislink"><a
-                                                    th:href="@{/back/productsPage(start=${page.Number-1})}">[上一页]</a></li>
+                                                    th:href="@{/back/productsPage(start=${page.Number-1},query=${query})}">[上一页]</a></li>
                                             <li id="next" th:class="${next}? active : dislink"><a
-                                                    th:href="@{/back/productsPage(start=${page.Number+1})}">[下一页]</a></li>
+                                                    th:href="@{/back/productsPage(start=${page.Number+1},query=${query})}">[下一页]</a></li>
                                             <li><a
-                                                    th:href="@{/back/productsPage(start=${page.TotalPages-1})}">[末页]</a></li>
+                                                    th:href="@{/back/productsPage(start=${page.TotalPages-1},query=${query})}">[末页]</a></li>
                                         </ul>
                                     </nav>
+                                    <a href="?query=name" id="searchLink" style="display: none"><span></span></a>
+                                    <script type="text/javascript" th:inline="javascript">
+                                        $(function () {
+                                            $("#query").val([[${query}]])
+                                        })
+                                        $("#searchButton").click(function () {
+                                            $("#searchLink").attr("href", "?query=" + $("#query").val());
+                                            $("#searchLink").find("span").trigger("click")
+                                        })
+
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -299,7 +314,8 @@
             <input type="text" class="form-control "
                    id="name" value="">
             <span class="mail-author-name">piece:</span>
-            <input type="number" class="form-control "
+            <input type="number" class="form-control " onkeyup="this.value=this.value.replace(/\D/g,'')"
+                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                    id="piece" value="" >
 
             <span class="mail-author-name">产品名称(English):</span>
@@ -341,6 +357,9 @@
                     <input checked="checked" type="radio" name="top" value="0"/>
                 </label>
             </div>
+            <span>权重<input onkeyup="this.value=this.value.replace(/\D/g,'')"
+                           onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-controll" id="weight" value="0" style="display: inline-block"/></span>
+
             <span class="mail-author-name">亚马逊链接</span>
             <input type="text" class="form-control "
                    id="amazon" value="">
@@ -349,7 +368,7 @@
             <input type="text" class="form-control "
                    id="ThreeD" value="">
 
-            <span class="mail-author-name" id="coverButton">封面(点击修改)</span>
+            <span class="mail-author-name" id="coverButton">封面(点击修改)750 × 1000</span>
             <input class="iron-hidden" type="file" id="coverInput"
                    accept="image/*"/>
             <div class="width100">
@@ -377,9 +396,9 @@
             <input type="text" class="form-control "
                    id="prize" value="">
 
-            <span class="mail-author-name">最高价</span>
-            <input type="text" class="form-control "
-                   id="maxPrize" value="">
+<!--            <span class="mail-author-name">最高价</span>-->
+<!--            <input type="text" class="form-control "-->
+<!--                   id="maxPrize" value="">-->
 
             <span class="mail-author-name">型号</span>
             <input type="text" class="form-control" id="model" value="">
@@ -412,12 +431,12 @@
 
 
             <span class="mail-author-name">照片</span>
-            <span id="BoxButton">点击上传</span>
+            <span id="BoxButton">点击上传 750 × 1000</span>
             <div id="ImgBox"></div>
             <input class="iron-hidden" type="file" value="修改照片" name="file" id="BoxInput" accept="image/*"/>
 
 
-            <span class="mail-author-name">详情照片</span>
+            <span class="mail-author-name">详情照片  ()1920 × 无限制</span>
             <span id="DetailImgButton" class="BoxButton">点击上传</span>
             <div id="DetailImgBox" class="ImgBox"></div>
             <input class="iron-hidden ImgInput" type="file"  value="修改照片" name="file" id="DetailImgInput" accept="image/*"/>
@@ -437,12 +456,12 @@
                     formData.append("model", getVal("#model"))
                     formData.append("model_en", getVal("#model_en"))
                     formData.append("prize", getVal("#prize"))
-                    formData.append("maxPrize", getVal("#maxPrize"))
                     formData.append("simple_intro", getVal("#simple_intro"))
                     formData.append("simple_intro_en", getVal("#simple_intro_en"))
                     formData.append("intro", getVal("#intro"))
                     formData.append("intro_en", getVal("#intro_en"))
                     formData.append("cover", window.product.cover)
+                    formData.append("weight", getVal("#weight"))
                     formData.append("cid", $("#categories option:selected").attr("data-id"))
                     formData.append("top", $("#top input:checked").val())
                     formData.append("new", $("#new input:checked").val())
@@ -452,6 +471,11 @@
                     postRequest(editProductUrl(), formData);
                 }
                 $(".mailbox-item .form-control").blur(function () {
+                    unloadProduct()
+                })
+
+                 $(".form-controll").blur(function () {
+                     console.log( $("#weight").val())
                     unloadProduct()
                 })
 

@@ -138,7 +138,7 @@
                             <div class="card-body">
                                 <table>
                                     <thead class="success">
-                                    <th><span id="carouselButton" class="fontRed">照片(添加1400*600)</span></th>
+                                    <th><span id="carouselButton" class="fontRed">照片(添加1920 × 843)</span></th>
                                     <th>链接</th>
                                     <th></th>
                                     </thead>
@@ -220,11 +220,37 @@
 
                                     <tr>
                                         <td width="20%">
+                                            <span th:text="${title_en.getTitle()}" id=""></span>
+                                        </td>
+                                        <td>
+                                            <input class="form-control homeAttr" id="title_en"
+                                                   th:value="${title_en.getContent()}"/>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%">
                                             <span th:text="${content.getTitle()}"></span>
                                         </td>
                                         <td>
                                             <input class="form-control" id="homeContentAttr"
                                                    th:value="${content.getContent()}"/>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="20%">
+                                            <span th:text="${content_en.getTitle()}" id=""></span>
+                                        </td>
+                                        <td>
+                                            <input class="form-control  homeAttr" id="content_en"
+                                                   th:value="${content_en.getContent()}"/>
                                         </td>
                                         <td>
 
@@ -239,18 +265,22 @@
                                             <img style="width: 100%" id="HomeImg" th:src="${qiniu}+${img.content}">
                                         </td>
                                         <td>
-                                            <span class="fontRed" id="editHomeImgButton">修改</span>
+                                            <span class="fontRed" id="editHomeImgButton">修改1920 × 843</span>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td>首页热门下边的照片 1920 × 843</td>
                                     </tr>
                                     <tr>
                                         <td width="20%">
                                             <span th:text="${detailImg.getTitle()}"></span>
                                         </td>
                                         <td width="60%">
-                                            <img style="width: 100%" id="HomeDetailImg" th:src="${qiniu}+${detailImg.content}">
+                                            <img style="width: 100%" id="HomeDetailImg"
+                                                 th:src="${qiniu}+${detailImg.content}">
                                         </td>
                                         <td>
-                                            <span class="fontRed" id="editHomeDetailImgButton">修改</span>
+                                            <span class="fontRed" id="editHomeDetailImgButton">修改1920 × 843</span>
                                         </td>
                                     </tr>
 
@@ -270,8 +300,10 @@
                                     <div th:replace="back/CommonInclude::url"></div>
                                     </tbody>
                                 </table>
-                                <input class="iron-hidden" type="file" value="修改照片" name="file" id="HomeImgAttr" accept="image/*"/>
-                                <input class="iron-hidden" type="file" value="修改照片" name="file" id="HomeDetailImgInput" accept="image/*"/>
+                                <input class="iron-hidden" type="file" value="修改照片" name="file" id="HomeImgAttr"
+                                       accept="image/*"/>
+                                <input class="iron-hidden" type="file" value="修改照片" name="file" id="HomeDetailImgInput"
+                                       accept="image/*"/>
                                 <script type="text/javascript" th:inline="javascript">
                                     $("#editHomeImgButton").click(function () {
                                         $("#HomeImgAttr").trigger("click")
@@ -324,10 +356,119 @@
                                         postRequest(editHomeAttr(), formData)
                                     })
 
+                                    $("#title_en").blur(function () {
+                                        let formData = getFormData("id", [[${title_en.id}]])
+                                        formData.append("title", [[${title_en.title}]])
+                                        formData.append("content", $(this).val())
+                                        postRequest(editHomeAttr(), formData)
+                                    })
+                                    $("#content_en").blur(function () {
+                                        let formData = getFormData("id", [[${content_en.id}]])
+                                        formData.append("title", [[${content_en.title}]])
+                                        formData.append("content", $(this).val())
+                                        postRequest(editHomeAttr(), formData)
+                                    })
                                 </script>
-
-
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="inbox-options">
+                                    <div class="inbox-page-count">页脚</div>
+
+                                </div>
+                                <table class="table table table-hover">
+                                    <thead class="success">
+                                    <th>属性</th>
+                                    <th>值</th>
+                                    <th> ...</th>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${twitter.getTitle()}" th:attr="data-id=${twitter.getId()}"
+                                            id="twitter"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="twitter"
+                                                   th:value="${twitter.getContent()}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td th:text="${youtube.getTitle()}" th:attr="data-id=${youtube.getId()}"
+                                            id="youtube"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="youtube"
+                                                   th:value="${youtube.getContent()}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td th:text="${facebook.getTitle()}" th:attr="data-id=${facebook.getId()}"
+                                            id="facebook"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="facebook"
+                                                   th:value="${facebook.getContent()}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td th:text="${linked.getTitle()}" th:attr="data-id=${linked.getId()}"
+                                            id="linked"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="linked"
+                                                   th:value="${linked.getContent()}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td th:text="${email.getTitle()}" th:attr="data-id=${email.getId()}"
+                                            id="email"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="email"
+                                                   th:value="${email.getContent()}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="${followUs.getTitle()}" th:attr="data-id=${followUs.getId()}"
+                                            id="followUs"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="followUs"
+                                                   th:value="${followUs.getContent()}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td th:text="${foot.getTitle()}" th:attr="data-id=${foot.getId()}"
+                                            id="foot"></td>
+                                        <td>
+                                            <input class="form-control footAttr" data-id="foot"
+                                                   th:value="${foot.getContent()}"/>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <script type="text/javascript" th:inline="javascript">
+                                $(".footAttr").blur(function () {
+                                    console.log("aa")
+                                    let id = "#" + $(this).attr("data-id")
+                                    let formData = getFormData("id", $(id).attr("data-id"))
+                                    let content = $(this).val()
+                                    let title = $(id).text()
+                                    if (title !== "email" && title !== "foot") {
+                                        if (!content.startsWith("http")) {
+                                            content = "http://" + content;
+                                        }
+                                    }
+                                    formData.append("title", title)
+                                    formData.append("content", content)
+                                    postRequest(editHomeAttr(), formData)
+                                })
+                            </script>
                         </div>
                     </div>
                 </div>

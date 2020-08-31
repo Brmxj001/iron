@@ -43,7 +43,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog get(Integer id) {
         Blog blog = blogDAO.findById(id).orElse(null);
-        assert blog != null;
+        if (null == blog) return  null;
         setBlogImgList(blog);
         return blog;
     }

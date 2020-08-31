@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService<Product> {
     private static final String PRODUCT_PRIZE = "prize";
 
     @Autowired
-    public ProductServiceImpl(ProductDetailImgDAO productDetailImgDAO,IronUtil ironUtil, ProductDAO productDAO, ProductImgServiceImpl productImgService, ProductAttrDAO productAttrDAO, CategoriesDAO categoriesDAO) {
+    public ProductServiceImpl(ProductDetailImgDAO productDetailImgDAO, IronUtil ironUtil, ProductDAO productDAO, ProductImgServiceImpl productImgService, ProductAttrDAO productAttrDAO, CategoriesDAO categoriesDAO) {
         this.productDetailImgDAO = productDetailImgDAO;
         this.ironUtil = ironUtil;
         this.productDAO = productDAO;
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService<Product> {
     @Override
     public Product get(Integer id) {
         Product result = productDAO.findById(id).orElse(null);
-        assert result != null;
+        if (null == result) return null;
         result.setImgList(productImgService.getAllByProductId(result.getId()));
         result.setProductAttrList(productAttrDAO.findByPid(id));
         result.setCategories(categoriesDAO.findById(result.getCid()).get());
@@ -66,17 +66,23 @@ public class ProductServiceImpl implements ProductService<Product> {
 
     @Override
     public List<Product> getAll() {
-        return productDAO.findAll();
+        List<Product> result = productDAO.findAll();
+        return result;
+
     }
 
     @Override
     public List<Product> getAll(Integer total) {
-        return productDAO.findAll(PageRequest.of(0, total)).getContent();
+        List<Product> result = new ArrayList<>(productDAO.findAll(PageRequest.of(0, total)).getContent());
+        result.sort((p1, p2) -> p1.getWeight() > p2.getWeight() ? -1 : 1);
+        return result;
     }
 
     @Override
     public List<Product> getAll(Integer total, Integer cid) {
-        return productDAO.findAll(getSpecificationEqualsCid(cid), PageRequest.of(0, total)).getContent();
+        List<Product> result =new ArrayList<>(productDAO.findAll(getSpecificationEqualsCid(cid), PageRequest.of(0, total)).getContent());
+        result.sort((p1, p2) -> p1.getWeight() >= p2.getWeight() ? -1 : 1);
+        return result;
     }
 
     @Override
@@ -96,7 +102,7 @@ public class ProductServiceImpl implements ProductService<Product> {
 
     @Override
     public Product add(Product product, MultipartFile file) throws IOException {
-        product.setCover( ironUtil.uploadImg(file, "ProductCover_"));
+        product.setCover(ironUtil.uploadImg(file, "ProductCover_"));
         product.setAccessTotal(0);
         product.setCreateTime(new Date());
         product.setUploadTime(new Date());
@@ -228,7 +234,7 @@ public class ProductServiceImpl implements ProductService<Product> {
         Product product = productDAO.findById(id).orElse(null);
         // 如果 true 程序继续执行
         assert product != null;
-        product.setCover( ironUtil.uploadImg(cover, "ProductCover_"));
+        product.setCover(ironUtil.uploadImg(cover, "ProductCover_"));
         return productDAO.save(product);
     }
 
