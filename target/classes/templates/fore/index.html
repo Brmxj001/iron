@@ -311,19 +311,19 @@
             <ul class="categories">
 
                 <li style="width: 50%" class="foo categoriesIndex" th:each="c:${categoriesListWithProduct}" th:if="${cStat.index<2}">
-                    <a type="hidden" class="redirect" th:href="@{/fore/categories(cid=${c.getId()})}"><span></span></a>
-                    <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
+                    <a type="hidden" class="redirect" th:href="@{/iron/fore/categories(cid=${c.getId()})}"><span></span></a>
+                    <a th:href="@{/iron/fore/categories(cid=${c.getId()})}" class="pic">
                         <img alt="" th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
                     </a>
 
-                    <dl style="height: 200px;">
+                    <dl style="height: 200px;" class="">
 
-                        <dt style="height: 30px;overflow: hidden">
+                        <dt style="height: 30px;overflow: hidden" class="">
                             <div th:if="${session.language  == 'ch'}">[[${c.name}]]</div>
                             <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
                         </dt>
                         <dd style="height:70%">
-                            <a style="height: 50%;overflow: hidden"   th:href="@{/fore/categories(cid=${c.getId()})}" >
+                            <a style="height: 50%;overflow: hidden"   th:href="@{/iron/fore/categories(cid=${c.getId()})}" >
                                 <div th:if="${session.language  == 'ch'}">[[${c.getDetail()}]]</div>
                                 <div th:unless="${session.language  == 'ch'}">[[${c.getDetailEn()}]]</div>
                             </a>
@@ -339,8 +339,8 @@
 
                 <li class="clear"></li>
                 <li class="foo categoriesIndex" th:each="c:${categoriesListWithProduct}"  th:if="${cStat.index>=2}">
-                    <a type="hidden" class="redirect" th:href="@{/fore/categories(cid=${c.getId()})}"><span></span></a>
-                    <a th:href="@{/fore/categories(cid=${c.getId()})}" class="pic">
+                    <a type="hidden" class="redirect" th:href="@{/iron/fore/categories(cid=${c.getId()})}"><span></span></a>
+                    <a th:href="@{/iron/fore/categories(cid=${c.getId()})}" class="pic">
                         <img alt="" th:alt="${c.getName()}" th:src="${qiniu}+${c.cover}"/>
                     </a>
 
@@ -350,7 +350,7 @@
                             <div th:unless="${session.language  == 'ch'}">[[${c.namee}]]</div>
                         </dt>
                         <dd>
-                            <a style="height: 100px; "  th:href="@{/fore/categories(cid=${c.getId()})}" >
+                            <a style="height: 100px; "  th:href="@{/iron/fore/categories(cid=${c.getId()})}" >
                                 <div th:if="${session.language  == 'ch'}">[[${c.getDetail()}]]</div>
                                 <div th:unless="${session.language  == 'ch'}">[[${c.getDetailEn()}]]</div>
                             </a>
@@ -362,10 +362,11 @@
 
                 </li>
                 <li class="clear"></li>
-                <script type="text/javascript">
-                        $("#categoriesIndex").click(function () {
-                            $(this).find(".redirect").find("span").trigger("click");
-                        })
+                <script type="text/javascript" th:inline="javascript">
+                            $(".categoriesIndex").click(function (e) {
+
+                                location.href = [[${url}]] + $(this).find(".redirect").attr("href");
+                            })
                 </script>
             </ul>
         </div>
@@ -375,17 +376,17 @@
 
                 <h3 class="title">
                     <div class="pro_change_title">
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll},way='newest')}">
+                        <a th:href="@{/iron/fore/categoriesSearch(searchOrAll=${searchOrAll},way='newest')}">
                             <div th:if="${session.language  == 'ch'}">最新</div>
                             <div th:unless="${session.language  == 'ch'}">New Arrivals</div>
                         </a>
 
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll},way='sale')}">
+                        <a th:href="@{/iron/fore/categoriesSearch(searchOrAll=${searchOrAll},way='sale')}">
                             <div th:if="${session.language  == 'ch'}">热卖</div>
                             <div th:unless="${session.language  == 'ch'}">Hot Sales</div>
                         </a>
 
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll},way='popular')}">
+                        <a th:href="@{/iron/fore/categoriesSearch(searchOrAll=${searchOrAll},way='popular')}">
                             <div th:if="${session.language  == 'ch'}">畅销品</div>
                             <div th:unless="${session.language  == 'ch'}">Top Sellers</div>
                         </a>
@@ -402,7 +403,7 @@
                             <div class="product_inner">
                                 <div class="quickcart_box" goods_id="118553"></div>
                                 <div class="img">
-                                    <a th:href="@{/fore/product(pid=${p.id})}" class="pic"
+                                    <a th:href="@{/iron/fore/product(pid=${p.id})}" class="pic"
                                        title="Defyant Reversible Dot Shorts">
                                         <img
                                                 th:src="${qiniu}+${p.cover}"
@@ -411,7 +412,7 @@
 
                                 </div>
                                 <div class="pro_content" style="height: 100px;">
-                                    <a th:href="@{/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
+                                    <a th:href="@{/iron/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
                                        th:title="${p.getName()}" class="name">
                                         <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
@@ -440,7 +441,7 @@
                             <div class="product_inner">
                                 <div class="quickcart_box" goods_id="118553"></div>
                                 <div class="img">
-                                    <a th:href="@{/fore/product(pid=${p.id})}" class="pic"
+                                    <a th:href="@{/iron/fore/product(pid=${p.id})}" class="pic"
                                        title="Defyant Reversible Dot Shorts">
                                         <img
                                                 th:src="${qiniu}+${p.cover}"
@@ -449,7 +450,7 @@
 
                                 </div>
                                 <div class="pro_content" style="height: 100px;">
-                                    <a th:href="@{/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
+                                    <a th:href="@{/iron/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
                                        th:title="${p.getName()}" class="name">
                                         <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
@@ -468,7 +469,7 @@
                             <div class="product_inner">
                                 <div class="quickcart_box" goods_id="118553"></div>
                                 <div class="img">
-                                    <a th:href="@{/fore/product(pid=${p.id})}" class="pic"
+                                    <a th:href="@{/iron/fore/product(pid=${p.id})}" class="pic"
                                        th:title="${p.getName()}">
                                         <img
                                                 th:src="${qiniu}+${p.cover}"
@@ -477,7 +478,7 @@
 
                                 </div>
                                 <div class="pro_content" style="height: 100px;">
-                                    <a th:href="@{/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
+                                    <a th:href="@{/iron/fore/product(pid=${p.id})}" style="max-height: 40px;overflow: hidden"
                                        th:title="${p.getName()}" class="name">
                                         <div th:if="${session.language  == 'ch'}">[[${p.name}]]</div>
                                         <div th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</div>
@@ -519,12 +520,12 @@
 
                 <li class="foo" th:each="blog:${blogList}">
                     <div class="pic">
-                        <a th:href="@{/fore/blogChild(id=${blog.id})}">
+                        <a th:href="@{/iron/fore/blogChild(id=${blog.id})}">
                             <img alt="" th:src="${qiniu}+${blog.getBlogImgList().get(0).path}"/>
                         </a>
                     </div>
                     <div class="text">
-                        <h5><a th:href="@{/fore/blogChild(id=${blog.id})}">
+                        <h5><a th:href="@{/iron/fore/blogChild(id=${blog.id})}">
                             <div th:if="${session.language  == 'ch'}">[[${blog.name}]]</div>
                             <div th:unless="${session.language  == 'ch'}">[[${blog.nameEn}]]</div>
                         </a></h5>
@@ -533,7 +534,7 @@
                         <div th:if="${session.language  == 'ch'}">[[${blog.intro}]]</div>
                         <div th:unless="${session.language  == 'ch'}">[[${blog.introEn}]]</div>
                         </p>
-                        <a class="more" th:href="@{/fore/blogChild(id=${blog.id})}">
+                        <a class="more" th:href="@{/iron/fore/blogChild(id=${blog.id})}">
                             <div th:if="${session.language  == 'ch'}">阅读更多 &#187</div>
                             <div th:unless="${session.language  == 'ch'}">Read More &#187</div>
                         </a>

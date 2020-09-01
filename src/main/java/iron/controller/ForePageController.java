@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import java.util.List;
  * @author wangxiaobo
  */
 @Controller
+@RequestMapping("/iron")
 public class ForePageController {
 
 
@@ -60,6 +62,15 @@ public class ForePageController {
         this.productDetailImgDAO = productDetailImgDAO;
     }
 
+//    @GetMapping("/")
+//    public RedirectView toIndexPage() {
+//        RedirectView redirectTarget = new RedirectView();
+//        redirectTarget.setContextRelative(true);
+//        redirectTarget.setUrl("productsPage");
+//        return redirectTarget;
+//    }
+
+
     @GetMapping("/fore/index")
     public String toIndexPage(Model m) {
         m.addAttribute("homeImgList", homeAttrDAO.findAll());
@@ -82,6 +93,8 @@ public class ForePageController {
         return "fore/index";
 
     }
+
+
 
     @GetMapping("/fore/categories")
     public String toCategoriesPage(@RequestParam(defaultValue = "200") Integer total, @RequestParam(defaultValue = "relevance") String way, Integer cid, Model m) {

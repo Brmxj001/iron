@@ -4,6 +4,7 @@ package iron.util;
 import iron.dao.HomeDAO;
 import iron.util.Qiniu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,7 @@ import java.util.UUID;
 /**
  * @author wangxiaobo
  */
-@Service
+@Service("IronUtil")
 public class IronUtil {
 
     @Autowired

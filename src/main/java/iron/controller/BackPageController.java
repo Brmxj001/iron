@@ -14,10 +14,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
+@RequestMapping("/iron")
 @Controller
 @Slf4j
 public class BackPageController {
@@ -57,8 +60,11 @@ public class BackPageController {
     }
 
     @GetMapping("/back/index")
-    public String toBackIndex() {
-        return "redirect:productsPage";
+    public RedirectView toBackIndex() {
+        RedirectView redirectTarget = new RedirectView();
+        redirectTarget.setContextRelative(true);
+        redirectTarget.setUrl("productsPage");
+        return redirectTarget;
     }
 
     @GetMapping("/back/homePage")

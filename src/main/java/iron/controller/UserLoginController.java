@@ -47,21 +47,21 @@ public class UserLoginController {
         }
     }
 
-    @PostMapping("/back/userLogin")
+    @PostMapping("/iron/back/userLogin")
     public String userLogin(Login login, HttpSession session, Model m) {
 
         Login result = loginDAO.findByUser(login.getUser());
         if (result != null) {
             if (result.getPassword().equals(login.getPassword())) {
                 session.setAttribute("isLogin", true);
-                return "redirect:/back/index";
+                return "redirect:/iron/back/index";
             }
         }
         m.addAttribute("info", "账号或密码错误");
         return "back/login";
     }
 
-    @GetMapping("/back/login")
+    @GetMapping("/iron/back/login")
     public String toLoginPage() {
         return "back/login";
     }

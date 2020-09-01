@@ -12,11 +12,11 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}">Products<i
+                        <a th:href="@{/iron/fore/categoriesSearch(searchOrAll='all')}">Products<i
                                 class="iconfont icon-arrows-copy"></i></a>
                         <ul class="sub_nav dropdown dropdown_cate">
                             <li th:each="c:${foreCategoriesList}">
-                                <a th:href="@{/fore/categories(cid=${c.id})}">
+                                <a th:href="@{/iron/fore/categories(cid=${c.id})}">
                                     <span>■</span>
                                     [[${c.name}]]
                                 </a>
@@ -233,7 +233,7 @@
 
                     <dl>
                         <dd>
-                            <a href="/iron/fore/aboutUs">
+                            <a href="/iron/fore/aboutUs" style="font-size: 20px;font-weight: bolder">
                                 <span th:if="${session.language  == 'ch'}">有关我们</span>
                                 <span th:unless="${session.language  == 'ch'}">ABOUT US</span>
                             </a>
@@ -266,7 +266,7 @@
 
                     <dl style="margin-left: 200px">
                         <dd>
-                        <a th:href="${followUs.getContent()}">
+                        <a th:href="${followUs.getContent()}" style="font-size: 20px;font-weight: bolder">
                             <span th:if="${session.language  == 'ch'}">关注我们 </span>
                             <span th:unless="${session.language  == 'ch'}"> Follow us </span>
                         </a>
@@ -274,10 +274,10 @@
 
                         <dd>
                             <div class="footImg" style="display: flex">
-                                <a th:href="${facebook.getContent()}"><img alt="" width="30px" th:src="@{/fore/facebook.png}"/></a>
-                                <a th:href="${youtube.getContent()}"><img alt="" width="30px" th:src="@{/fore/youtube.png}"/></a>
-                                <a th:href="${twitter.getContent()}"><img alt="" width="30px" th:src="@{/fore/twitter.png}"/></a>
-                                <a th:href="${linked.getContent()}"><img alt="" width="30px" th:src="@{/fore/linkedin.png}"/></a>
+                                <a th:href="${facebook.getContent()}" style="margin: 4px"><img alt="" width="40px" th:src="@{/fore/facebook.png}"/></a>
+                                <a th:href="${youtube.getContent()}" style="margin: 4px"><img alt="" width="40px" th:src="@{/fore/youtube.png}"/></a>
+                                <a th:href="${twitter.getContent()}" style="margin: 4px"><img alt="" width="40px" th:src="@{/fore/twitter.png}"/></a>
+                                <a th:href="${linked.getContent()}" style="margin: 4px"><img alt="" width="40px" th:src="@{/fore/linkedin.png}"/></a>
                             </div>
                         </dd>
 
@@ -341,13 +341,13 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/fore/categoriesSearch(searchOrAll='all')}"> <span
+                        <a th:href="@{/iron/fore/categoriesSearch(searchOrAll='all')}"> <span
                                 th:if="${session.language  == 'ch'}">分类</span>
                             <span th:unless="${session.language  == 'ch'}">Categories</span><i
                                     class="iconfont icon-arrows-copy"></i></a>
                         <ul class="sub_nav dropdown dropdown_cate">
                             <li th:each="c:${foreCategoriesList}">
-                                <a th:href="@{/fore/categories(cid=${c.id})}">
+                                <a th:href="@{/iron/fore/categories(cid=${c.id})}">
                                     <span th:if="${session.language  == 'ch'}">■[[${c.namee}]]</span>
                                     <span th:unless="${session.language  == 'ch'}">■[[${c.name}]]</span>
                                 </a>

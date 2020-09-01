@@ -237,7 +237,7 @@
                 <!--<a href="/POWER-TOOLS-c34573/list---7------r1.html"  >New In</a>-->
             </div>
             <a class="display:none" id="categoriesPageAccessLink"
-               th:href="@{/fore/categories(cid=${categories.id})}"><span></span></a>
+               th:href="@{/iron/fore/categories(cid=${categories.id})}"><span></span></a>
 
             <div class="viewlistnav psize">
                 <span class="iconfont icon-arrows-copy"></span>
@@ -277,14 +277,14 @@
                     <div class="product_inner">
                         <div class="quickcart_box" goods_id="118548"></div>
                         <div class="img">
-                            <a  th:href="@{/fore/product(pid=${p.id})}" class="pic"
+                            <a  th:href="@{/iron/fore/product(pid=${p.id})}" class="pic"
                                title="cross colours camo print tank half mengo">
                                 <img  title="nothing" th:src="${qiniu}+${p.cover}"
                                      alt="nothing"/>
                             </a>
                         </div>
                         <div class="pro_content">
-                            <a  th:href="@{/fore/product(pid=${p.id})}" style="height: 64px;overflow: hidden"
+                            <a  th:href="@{/iron/fore/product(pid=${p.id})}" style="height: 64px;overflow: hidden"
                                th:title="${p.getName()}" class="name" th:text="${p.name}">
                                 <span th:if="${session.language  == 'ch'}">[[${p.name}]]</span>
                                 <span th:unless="${session.language  == 'ch'}">[[${p.name_en}]]</span>

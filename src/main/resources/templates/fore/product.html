@@ -1120,7 +1120,7 @@
         </script>
 <div><a href="www.baidu.com"> a</a></div>
         <div class="crumb"><a href="/iron/fore/index">Home</a>&gt;<a
-                th:href="@{/fore/categories(cid=${product.categories.id})}" th:text="${product.categories.name}">
+                th:href="@{/iron/fore/categories(cid=${product.categories.id})}" th:text="${product.categories.name}">
             <span th:if="${session.language  == 'ch'}">[[${product.categories.name}]]</span>
             <span th:unless="${session.language  == 'ch'}">[[${product.categories.namee}]]</span>
             </a>&gt;<span>
@@ -1328,13 +1328,13 @@
                 <li class="pro_list5" th:each="p:${product.getProductLikeList()}" th:if="${pStat.index < 10}">
 
                     <div class="quickcart_box" goods_id="118549"></div>
-                    <a th:href="@{/fore/product(pid=${p.getId()})}" class="pic"
+                    <a th:href="@{/iron/fore/product(pid=${p.getId()})}" class="pic"
                        title="Defyant Reversible Dot Shorts"><span></span>
                         <img th:src="${qiniu}+${p.cover}" th:title="${p.getName()}"
                              th:alt="${p.getName()}"/>
                     </a>
                     <div class="pro_content">
-                        <a th:href="@{/fore/product(pid=${p.getId()})}" th:title="${p.getName()}"
+                        <a th:href="@{/iron/fore/product(pid=${p.getId()})}" th:title="${p.getName()}"
                            class="name">
                             <span th:if="${session.language  == 'ch'}">[[${p.getName()}]]</span>
                             <span th:unless="${session.language  == 'ch'}">[[${p.getName_en()}]]</span>

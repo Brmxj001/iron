@@ -236,7 +236,7 @@
                 <!--<a href="/POWER-TOOLS-c34573/list---2-1-----r1.html" ><span class="price">Price</span><span class="price_up"></span></a> |-->
                 <!--<a href="/POWER-TOOLS-c34573/list---7------r1.html"  >New In</a>-->
             </div>
-                <a class="display:none" id="categoriesPageAccessLink" th:href="@{/fore/categoriesSearch(searchOrAll=${searchOrAll})}">
+                <a class="display:none" id="categoriesPageAccessLink" th:href="@{/iron/fore/categoriesSearch(searchOrAll=${searchOrAll})}">
                     <span></span>
                 </a>
 
@@ -282,7 +282,7 @@
                     <div class="product_inner">
                         <div class="quickcart_box" goods_id="118548"></div>
                         <div class="img">
-                            <a  th:href="@{/fore/product(pid=${p.id})}" class="pic"
+                            <a  th:href="@{/iron/fore/product(pid=${p.id})}" class="pic"
                                title="cross colours camo print tank half mengo">
                                 <img  th:src="${qiniu}+${p.cover}"
                                      th:title="${p.getName()}"
@@ -290,7 +290,7 @@
                             </a>
                         </div>
                         <div class="pro_content">
-                            <a  th:href="@{/fore/product(pid=${p.id})}" style="height: 64px; overflow: hidden"
+                            <a  th:href="@{/iron/fore/product(pid=${p.id})}" style="height: 64px; overflow: hidden"
                                th:title="${p.getName()}" class="name" >
                                 <span th:if="${session.language  == 'ch'}">[[${p.name}]] </span>
                                 <span th:unless="${session.language  == 'ch'}"> [[${p.name_en}]]</span>

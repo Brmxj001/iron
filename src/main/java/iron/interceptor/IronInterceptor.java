@@ -62,6 +62,9 @@ public class IronInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
+        if (uri.equals("/")){
+            response.sendRedirect("/iron/fore/index");
+        }
         if (backPage.contains(uri)){
             if (null == request.getSession().getAttribute("isLogin") || !(boolean) request.getSession().getAttribute("isLogin")){
                 request.getSession().setAttribute("isLogin", false);

@@ -183,7 +183,7 @@
                 </h1>
                 <ul>
                     <li th:each="blog:${blogList}">
-                        <a class="newname" th:href="@{/fore/blogChild(id=${blog.getId()})}" >
+                        <a class="newname" th:href="@{/iron/fore/blogChild(id=${blog.getId()})}" >
                             <span th:if="${session.language  == 'ch'}">[[${blog.name}]]</span>
                             <span th:unless="${session.language  == 'ch'}">[[${blog.nameEn}]]</span>
                         </a>
@@ -192,7 +192,7 @@
                             <span th:if="${session.language  == 'ch'}">[[${blog.intro}]]</span>
                             <span th:unless="${session.language  == 'ch'}">[[${blog.introEn}]]</span>
                         </div>
-                        <div class="newmore"><a th:href="@{/fore/blogChild(id=${blog.getId()})}">
+                        <div class="newmore"><a th:href="@{/iron/fore/blogChild(id=${blog.getId()})}">
                             <span th:if="${session.language  == 'ch'}">更多..</span>
                             <span th:unless="${session.language  == 'ch'}">View More</span>
                         </a></div>

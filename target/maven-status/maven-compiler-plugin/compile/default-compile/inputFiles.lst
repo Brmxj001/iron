@@ -15,6 +15,7 @@
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/ProductImg.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/impl/CategoriesServiceImpl.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/BlogService.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/TomcatHttpConfig.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/Product.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/HomeController.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/controller/ProductsController.java
@@ -36,6 +37,7 @@
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/ConfigBean.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/ProductImgService.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/IronApplicationRuner.java
+/Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/WebMvcConfig.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/dao/HomeAttrDAO.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/service/BlogImgService.java
 /Users/wangxiaobo/brmxj/Github/iron/src/main/java/iron/bean/contact.java
